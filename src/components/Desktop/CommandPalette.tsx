@@ -28,7 +28,12 @@ const ALL_COMMANDS = [
   { label: 'Open SlashDot AI',   action: 'open:slashdotai',  icon: '🤖' },
   { label: 'Open Achievements',  action: 'open:achievements', icon: '🏆' },
   { label: 'Open Flappy Bracket',action: 'open:flappy',       icon: '{}' },
-  { label: 'Open Dungeon',       action: 'open:dungeon',      icon: '⚔'  },
+  { label: 'Open Dungeon',       action: 'open:dungeon',      icon: '⚔' },
+  { label: 'Open File Explorer', action: 'open:fileexplorer', icon: '📁' },
+  { label: 'Open Settings',      action: 'open:settings',     icon: '⚙' },
+  { label: 'Open Snake',         action: 'open:snake',        icon: '🐍' },
+  { label: 'Open Notepad',       action: 'open:notepad',      icon: '📝' },
+  { label: 'Open Task Manager',  action: 'open:taskmanager',  icon: '[%]' },
   { label: 'Sudo Party 🎉',      action: 'cmd:sudo party',   icon: '🎉' },
   { label: 'Matrix Rain',        action: 'cmd:matrix',       icon: '🟩' },
   { label: 'Neofetch',           action: 'cmd:neofetch',     icon: '🖥' },
@@ -94,7 +99,9 @@ export function CommandPalette({ onOpenWindow, onRunCommand }: Props) {
         typing: 'typing.exe', guestbook: 'guestbook.app',
         poll: 'poll.app', jokes: 'jokes.app', slashdotai: 'slashdot-ai.app',
         achievements: 'achievements.app', flappy: 'flappy.exe',
-        dungeon: 'dungeon.exe',
+        dungeon: 'dungeon.exe', fileexplorer: 'files.app',
+        settings: 'settings.app', snake: 'snake.exe',
+        notepad: 'notepad.app', taskmanager: 'taskmanager.app',
       }
       onOpenWindow(appId, titleMap[appId] ?? appId)
     } else if (action.startsWith('cmd:')) {

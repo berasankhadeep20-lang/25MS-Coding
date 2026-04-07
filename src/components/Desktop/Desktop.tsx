@@ -39,7 +39,12 @@ const ICONS: DesktopIcon[] = [
   { appId: 'slashdotai',  title: 'slashdot-ai.app',   label: 'AI Chat',     icon: '🤖'  },
   { appId: 'achievements',title: 'achievements.app',  label: 'Achievements', icon: '🏆'  },
   { appId: 'flappy',      title: 'flappy.exe',         label: 'Flappy {',    icon: '{}'  },
-  { appId: 'dungeon',     title: 'dungeon.exe',         label: 'Dungeon',     icon: '⚔'   },
+  { appId: 'dungeon',      title: 'dungeon.exe',       label: 'Dungeon',      icon: '⚔' },
+  { appId: 'fileexplorer', title: 'files.app',         label: 'Files',        icon: '📁' },
+  { appId: 'settings',     title: 'settings.app',      label: 'Settings',     icon: '⚙' },
+  { appId: 'snake',        title: 'snake.exe',         label: 'Snake',        icon: '🐍' },
+  { appId: 'notepad',      title: 'notepad.app',       label: 'Notepad',      icon: '📝' },
+  { appId: 'taskmanager',  title: 'taskmanager.app',   label: 'Task Mgr',     icon: '[%]'},
 ]
 
 interface ContextMenu {

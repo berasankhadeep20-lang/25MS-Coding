@@ -32,6 +32,11 @@ import { TypingTestApp } from './components/Apps/TypingTest'
 import { AchievementsApp } from './components/Apps/Achievements'
 import { FlappyBirdApp } from './components/Apps/FlappyBird'
 import { DungeonCrawlerApp } from './components/Apps/DungeonCrawler'
+import { FileExplorerApp } from './components/Apps/FileExplorer'
+import { SettingsApp } from './components/Apps/Settings'
+import { SnakeApp } from './components/Apps/Snake'
+import { NotepadApp } from './components/Apps/Notepad'
+import { TaskManagerApp } from './components/Apps/TaskManager'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
@@ -109,6 +114,11 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'achievements': return <AchievementsApp />
     case 'flappy':       return <FlappyBirdApp />
     case 'dungeon':      return <DungeonCrawlerApp />
+    case 'fileexplorer': return <FileExplorerApp />
+    case 'settings':     return <SettingsApp />
+    case 'snake':        return <SnakeApp />
+    case 'notepad':      return <NotepadApp />
+    case 'taskmanager':  return <TaskManagerApp />
     default:             return null
   }
 }

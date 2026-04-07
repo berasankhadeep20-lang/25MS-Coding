@@ -53,6 +53,7 @@ SlashDot OS turns the SlashDot club website into a fake operating system running
 - **Dungeon Crawler** — ASCII roguelike, WASD to move, bump enemies to attack, find the stairs
 - **Conway's Game of Life** — click cells, presets, random fill
 - **Typing Speed Test** — WPM, accuracy, random passages
+- **Snake** — classic snake, arrow keys or WASD, speed slider
 
 ### Science Apps
 - **Periodic Table** — click elements for info, search by name/symbol/number
@@ -136,6 +137,11 @@ open slashdotai   → Chat with SlashDot AI
 open achievements → View achievements
 open flappy       → Flappy { } game
 open dungeon      → ASCII dungeon crawler RPG
+open fileexplorer → Browse the virtual filesystem
+open settings     → System settings (theme, font, cursor, wallpaper)
+open snake        → Snake game (arrow keys / WASD)
+open notepad      → Notepad with multiple notes
+open taskmanager  → Task manager with kill support
 open gameoflife   → Conway's Game of Life
 ```
 

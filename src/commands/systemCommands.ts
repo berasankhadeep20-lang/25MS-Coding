@@ -48,6 +48,11 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.yellow}setname <name>${c.reset}       ${c.gray}Set your username${c.reset}`,
         `${c.yellow}visits${c.reset}               ${c.gray}Live visitor counter${c.reset}`,
         `${c.yellow}rain on/off${c.reset}          ${c.gray}Toggle desktop rain${c.reset}`,
+        `${c.cyan}open fileexplorer${c.reset}     ${c.gray}File explorer${c.reset}`,
+        `${c.cyan}open settings${c.reset}         ${c.gray}System settings${c.reset}`,
+        `${c.cyan}open snake${c.reset}            ${c.gray}Snake game${c.reset}`,
+        `${c.cyan}open notepad${c.reset}          ${c.gray}Notepad / notes${c.reset}`,
+        `${c.cyan}open taskmanager${c.reset}      ${c.gray}Task manager${c.reset}`,
       ]),
       formatSection('Easter Eggs', [
         `${c.magenta}sudo party${c.reset}                      ${c.gray}???${c.reset}`,
