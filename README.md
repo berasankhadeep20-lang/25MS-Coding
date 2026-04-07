@@ -3,9 +3,9 @@
 > A browser-based OS simulator built for the Inter-Batch Website Development Competition 2026.
 > Organized by SlashDot Programming & Design Club, IISER Kolkata.
 
-[![Deploy](https://github.com/berasankhadeep20-lang/Interbatch-Coding-2026-25MS/actions/workflows/deploy.yml/badge.svg)](https://github.com/berasankhadeep20-lang/Interbatch-Coding-2026-25MS/actions)
+[![Deploy](https://github.com/berasankhadeep20-lang/25MS-Coding/actions/workflows/deploy.yml/badge.svg)](https://github.com/berasankhadeep20-lang/25MS-Coding/actions)
 
-**Live Site:** https://berasankhadeep20-lang.github.io/Interbatch-Coding-2026-25MS/
+**Live Site:** https://berasankhadeep20-lang.github.io/25MS-Coding/
 
 ---
 
@@ -222,8 +222,8 @@ Double-click titlebar → Maximize/restore window
 
 ## Quick Start
 ```bash
-git clone https://github.com/berasankhadeep20-lang/Interbatch-Coding-2026-25MS.git
-cd Interbatch-Coding-2026-25MS/slashdot-os
+git clone https://github.com/berasankhadeep20-lang/25MS-Coding.git
+cd 25MS-Coding/slashdot-os
 npm install
 npm run dev
 ```
