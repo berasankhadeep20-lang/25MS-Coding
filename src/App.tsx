@@ -37,6 +37,10 @@ import { SettingsApp } from './components/Apps/Settings'
 import { SnakeApp } from './components/Apps/Snake'
 import { NotepadApp } from './components/Apps/Notepad'
 import { TaskManagerApp } from './components/Apps/TaskManager'
+import { JSONFormatterApp, Base64App, MarkdownApp, ColorPickerApp, PasswordGenApp, DiffViewerApp, CodeRunnerApp, LoremApp, HashGenApp } from './components/Apps/DevTools'
+import { PaintApp, ASCIIArtApp, PixelArtApp } from './components/Apps/CreativeApps'
+import { CalendarApp, PomodoroApp, StopwatchApp, CurrencyApp, BMIApp, AgeCalcApp, HabitTrackerApp } from './components/Apps/LifeApps'
+import { NewsTickerApp, LeaderboardApp, GitHubStatsApp, WikipediaApp, TamagotchiApp, StocksApp, HoroscopeApp, LoveCalcApp, Magic8App, DeployedApp } from './components/Apps/FunApps'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
@@ -119,6 +123,35 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'snake':        return <SnakeApp />
     case 'notepad':      return <NotepadApp />
     case 'taskmanager':  return <TaskManagerApp />
+    case 'jsonformat':   return <JSONFormatterApp />
+    case 'base64':       return <Base64App />
+    case 'markdown':     return <MarkdownApp />
+    case 'colorpicker':  return <ColorPickerApp />
+    case 'passgen':      return <PasswordGenApp />
+    case 'diffview':     return <DiffViewerApp />
+    case 'coderunner':   return <CodeRunnerApp />
+    case 'lorem':        return <LoremApp />
+    case 'hashgen':      return <HashGenApp />
+    case 'paint':        return <PaintApp />
+    case 'asciiart':     return <ASCIIArtApp />
+    case 'pixelart':     return <PixelArtApp />
+    case 'calendar':     return <CalendarApp />
+    case 'pomodoro':     return <PomodoroApp />
+    case 'stopwatch':    return <StopwatchApp />
+    case 'currency':     return <CurrencyApp />
+    case 'bmi':          return <BMIApp />
+    case 'agecalc':      return <AgeCalcApp />
+    case 'habittracker': return <HabitTrackerApp />
+    case 'newsticker':   return <NewsTickerApp />
+    case 'leaderboard':  return <LeaderboardApp />
+    case 'githubstats':  return <GitHubStatsApp />
+    case 'wikipedia':    return <WikipediaApp />
+    case 'tamagotchi':   return <TamagotchiApp />
+    case 'stocks':       return <StocksApp />
+    case 'horoscope':    return <HoroscopeApp />
+    case 'lovecalc':     return <LoveCalcApp />
+    case 'magic8':       return <Magic8App />
+    case 'deployed':     return <DeployedApp />
     default:             return null
   }
 }

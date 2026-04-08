@@ -44,7 +44,36 @@ const ICONS: DesktopIcon[] = [
   { appId: 'settings',     title: 'settings.app',      label: 'Settings',     icon: '⚙' },
   { appId: 'snake',        title: 'snake.exe',         label: 'Snake',        icon: '🐍' },
   { appId: 'notepad',      title: 'notepad.app',       label: 'Notepad',      icon: '📝' },
-  { appId: 'taskmanager',  title: 'taskmanager.app',   label: 'Task Mgr',     icon: '[%]'},
+{ appId: 'taskmanager',  title: 'taskmanager.app',  label: 'Task Mgr',    icon: '[%]' },
+  { appId: 'jsonformat',   title: 'json.app',         label: 'JSON',        icon: '{ }' },
+  { appId: 'base64',       title: 'base64.app',       label: 'Base64',      icon: 'b64' },
+  { appId: 'markdown',     title: 'markdown.app',     label: 'Markdown',    icon: '.md' },
+  { appId: 'colorpicker',  title: 'color.app',        label: 'Colors',      icon: '🎨'  },
+  { appId: 'passgen',      title: 'passgen.app',      label: 'PassGen',     icon: '🔑'  },
+  { appId: 'diffview',     title: 'diff.app',         label: 'Diff',        icon: '±'   },
+  { appId: 'coderunner',   title: 'code.app',         label: 'Code',        icon: '▶'   },
+  { appId: 'lorem',        title: 'lorem.app',        label: 'Lorem',       icon: 'Aa'  },
+  { appId: 'hashgen',      title: 'hash.app',         label: 'Hash',        icon: '#'   },
+  { appId: 'paint',        title: 'paint.app',        label: 'Paint',       icon: '🖌'  },
+  { appId: 'asciiart',     title: 'ascii.app',        label: 'ASCII Art',   icon: 'A'   },
+  { appId: 'pixelart',     title: 'pixel.app',        label: 'Pixel Art',   icon: '🟦'  },
+  { appId: 'calendar',     title: 'calendar.app',     label: 'Calendar',    icon: '📅'  },
+  { appId: 'pomodoro',     title: 'pomodoro.app',     label: 'Pomodoro',    icon: '🍅'  },
+  { appId: 'stopwatch',    title: 'stopwatch.app',    label: 'Stopwatch',   icon: '⏱'  },
+  { appId: 'currency',     title: 'currency.app',     label: 'Currency',    icon: '💱'  },
+  { appId: 'bmi',          title: 'bmi.app',          label: 'BMI',         icon: '⚖'   },
+  { appId: 'agecalc',      title: 'age.app',          label: 'Age Calc',    icon: '🎂'  },
+  { appId: 'habittracker', title: 'habits.app',       label: 'Habits',      icon: '✅'  },
+  { appId: 'newsticker',   title: 'news.app',         label: 'News',        icon: '📰'  },
+  { appId: 'leaderboard',  title: 'leaderboard.app',  label: 'Leaderboard', icon: '🏆'  },
+  { appId: 'githubstats',  title: 'github.app',       label: 'GitHub',      icon: '🐙'  },
+  { appId: 'wikipedia',    title: 'wiki.app',         label: 'Wikipedia',   icon: 'W'   },
+  { appId: 'tamagotchi',   title: 'tamagotchi.app',   label: 'Tamagotchi',  icon: '🐣'  },
+  { appId: 'stocks',       title: 'stocks.app',       label: 'Stocks',      icon: '📈'  },
+  { appId: 'horoscope',    title: 'horoscope.app',    label: 'Horoscope',   icon: '♈'  },
+  { appId: 'lovecalc',     title: 'love.app',         label: 'Love Calc',   icon: '❤'   },
+  { appId: 'magic8',       title: 'magic8.app',       label: 'Magic 8',     icon: '🎱'  },
+  { appId: 'deployed',     title: 'deployed.app',     label: 'Deployed?',   icon: '🚀'  },
 ]
 
 interface ContextMenu {
@@ -71,11 +100,11 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
   const [raining, setRaining] = useState(false)
   const [visitorCount, setVisitorCount] = useState<number | null>(null)
   const [iconPositions, setIconPositions] = useState<Record<string, IconPosition>>(() => {
-    const COL_W = 80
-    const ROW_H = 88
-    const START_X = 16
-    const START_Y = 16
-    const COLS = 4
+    const COL_W = 76
+    const ROW_H = 82
+    const START_X = 8
+    const START_Y = 8
+    const COLS = 5
     const positions: Record<string, IconPosition> = {}
     ICONS.forEach(function(icon, i) {
       positions[icon.appId] = {

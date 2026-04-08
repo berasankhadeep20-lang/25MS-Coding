@@ -71,6 +71,7 @@ SlashDot OS turns the SlashDot club website into a fake operating system running
 - **Joke Generator** — programming, science, IISER, math jokes
 - **SlashDot AI** — fake AI chatbot that actually responds
 
+
 ---
 
 ## Terminal Commands
@@ -142,6 +143,32 @@ open settings     → System settings (theme, font, cursor, wallpaper)
 open snake        → Snake game (arrow keys / WASD)
 open notepad      → Notepad with multiple notes
 open taskmanager  → Task manager with kill support
+open jsonformat   → JSON formatter & validator
+open base64       → Base64 encoder/decoder
+open markdown     → Markdown previewer (split pane)
+open colorpicker  → Color picker with HEX/RGB/HSL
+open passgen      → Password generator with strength meter
+open diffview     → Diff viewer (paste two texts)
+open coderunner   → Code runner (Python/JS/C, fake)
+open lorem        → Lorem ipsum generator (with IISER flavor)
+open hashgen      → Hash generator (MD5/SHA, demonstration)
+open paint        → Paint app with brushes and colors
+open asciiart     → ASCII art generator from text
+open pixelart     → 16×16 pixel art editor
+open calendar     → Calendar with event management
+open pomodoro     → Pomodoro timer (25min work / 5min break)
+open stopwatch    → Stopwatch with lap tracking
+open currency     → Currency converter (12 currencies)
+open bmi          → BMI calculator
+open agecalc      → Age calculator
+open habittracker → 7-day habit tracker
+open calendar     → Calendar with event management
+open pomodoro     → Pomodoro timer (25min work / 5min break)
+open stopwatch    → Stopwatch with lap tracking
+open currency     → Currency converter (12 currencies)
+open bmi          → BMI calculator
+open agecalc      → Age calculator
+open habittracker → 7-day habit tracker
 open gameoflife   → Conway's Game of Life
 ```
 
