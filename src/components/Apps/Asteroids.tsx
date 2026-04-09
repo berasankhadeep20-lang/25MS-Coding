@@ -38,7 +38,7 @@ function randomAsteroid(W: number, H: number, radius: number, avoidPos?: Vec2): 
     pos = { x: Math.random() * W, y: Math.random() * H }
   } while (avoidPos && Math.hypot(pos.x - avoidPos.x, pos.y - avoidPos.y) < 150)
 
-  const speed = (Math.random() * 1.5 + 0.5) * (60 / radius)
+  const speed = (Math.random() * 0.8 + 0.3) * (40 / radius)
   const angle = Math.random() * Math.PI * 2
   const numV = Math.floor(Math.random() * 5) + 7
   const vertices = Array.from({ length: numV }, () =>

@@ -25,6 +25,8 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.cyan}open team${c.reset}             ${c.gray}Team page${c.reset}`,
         `${c.cyan}open stack${c.reset}            ${c.gray}Tech stack${c.reset}`,
         `${c.cyan}open contact${c.reset}          ${c.gray}Contact page${c.reset}`,
+        `${c.cyan}open events${c.reset}           ${c.gray}SlashDot club events${c.reset}`,
+        `${c.cyan}open showcase${c.reset}         ${c.gray}Member project showcase${c.reset}`,
         `${c.cyan}open clock${c.reset}            ${c.gray}Live clock${c.reset}`,
         `${c.cyan}open asteroids${c.reset}        ${c.gray}Play Asteroids${c.reset}`,
         `${c.cyan}open pong${c.reset}             ${c.gray}Play Pong (2P)${c.reset}`,

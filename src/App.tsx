@@ -45,6 +45,7 @@ import { SortVisApp, PathVisApp, BinConvApp, TruthTableApp, EqSolverApp, Mandelb
 import { ISSTrackerApp, APODApp, BookSearchApp, ExchRateApp, IPGeoApp, RandUserApp } from './components/Apps/APIApps'
 import { FlashcardApp, BudgetApp, RecipeApp, CountdownApp, MealGenApp, StudySchedApp } from './components/Apps/ProductivityApps2'
 import { FakeTwitterApp, FakeWhatsAppApp, ConfessionApp, ComplimentApp, InsultApp, DebateApp, LinusCallApp, CGPASimApp, RateMyCodeApp, RickrollApp, ExcuseGenApp, ScreensaverApp, FakeLoadApp, FortuneCookieApp, FixBugApp, KBTrainerApp, SysLogApp, ClipboardApp } from './components/Apps/SocialFunApps'
+import { EventsApp, ShowcaseApp } from './components/Apps/ClubApps'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
@@ -196,6 +197,8 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'kbtrainer':    return <KBTrainerApp />
     case 'syslog':       return <SysLogApp />
     case 'clipboard':    return <ClipboardApp />
+    case 'events':       return <EventsApp />
+    case 'showcase':     return <ShowcaseApp />
     default:             return null
   }
 }

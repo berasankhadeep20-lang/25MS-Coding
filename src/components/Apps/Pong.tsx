@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 export function PongGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const stateRef = useRef({
-    ball: { x: 320, y: 210, vx: 4, vy: 3 },
+    ball: { x: 320, y: 210, vx: 2.5, vy: 2 },
     p1: { y: 160, score: 0 },
     p2: { y: 160, score: 0 },
     keys: {} as Record<string, boolean>,
@@ -106,7 +106,7 @@ export function PongGame() {
         return
       }
 
-      const SPEED = 5
+      const SPEED = 3
       if (s.keys['w'] && s.p1.y > 0)          s.p1.y -= SPEED
       if (s.keys['s'] && s.p1.y < H - PH)     s.p1.y += SPEED
       if (s.keys['ArrowUp'] && s.p2.y > 0)    s.p2.y -= SPEED
@@ -123,7 +123,7 @@ export function PongGame() {
         s.ball.y > s.p1.y &&
         s.ball.y < s.p1.y + PH
       ) {
-        s.ball.vx = Math.abs(s.ball.vx) * 1.05
+        s.ball.vx = Math.abs(s.ball.vx) * 1.01
         const hitPos = (s.ball.y - s.p1.y) / PH - 0.5
         s.ball.vy = hitPos * 8
       }
@@ -134,19 +134,19 @@ export function PongGame() {
         s.ball.y > s.p2.y &&
         s.ball.y < s.p2.y + PH
       ) {
-        s.ball.vx = -Math.abs(s.ball.vx) * 1.05
+        s.ball.vx = -Math.abs(s.ball.vx) * 1.01
         const hitPos = (s.ball.y - s.p2.y) / PH - 0.5
         s.ball.vy = hitPos * 8
       }
 
       // Cap speed
-      s.ball.vx = Math.max(-12, Math.min(12, s.ball.vx))
-      s.ball.vy = Math.max(-10, Math.min(10, s.ball.vy))
+      s.ball.vx = Math.max(-6, Math.min(6, s.ball.vx))
+      s.ball.vy = Math.max(-5, Math.min(5, s.ball.vy))
 
       // Scoring
       if (s.ball.x < 0) {
         s.p2.score++
-        s.ball = { x: W / 2, y: H / 2, vx: -4, vy: 3 * (Math.random() > 0.5 ? 1 : -1) }
+        s.ball = { x: W / 2, y: H / 2, vx: -2.5, vy: 2 * (Math.random() > 0.5 ? 1 : -1) }
         setDisplay(d => ({ ...d, p2: s.p2.score }))
         if (s.p2.score >= WIN_SCORE) {
           s.gameOver = true
@@ -156,7 +156,7 @@ export function PongGame() {
       }
       if (s.ball.x > W) {
         s.p1.score++
-        s.ball = { x: W / 2, y: H / 2, vx: 4, vy: 3 * (Math.random() > 0.5 ? 1 : -1) }
+        s.ball = { x: W / 2, y: H / 2, vx: 2.5, vy: 2 * (Math.random() > 0.5 ? 1 : -1) }
         setDisplay(d => ({ ...d, p1: s.p1.score }))
         if (s.p1.score >= WIN_SCORE) {
           s.gameOver = true

@@ -4,12 +4,12 @@ const W = 640
 const H = 420
 const BIRD_X = 120
 const BIRD_R = 14
-const GRAVITY = 0.5
-const JUMP = -9
+const GRAVITY = 0.1
+const JUMP = -6
 const PIPE_W = 52
 const GAP = 140
-const PIPE_SPEED = 3
-const PIPE_INTERVAL = 180
+const PIPE_SPEED = 2
+const PIPE_INTERVAL = 220
 
 interface Pipe {
   x: number

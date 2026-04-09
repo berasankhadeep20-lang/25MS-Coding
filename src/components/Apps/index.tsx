@@ -6,78 +6,22 @@ import { techStack } from '../../data/techStack'
 export function HomeApp() {
   return (
     <div className="app-body">
-      <div className="app-section">
-        <p className="app-subtitle cyan">Inter-Batch Website Development Competition 2026</p>
-        <p className="app-subtitle gray">25MS Batch • IISER Kolkata • SlashDot Club</p>
+      <p className="app-label cyan">// home.exe — SlashDot Club, IISER Kolkata</p>
+      <div className="app-divider" />
+      <div style={{ textAlign: 'center', padding: '16px 0 8px' }}>
+        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 90, marginBottom: 12, opacity: 0.95 }} />
+        <p style={{ color: '#00ff46', fontFamily: 'JetBrains Mono', fontSize: 22, fontWeight: 700, margin: '0 0 4px', letterSpacing: '0.15em' }}>SLASHDOT</p>
+        <p style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 11, margin: '0 0 4px' }}>The Coding & Designing Club of IISER Kolkata</p>
+        <p style={{ color: '#333', fontFamily: 'JetBrains Mono', fontSize: 10, margin: 0 }}>slashdot-iiserk.github.io</p>
       </div>
       <div className="app-divider" />
-      <div className="app-section">
-        <p className="app-label yellow">// what is this?</p>
-        <p className="app-text">
-          SlashDot OS is a browser-based operating system simulator built as our
-          entry for the 2026 Inter-Batch Website Development Competition. Every
-          section of the site is an app you can open from the desktop or launch via the terminal.
-        </p>
-      </div>
-      <div className="app-section">
-        <p className="app-label yellow">// quick start</p>
-        <div className="app-commands">
-          {[
-            ['neofetch', 'System info + logos'],
-            ['open about', 'About this project'],
-            ['open team', 'Meet the 25MS team'],
-            ['open stack', 'Tech stack details'],
-            ['open contact', 'Contact information'],
-            ['help', 'All commands'],
-          ].map(function(item) {
-            return (
-              <div key={item[0]} className="app-cmd-row">
-                <span className="app-cmd">{item[0]}</span>
-                <span className="app-cmd-desc">{item[1]}</span>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-      <div className="app-logos">
-        <div className="logo-placeholder">
-          <img src="./iiserkol_logo.png" alt="IISER Kolkata" className="logo-img" />
-        </div>
-        <div className="logo-placeholder">
-          <img src="./slashdot_logo.png" alt="SlashDot" className="logo-img" />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function AboutApp() {
-  return (
-    <div className="app-body">
-      <p className="app-label cyan">// about.txt</p>
-      <h2 className="app-heading">The Concept</h2>
-      <p className="app-text">
-        What if a club website was not just a website but an operating system?
-        SlashDot OS reimagines the SlashDot club website as a retro-futuristic terminal OS
-        running entirely in your browser.
-      </p>
-      <div className="app-divider" />
-      <p className="app-label cyan">// motivation</p>
-      <p className="app-text">
-        SlashDot is a programming and design club. We eat code for breakfast.
-        What better way to represent that than a fully navigable OS where
-        every piece of content is a file, every page is an app, and every
-        interaction feels like you built it yourself.
-      </p>
-      <div className="app-divider" />
-      <p className="app-label cyan">// architecture</p>
+      <p className="app-label yellow">// explore</p>
       <div className="app-commands">
         {[
-          ['Virtual filesystem', 'ls, cd, cat work on a fake FS'],
-          ['App windows', 'Draggable, stackable app windows'],
-          ['Terminal core', 'xterm.js with full command parser'],
-          ['Boot sequence', 'BIOS screen to boot log to desktop'],
-          ['Easter eggs', 'sudo party, matrix, sl, and more'],
+          ['open about',    'About the club'],
+          ['open team',     'Office Bearers & Core Committee'],
+          ['open stack',    'Technologies we use'],
+          ['open contact',  'Get in touch'],
         ].map(function(item) {
           return (
             <div key={item[0]} className="app-cmd-row">
@@ -88,14 +32,67 @@ export function AboutApp() {
         })}
       </div>
       <div className="app-divider" />
-      <div className="app-logos">
-        <div className="logo-placeholder">
-          <img src="./iiserkol_logo.png" alt="IISER Kolkata" className="logo-img" />
-        </div>
-        <div className="logo-placeholder">
-          <img src="./slashdot_logo.png" alt="SlashDot" className="logo-img" />
-        </div>
+      <p className="app-label yellow">// links</p>
+      <div className="app-commands">
+        {[
+          ['GitHub',   'github.com/slashdot-iiserk'],
+          ['Website',  'slashdot-iiserk.github.io'],
+          ['Email',    'slashdot@iiserkol.ac.in'],
+          ['IISER',    'iiserkol.ac.in'],
+        ].map(function(item) {
+          return (
+            <div key={item[0]} className="app-cmd-row">
+              <span className="app-cmd">{item[0]}</span>
+              <span className="app-cmd-desc">{item[1]}</span>
+            </div>
+          )
+        })}
       </div>
+    </div>
+  )
+}
+export function AboutApp() {
+  return (
+    <div className="app-body">
+      <p className="app-label cyan">// about.txt — About SlashDot</p>
+      <div className="app-divider" />
+      <p style={{ color: '#d0d0d0', fontFamily: 'JetBrains Mono', fontSize: 13, lineHeight: 1.9, marginBottom: 12 }}>
+        Hola! You've stepped into the cynosure for the perks of cool coding skills.
+        SlashDot is the <span style={{ color: '#00ff46' }}>official coding and designing club</span> of the
+        Indian Institute of Science Education and Research (IISER) Kolkata.
+      </p>
+      <p style={{ color: '#aaa', fontFamily: 'JetBrains Mono', fontSize: 12, lineHeight: 1.9, marginBottom: 16 }}>
+        Simplicity is the soul of efficiency. Our club loves to explore every nook and
+        corner of the modern day coding world — learning how to think out of the box,
+        starting from scratch. Grab your coffee, Devs!
+      </p>
+      <div className="app-divider" />
+      <p className="app-label yellow">// what we do</p>
+      <div className="app-commands">
+        {[
+          ['Workshops',     'Regular coding and design workshops for all batches'],
+          ['Competitions',  'Inter-batch and external competitions'],
+          ['Projects',      'Open source and collaborative club projects'],
+          ['Showcase',      'Highlighting the best projects by members'],
+          ['Events',        'Hackathons, talks, seminars and more'],
+          ['Recruitment',   'Annual recruitment drives for new members'],
+        ].map(function(item) {
+          return (
+            <div key={item[0]} className="app-cmd-row">
+              <span className="app-cmd">{item[0]}</span>
+              <span className="app-cmd-desc">{item[1]}</span>
+            </div>
+          )
+        })}
+      </div>
+      <div className="app-divider" />
+      <p className="app-label yellow">// about this website</p>
+      <p style={{ color: '#666', fontFamily: 'JetBrains Mono', fontSize: 11, lineHeight: 1.7 }}>
+        SlashDot OS is the official website of SlashDot Club, reimagined as a
+        browser-based operating system. Built by the 25MS batch for the
+        Inter-Batch Website Development Competition 2026.
+        Navigate using the terminal or desktop icons.
+      </p>
     </div>
   )
 }
@@ -103,31 +100,48 @@ export function AboutApp() {
 export function TeamApp() {
   return (
     <div className="app-body">
-      <p className="app-label cyan">// team.db — 25MS Batch</p>
-      <h2 className="app-heading">The Crew</h2>
-      <div className="team-grid">
-        {teamMembers.map(function(member, index) {
+      <p className="app-label cyan">// team.db — Meet the Team</p>
+      <div className="app-divider" />
+      <p className="app-label yellow">// office bearers</p>
+      <div className="app-commands" style={{ marginBottom: 16 }}>
+        {[
+          { name: 'Shuvam Banerji Seal', role: 'Office Bearer', batch: '22MS', email: 'sbs22ms076@iiserkol.ac.in' },
+          { name: 'Anuprovo Debnath',    role: 'Office Bearer', batch: '23MS', email: 'ad23ms110@iiserkol.ac.in'  },
+          { name: 'Abhinav Dhingra',     role: 'Office Bearer', batch: '24MS', email: 'ad24ms110@iiserkol.ac.in'  },
+        ].map(function(member) {
           return (
-            <div key={index} className="team-card">
-              <pre className="team-ascii">{member.ascii}</pre>
-              <p className="team-name">{member.name}</p>
-              <p className="team-role">{member.role}</p>
-              <p
-                className="team-github"
-                onClick={function() {
-                  if (member.github) {
-                    window.open('https://github.com/' + member.github, '_blank')
-                  }
-                }}
-                style={{ cursor: member.github ? 'pointer' : 'default' }}
-              >
-                {member.github ? '@' + member.github : ''}
-              </p>
-              <p className="team-fact">{'fun fact: ' + member.fun_fact}</p>
+            <div key={member.name} className="app-cmd-row" style={{ alignItems: 'flex-start', padding: '6px 0' }}>
+              <div style={{ minWidth: 160 }}>
+                <span className="app-cmd" style={{ color: '#ffd700' }}>{member.name}</span>
+                <p style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 9, margin: '2px 0 0' }}>[{member.batch}] {member.role}</p>
+              </div>
+              <span className="app-cmd-desc" style={{ fontSize: 10 }}>{member.email}</span>
             </div>
           )
         })}
       </div>
+      <div className="app-divider" />
+      <p className="app-label yellow">// 25ms developers (this website)</p>
+      <div className="app-commands">
+        {[
+          { name: 'Sankhadeep Bera', role: 'Lead Developer', batch: '25MS', email: 'sb25ms227@iiserkol.ac.in' },
+          { name: 'S. Bari',         role: 'Developer',      batch: '25MS', email: 'shayan.bari.0001@gmail.com' },
+        ].map(function(member) {
+          return (
+            <div key={member.name} className="app-cmd-row" style={{ alignItems: 'flex-start', padding: '6px 0' }}>
+              <div style={{ minWidth: 160 }}>
+                <span className="app-cmd" style={{ color: '#00ff46' }}>{member.name}</span>
+                <p style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 9, margin: '2px 0 0' }}>[{member.batch}] {member.role}</p>
+              </div>
+              <span className="app-cmd-desc" style={{ fontSize: 10 }}>{member.email}</span>
+            </div>
+          )
+        })}
+      </div>
+      <div className="app-divider" />
+      <p style={{ color: '#333', fontFamily: 'JetBrains Mono', fontSize: 10 }}>
+        Core committee members will be listed here once the recruitment is complete.
+      </p>
     </div>
   )
 }
@@ -167,44 +181,68 @@ export function TechStackApp() {
 }
 
 export function ContactApp() {
-  const contactInfo = [
-    ['GitHub', 'github.com/berasankhadeep20-lang'],
-    ['Email', 'sb25ms227@iiserkol.ac.in'],
-    ['Club', 'SlashDot — IISER Kolkata'],
-    ['Competition', 'Inter-Batch Web Dev 2026'],
-  ]
   return (
     <div className="app-body">
-      <p className="app-label cyan">// contact.sh — executing...</p>
-      <h2 className="app-heading">Get in Touch</h2>
-      <div className="app-section">
-        <p className="app-label yellow">// team contact</p>
-        <div className="app-commands">
-          {contactInfo.map(function(item) {
-            return (
-              <div key={item[0]} className="app-cmd-row">
-                <span className="app-cmd">{item[0]}</span>
-                <span className="app-cmd-desc">{item[1]}</span>
-              </div>
-            )
-          })}
-        </div>
+      <p className="app-label cyan">// contact.sh — Get in Touch</p>
+      <div className="app-divider" />
+      <p className="app-label yellow">// club contact</p>
+      <div className="app-commands" style={{ marginBottom: 16 }}>
+        {[
+          ['Email',    'slashdot@iiserkol.ac.in'],
+          ['GitHub',   'github.com/slashdot-iiserk'],
+          ['Website',  'slashdot-iiserk.github.io'],
+          ['Location', 'IISER Kolkata, Mohanpur, WB 741246'],
+        ].map(function(item) {
+          return (
+            <div key={item[0]} className="app-cmd-row">
+              <span className="app-cmd">{item[0]}</span>
+              <span className="app-cmd-desc">{item[1]}</span>
+            </div>
+          )
+        })}
       </div>
       <div className="app-divider" />
-      <p className="app-label yellow">// source code</p>
-      <p className="app-text">
-        This project is open source under the MIT License.
-        Find the full source code on GitHub — contributions welcome!
-      </p>
+      <p className="app-label yellow">// office bearers contact</p>
+      <div className="app-commands" style={{ marginBottom: 16 }}>
+        {[
+          ['Shuvam Banerji Seal', 'sbs22ms076@iiserkol.ac.in'],
+          ['Anuprovo Debnath',    'ad23ms110@iiserkol.ac.in' ],
+          ['Abhinav Dhingra',     'ad24ms110@iiserkol.ac.in' ],
+        ].map(function(item) {
+          return (
+            <div key={item[0]} className="app-cmd-row">
+              <span className="app-cmd">{item[0]}</span>
+              <span className="app-cmd-desc">{item[1]}</span>
+            </div>
+          )
+        })}
+      </div>
+      <div className="app-divider" />
+      <p className="app-label yellow">// developer contact</p>
+      <div className="app-commands">
+        {[
+          ['Sankhadeep Bera', 'sb25ms227@iiserkol.ac.in'],
+          ['S. Bari',         'shayan.bari.0001@gmail.com'],
+        ].map(function(item) {
+          return (
+            <div key={item[0]} className="app-cmd-row">
+              <span className="app-cmd">{item[0]}</span>
+              <span className="app-cmd-desc">{item[1]}</span>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
 
 export function NeofetchApp() {
   const info = [
-    ['OS', 'SlashDot OS 2026.1-LTS'],
+    ['OS',       'SlashDot OS 2026 — IISER Kolkata'],
+    ['Club',     'SlashDot — Coding & Design Club'],
+    ['Website',  'slashdot-iiserk.github.io'],
+    ['GitHub',   'github.com/slashdot-iiserk'],
     ['Batch', '25MS — IISER Kolkata'],
-    ['Club', 'SlashDot Programming & Design Club'],
     ['Shell', 'slashdot-sh 2026'],
     ['Terminal', 'xterm.js v5.5'],
     ['Theme', 'Terminal Green on Void Black'],

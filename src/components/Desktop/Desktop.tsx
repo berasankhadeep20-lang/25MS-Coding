@@ -12,69 +12,124 @@ interface DesktopIcon {
   icon: string
 }
 
-const ICONS: DesktopIcon[] = [
-  { appId: 'terminal',    title: 'terminal.sh',      label: 'Terminal',    icon: '>_'  },
-  { appId: 'home',        title: 'home.exe',          label: 'Home',        icon: '⌂'   },
-  { appId: 'about',       title: 'about.txt',         label: 'About',       icon: '📄'  },
-  { appId: 'team',        title: 'team.db',           label: 'Team',        icon: '👥'  },
-  { appId: 'stack',       title: 'stack.log',         label: 'Tech Stack',  icon: '⚙'   },
-  { appId: 'contact',     title: 'contact.sh',        label: 'Contact',     icon: '@'   },
-  { appId: 'neofetch',    title: 'neofetch',          label: 'Neofetch',    icon: '🖥'  },
-  { appId: 'clock',       title: 'clock.app',         label: 'Clock',       icon: '⏰'  },
-  { appId: 'asteroids',   title: 'asteroids.exe',     label: 'Asteroids',   icon: '🚀'  },
-  { appId: 'pong',        title: 'pong.exe',          label: 'Pong',        icon: '🏓'  },
-  { appId: 'gameoflife',  title: 'life.exe',          label: "Conway's",    icon: '🔲'  },
-  { appId: 'typing',      title: 'typing.exe',        label: 'Typing',      icon: '⌨'   },
-  { appId: 'periodic',    title: 'periodic.app',      label: 'Periodic',    icon: '⚗'   },
-  { appId: 'fourier',     title: 'fourier.app',       label: 'Fourier',     icon: '〜'  },
-  { appId: 'gravity',     title: 'gravity.app',       label: 'Gravity',     icon: '🪐'  },
-  { appId: 'dna',         title: 'dna.app',           label: 'DNA',         icon: '🧬'  },
-  { appId: 'grapher',     title: 'grapher.app',       label: 'Grapher',     icon: 'f(x)'},
-  { appId: 'physics',     title: 'physics.app',       label: 'Physics',     icon: '⚛'   },
-  { appId: 'molecular',   title: 'molecular.app',     label: 'Molecule',    icon: '🔬'  },
-  { appId: 'matrix-calc', title: 'matrix.app',        label: 'Matrix',      icon: '[M]' },
-  { appId: 'guestbook',   title: 'guestbook.app',     label: 'Guestbook',   icon: '📖'  },
-  { appId: 'poll',        title: 'poll.app',          label: 'Poll',        icon: '📊'  },
-  { appId: 'jokes',       title: 'jokes.app',         label: 'Jokes',       icon: '😂'  },
-  { appId: 'slashdotai',  title: 'slashdot-ai.app',   label: 'AI Chat',     icon: '🤖'  },
-  { appId: 'achievements',title: 'achievements.app',  label: 'Achievements', icon: '🏆'  },
-  { appId: 'flappy',      title: 'flappy.exe',         label: 'Flappy {',    icon: '{}'  },
-  { appId: 'dungeon',      title: 'dungeon.exe',       label: 'Dungeon',      icon: '⚔' },
-  { appId: 'fileexplorer', title: 'files.app',         label: 'Files',        icon: '📁' },
-  { appId: 'settings',     title: 'settings.app',      label: 'Settings',     icon: '⚙' },
-  { appId: 'snake',        title: 'snake.exe',         label: 'Snake',        icon: '🐍' },
-  { appId: 'notepad',      title: 'notepad.app',       label: 'Notepad',      icon: '📝' },
-{ appId: 'taskmanager',  title: 'taskmanager.app',  label: 'Task Mgr',    icon: '[%]' },
-  { appId: 'jsonformat',   title: 'json.app',         label: 'JSON',        icon: '{ }' },
-  { appId: 'base64',       title: 'base64.app',       label: 'Base64',      icon: 'b64' },
-  { appId: 'markdown',     title: 'markdown.app',     label: 'Markdown',    icon: '.md' },
-  { appId: 'colorpicker',  title: 'color.app',        label: 'Colors',      icon: '🎨'  },
-  { appId: 'passgen',      title: 'passgen.app',      label: 'PassGen',     icon: '🔑'  },
-  { appId: 'diffview',     title: 'diff.app',         label: 'Diff',        icon: '±'   },
-  { appId: 'coderunner',   title: 'code.app',         label: 'Code',        icon: '▶'   },
-  { appId: 'lorem',        title: 'lorem.app',        label: 'Lorem',       icon: 'Aa'  },
-  { appId: 'hashgen',      title: 'hash.app',         label: 'Hash',        icon: '#'   },
-  { appId: 'paint',        title: 'paint.app',        label: 'Paint',       icon: '🖌'  },
-  { appId: 'asciiart',     title: 'ascii.app',        label: 'ASCII Art',   icon: 'A'   },
-  { appId: 'pixelart',     title: 'pixel.app',        label: 'Pixel Art',   icon: '🟦'  },
-  { appId: 'calendar',     title: 'calendar.app',     label: 'Calendar',    icon: '📅'  },
-  { appId: 'pomodoro',     title: 'pomodoro.app',     label: 'Pomodoro',    icon: '🍅'  },
-  { appId: 'stopwatch',    title: 'stopwatch.app',    label: 'Stopwatch',   icon: '⏱'  },
-  { appId: 'currency',     title: 'currency.app',     label: 'Currency',    icon: '💱'  },
-  { appId: 'bmi',          title: 'bmi.app',          label: 'BMI',         icon: '⚖'   },
-  { appId: 'agecalc',      title: 'age.app',          label: 'Age Calc',    icon: '🎂'  },
-  { appId: 'habittracker', title: 'habits.app',       label: 'Habits',      icon: '✅'  },
-  { appId: 'newsticker',   title: 'news.app',         label: 'News',        icon: '📰'  },
-  { appId: 'leaderboard',  title: 'leaderboard.app',  label: 'Leaderboard', icon: '🏆'  },
-  { appId: 'githubstats',  title: 'github.app',       label: 'GitHub',      icon: '🐙'  },
-  { appId: 'wikipedia',    title: 'wiki.app',         label: 'Wikipedia',   icon: 'W'   },
-  { appId: 'tamagotchi',   title: 'tamagotchi.app',   label: 'Tamagotchi',  icon: '🐣'  },
-  { appId: 'stocks',       title: 'stocks.app',       label: 'Stocks',      icon: '📈'  },
-  { appId: 'horoscope',    title: 'horoscope.app',    label: 'Horoscope',   icon: '♈'  },
-  { appId: 'lovecalc',     title: 'love.app',         label: 'Love Calc',   icon: '❤'   },
-  { appId: 'magic8',       title: 'magic8.app',       label: 'Magic 8',     icon: '🎱'  },
-  { appId: 'deployed',     title: 'deployed.app',     label: 'Deployed?',   icon: '🚀'  },
+const LEFT_ICONS: DesktopIcon[] = [
+  // Row 1 — Games
+  { appId: 'asteroids',   title: 'asteroids.exe',    label: 'Asteroids',   icon: '🚀'  },
+  { appId: 'pong',        title: 'pong.exe',         label: 'Pong',        icon: '🏓'  },
+  { appId: 'flappy',      title: 'flappy.exe',       label: 'Flappy {',   icon: '{}'  },
+  { appId: 'snake',       title: 'snake.exe',        label: 'Snake',       icon: '🐍'  },
+  { appId: 'dungeon',     title: 'dungeon.exe',      label: 'Dungeon',     icon: '⚔'   },
+  { appId: 'gameoflife',  title: 'life.exe',         label: "Conway's",   icon: '🔲'  },
+  { appId: 'typing',      title: 'typing.exe',       label: 'Typing',      icon: '⌨'   },
+  // Row 2 — Science
+  { appId: 'periodic',    title: 'periodic.app',     label: 'Periodic',    icon: '⚗'   },
+  { appId: 'fourier',     title: 'fourier.app',      label: 'Fourier',     icon: '〜'  },
+  { appId: 'gravity',     title: 'gravity.app',      label: 'Gravity',     icon: '🪐'  },
+  { appId: 'dna',         title: 'dna.app',          label: 'DNA',         icon: '🧬'  },
+  { appId: 'grapher',     title: 'grapher.app',      label: 'Grapher',     icon: 'f(x)'},
+  { appId: 'physics',     title: 'physics.app',      label: 'Physics',     icon: '⚛'   },
+  { appId: 'molecular',   title: 'molecular.app',    label: 'Molecule',    icon: '🔬'  },
+  { appId: 'matrix-calc', title: 'matrix.app',       label: 'Matrix',      icon: '[M]' },
+  { appId: 'sortvis',     title: 'sort.app',         label: 'Sort Vis',    icon: '⟨⟩'  },
+  { appId: 'pathvis',     title: 'path.app',         label: 'Pathfind',    icon: '🗺'  },
+  { appId: 'binconv',     title: 'binconv.app',      label: 'BinConv',     icon: '01'  },
+  { appId: 'truthtable',  title: 'truth.app',        label: 'Truth Tbl',   icon: '⊕'   },
+  { appId: 'eqsolver',    title: 'eq.app',           label: 'Eq Solver',   icon: '∑'   },
+  { appId: 'mandelbrot',  title: 'mandel.app',       label: 'Mandelbrot',  icon: '🌀'  },
+  { appId: 'cellaut',     title: 'cell.app',         label: 'Cell Aut',    icon: '⬛'  },
+  { appId: 'statsCalc',   title: 'stats.app',        label: 'Statistics',  icon: 'σ'   },
+  { appId: 'fibprime',    title: 'fib.app',          label: 'Fib/Prime',   icon: 'φ'   },
+  { appId: 'logicgate',   title: 'logic.app',        label: 'Logic Gate',  icon: '⋀'   },
+  // Row 3 — Dev Tools
+  { appId: 'jsonformat',  title: 'json.app',         label: 'JSON',        icon: '{ }' },
+  { appId: 'base64',      title: 'base64.app',       label: 'Base64',      icon: 'b64' },
+  { appId: 'markdown',    title: 'markdown.app',     label: 'Markdown',    icon: '.md' },
+  { appId: 'colorpicker', title: 'color.app',        label: 'Colors',      icon: '🎨'  },
+  { appId: 'passgen',     title: 'passgen.app',      label: 'PassGen',     icon: '🔑'  },
+  { appId: 'diffview',    title: 'diff.app',         label: 'Diff',        icon: '±'   },
+  { appId: 'coderunner',  title: 'code.app',         label: 'Code',        icon: '▶'   },
+  { appId: 'lorem',       title: 'lorem.app',        label: 'Lorem',       icon: 'Aa'  },
+  { appId: 'hashgen',     title: 'hash.app',         label: 'Hash',        icon: '#'   },
+  // Row 4 — Creative
+  { appId: 'paint',       title: 'paint.app',        label: 'Paint',       icon: '🖌'  },
+  { appId: 'asciiart',    title: 'ascii.app',        label: 'ASCII Art',   icon: 'A'   },
+  { appId: 'pixelart',    title: 'pixel.app',        label: 'Pixel Art',   icon: '🟦'  },
+  // Row 5 — API / Live
+  { appId: 'isstrack',    title: 'iss.app',          label: 'ISS Track',   icon: '🛸'  },
+  { appId: 'apod',        title: 'apod.app',         label: 'APOD',        icon: '🔭'  },
+  { appId: 'bookSearch',  title: 'books.app',        label: 'Books',       icon: '📚'  },
+  { appId: 'exchRate',    title: 'rates.app',        label: 'Ex Rates',    icon: '💹'  },
+  { appId: 'ipgeo',       title: 'ip.app',           label: 'IP Lookup',   icon: '🌐'  },
+  { appId: 'randuser',    title: 'user.app',         label: 'Rand User',   icon: '👤'  },
+  { appId: 'githubstats', title: 'github.app',       label: 'GitHub',      icon: '🐙'  },
+  { appId: 'wikipedia',   title: 'wiki.app',         label: 'Wikipedia',   icon: 'W'   },
+  // Row 6 — Productivity
+  { appId: 'calendar',    title: 'calendar.app',     label: 'Calendar',    icon: '📅'  },
+  { appId: 'pomodoro',    title: 'pomodoro.app',     label: 'Pomodoro',    icon: '🍅'  },
+  { appId: 'stopwatch',   title: 'stopwatch.app',    label: 'Stopwatch',   icon: '⏱'  },
+  { appId: 'currency',    title: 'currency.app',     label: 'Currency',    icon: '💱'  },
+  { appId: 'bmi',         title: 'bmi.app',          label: 'BMI',         icon: '⚖'   },
+  { appId: 'agecalc',     title: 'age.app',          label: 'Age Calc',    icon: '🎂'  },
+  { appId: 'habittracker',title: 'habits.app',       label: 'Habits',      icon: '✅'  },
+  { appId: 'flashcard',   title: 'flash.app',        label: 'Flashcards',  icon: '🃏'  },
+  { appId: 'budget',      title: 'budget.app',       label: 'Budget',      icon: '💰'  },
+  { appId: 'recipe',      title: 'recipe.app',       label: 'Recipes',     icon: '🍜'  },
+  { appId: 'countdown',   title: 'count.app',        label: 'Countdown',   icon: '⏳'  },
+  { appId: 'mealgent',    title: 'meal.app',         label: 'Meal Gen',    icon: '🍱'  },
+  { appId: 'studysched',  title: 'study.app',        label: 'Study Sched', icon: '📋'  },
+  { appId: 'notepad',     title: 'notepad.app',      label: 'Notepad',     icon: '📝'  },
+  // Row 7 — Social & Fun
+  { appId: 'guestbook',   title: 'guestbook.app',    label: 'Guestbook',   icon: '📖'  },
+  { appId: 'poll',        title: 'poll.app',         label: 'Poll',        icon: '📊'  },
+  { appId: 'jokes',       title: 'jokes.app',        label: 'Jokes',       icon: '😂'  },
+  { appId: 'slashdotai',  title: 'slashdot-ai.app',  label: 'AI Chat',     icon: '🤖'  },
+  { appId: 'newsticker',  title: 'news.app',         label: 'News',        icon: '📰'  },
+  { appId: 'leaderboard', title: 'leaderboard.app',  label: 'Leaderboard', icon: '🏆'  },
+  { appId: 'faketwitter', title: 'twitter.app',      label: 'Twitter',     icon: '🐦'  },
+  { appId: 'fakewhatsapp',title: 'whatsapp.app',     label: 'WhatsApp',    icon: '💬'  },
+  { appId: 'confession',  title: 'confess.app',      label: 'Confessions', icon: '🤫'  },
+  { appId: 'compliment',  title: 'compliment.app',   label: 'Compliments', icon: '💐'  },
+  { appId: 'insult',      title: 'insult.app',       label: 'Roasts',      icon: '🔥'  },
+  { appId: 'debate',      title: 'debate.app',       label: 'Debate',      icon: '⚖'   },
+  { appId: 'tamagotchi',  title: 'tamagotchi.app',   label: 'Tamagotchi',  icon: '🐣'  },
+  { appId: 'stocks',      title: 'stocks.app',       label: 'Stocks',      icon: '📈'  },
+  { appId: 'horoscope',   title: 'horoscope.app',    label: 'Horoscope',   icon: '♈'  },
+  { appId: 'lovecalc',    title: 'love.app',         label: 'Love Calc',   icon: '❤'   },
+  { appId: 'magic8',      title: 'magic8.app',       label: 'Magic 8',     icon: '🎱'  },
+  { appId: 'linuscall',   title: 'linus.app',        label: 'Linus Call',  icon: '📞'  },
+  { appId: 'cgpasim',     title: 'cgpa.app',         label: 'CGPA Sim',    icon: '📊'  },
+  { appId: 'ratemycode',  title: 'rate.app',         label: 'Rate Code',   icon: '⭐'  },
+  { appId: 'rickroll',    title: 'rick.app',         label: 'Rickroll',    icon: '🎵'  },
+  { appId: 'excusegen',   title: 'excuse.app',       label: 'Excuses',     icon: '🙏'  },
+  { appId: 'screensaver', title: 'screen.app',       label: 'Screensaver', icon: '✨'  },
+  { appId: 'fakeload',    title: 'load.app',         label: 'Fake Load',   icon: '⏰'  },
+  { appId: 'fortunecook', title: 'fortune.app',      label: 'Fortune',     icon: '🥠'  },
+  { appId: 'fixbug',      title: 'fixbug.app',       label: 'Fix Bug',     icon: '🐛'  },
+  { appId: 'deployed',    title: 'deployed.app',     label: 'Deployed?',   icon: '🚀'  },
+  // Row 8 — OS Tools
+  { appId: 'fileexplorer',title: 'files.app',        label: 'Files',       icon: '📁'  },
+  { appId: 'taskmanager', title: 'taskmanager.app',  label: 'Task Mgr',    icon: '[%]' },
+  { appId: 'settings',    title: 'settings.app',     label: 'Settings',    icon: '⚙'   },
+  { appId: 'clock',       title: 'clock.app',        label: 'Clock',       icon: '⏰'  },
+  { appId: 'achievements',title: 'achievements.app', label: 'Achievements',icon: '🏆'  },
+  { appId: 'kbtrainer',   title: 'kb.app',           label: 'KB Trainer',  icon: '⌨'   },
+  { appId: 'syslog',      title: 'syslog.app',       label: 'Sys Logs',    icon: '📜'  },
+  { appId: 'clipboard',   title: 'clipboard.app',    label: 'Clipboard',   icon: '📋'  },
 ]
+
+const RIGHT_ICONS: DesktopIcon[] = [
+  { appId: 'terminal',    title: 'terminal.sh',      label: 'Terminal',    icon: '>_'  },
+  { appId: 'home',        title: 'home.exe',         label: 'Home',        icon: '⌂'   },
+  { appId: 'about',       title: 'about.txt',        label: 'About',       icon: '📄'  },
+  { appId: 'team',        title: 'team.db',          label: 'Team',        icon: '👥'  },
+  { appId: 'stack',       title: 'stack.log',        label: 'Tech Stack',  icon: '⚙'   },
+  { appId: 'contact',     title: 'contact.sh',       label: 'Contact',     icon: '@'   },
+  { appId: 'neofetch',    title: 'neofetch',         label: 'Neofetch',    icon: '🖥'  },
+  { appId: 'events',      title: 'events.app',       label: 'Events',      icon: '📅'  },
+  { appId: 'showcase',    title: 'showcase.app',     label: 'Showcase',    icon: '🌟'  },
+]
+
+const ICONS: DesktopIcon[] = [...LEFT_ICONS, ...RIGHT_ICONS]
 
 interface ContextMenu {
   x: number
@@ -100,18 +155,28 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
   const [raining, setRaining] = useState(false)
   const [visitorCount, setVisitorCount] = useState<number | null>(null)
  const [iconPositions, setIconPositions] = useState<Record<string, IconPosition>>(() => {
+    const positions: Record<string, IconPosition> = {}
     const COL_W = 72
     const ROW_H = 78
-    const START_X = 6
-    const START_Y = 6
-    const COLS = 6
-    const positions: Record<string, IconPosition> = {}
-    ICONS.forEach(function(icon, i) {
+    const LEFT_COLS = 7
+    const LEFT_START_X = 6
+    const LEFT_START_Y = 6
+
+    LEFT_ICONS.forEach(function(icon, i) {
       positions[icon.appId] = {
-        x: START_X + (i % COLS) * COL_W,
-        y: START_Y + Math.floor(i / COLS) * ROW_H,
+        x: LEFT_START_X + (i % LEFT_COLS) * COL_W,
+        y: LEFT_START_Y + Math.floor(i / LEFT_COLS) * ROW_H,
       }
     })
+
+    const RIGHT_START_X = window.innerWidth - 88
+    RIGHT_ICONS.forEach(function(icon, i) {
+      positions[icon.appId] = {
+        x: RIGHT_START_X,
+        y: LEFT_START_Y + i * ROW_H,
+      }
+    })
+
     return positions
   })
   const draggingIcon = useRef<{ appId: string; startX: number; startY: number; origX: number; origY: number } | null>(null)
