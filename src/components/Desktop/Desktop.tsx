@@ -99,12 +99,12 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
   const [muted, setMuted] = useState(false)
   const [raining, setRaining] = useState(false)
   const [visitorCount, setVisitorCount] = useState<number | null>(null)
-  const [iconPositions, setIconPositions] = useState<Record<string, IconPosition>>(() => {
-    const COL_W = 76
-    const ROW_H = 82
-    const START_X = 8
-    const START_Y = 8
-    const COLS = 5
+ const [iconPositions, setIconPositions] = useState<Record<string, IconPosition>>(() => {
+    const COL_W = 72
+    const ROW_H = 78
+    const START_X = 6
+    const START_Y = 6
+    const COLS = 6
     const positions: Record<string, IconPosition> = {}
     ICONS.forEach(function(icon, i) {
       positions[icon.appId] = {

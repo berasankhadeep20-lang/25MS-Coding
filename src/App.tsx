@@ -41,6 +41,10 @@ import { JSONFormatterApp, Base64App, MarkdownApp, ColorPickerApp, PasswordGenAp
 import { PaintApp, ASCIIArtApp, PixelArtApp } from './components/Apps/CreativeApps'
 import { CalendarApp, PomodoroApp, StopwatchApp, CurrencyApp, BMIApp, AgeCalcApp, HabitTrackerApp } from './components/Apps/LifeApps'
 import { NewsTickerApp, LeaderboardApp, GitHubStatsApp, WikipediaApp, TamagotchiApp, StocksApp, HoroscopeApp, LoveCalcApp, Magic8App, DeployedApp } from './components/Apps/FunApps'
+import { SortVisApp, PathVisApp, BinConvApp, TruthTableApp, EqSolverApp, MandelbrotApp, CellAutApp, StatsCalcApp, FibPrimeApp, LogicGateApp } from './components/Apps/ScienceApps2'
+import { ISSTrackerApp, APODApp, BookSearchApp, ExchRateApp, IPGeoApp, RandUserApp } from './components/Apps/APIApps'
+import { FlashcardApp, BudgetApp, RecipeApp, CountdownApp, MealGenApp, StudySchedApp } from './components/Apps/ProductivityApps2'
+import { FakeTwitterApp, FakeWhatsAppApp, ConfessionApp, ComplimentApp, InsultApp, DebateApp, LinusCallApp, CGPASimApp, RateMyCodeApp, RickrollApp, ExcuseGenApp, ScreensaverApp, FakeLoadApp, FortuneCookieApp, FixBugApp, KBTrainerApp, SysLogApp, ClipboardApp } from './components/Apps/SocialFunApps'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
@@ -152,6 +156,46 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'lovecalc':     return <LoveCalcApp />
     case 'magic8':       return <Magic8App />
     case 'deployed':     return <DeployedApp />
+    case 'sortvis':      return <SortVisApp />
+    case 'pathvis':      return <PathVisApp />
+    case 'binconv':      return <BinConvApp />
+    case 'truthtable':   return <TruthTableApp />
+    case 'eqsolver':     return <EqSolverApp />
+    case 'mandelbrot':   return <MandelbrotApp />
+    case 'cellaut':      return <CellAutApp />
+    case 'statsCalc':    return <StatsCalcApp />
+    case 'fibprime':     return <FibPrimeApp />
+    case 'logicgate':    return <LogicGateApp />
+    case 'isstrack':     return <ISSTrackerApp />
+    case 'apod':         return <APODApp />
+    case 'bookSearch':   return <BookSearchApp />
+    case 'exchRate':     return <ExchRateApp />
+    case 'ipgeo':        return <IPGeoApp />
+    case 'randuser':     return <RandUserApp />
+    case 'flashcard':    return <FlashcardApp />
+    case 'budget':       return <BudgetApp />
+    case 'recipe':       return <RecipeApp />
+    case 'countdown':    return <CountdownApp />
+    case 'mealgent':     return <MealGenApp />
+    case 'studysched':   return <StudySchedApp />
+    case 'faketwitter':  return <FakeTwitterApp />
+    case 'fakewhatsapp': return <FakeWhatsAppApp />
+    case 'confession':   return <ConfessionApp />
+    case 'compliment':   return <ComplimentApp />
+    case 'insult':       return <InsultApp />
+    case 'debate':       return <DebateApp />
+    case 'linuscall':    return <LinusCallApp />
+    case 'cgpasim':      return <CGPASimApp />
+    case 'ratemycode':   return <RateMyCodeApp />
+    case 'rickroll':     return <RickrollApp />
+    case 'excusegen':    return <ExcuseGenApp />
+    case 'screensaver':  return <ScreensaverApp />
+    case 'fakeload':     return <FakeLoadApp />
+    case 'fortunecook':  return <FortuneCookieApp />
+    case 'fixbug':       return <FixBugApp />
+    case 'kbtrainer':    return <KBTrainerApp />
+    case 'syslog':       return <SysLogApp />
+    case 'clipboard':    return <ClipboardApp />
     default:             return null
   }
 }

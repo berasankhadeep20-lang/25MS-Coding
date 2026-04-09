@@ -71,7 +71,6 @@ SlashDot OS turns the SlashDot club website into a fake operating system running
 - **Joke Generator** — programming, science, IISER, math jokes
 - **SlashDot AI** — fake AI chatbot that actually responds
 
-
 ---
 
 ## Terminal Commands
@@ -169,6 +168,46 @@ open currency     → Currency converter (12 currencies)
 open bmi          → BMI calculator
 open agecalc      → Age calculator
 open habittracker → 7-day habit tracker
+open faketwitter  → Fake IISER Twitter feed
+open fakewhatsapp → WhatsApp chat with SlashDot Bot
+open confession   → Anonymous confession wall
+open compliment   → Compliment generator
+open insult       → Friendly roast generator
+open debate       → Two-sided debate arena with voting
+open linuscall    → Fake phone call from Linus Torvalds
+open cgpasim      → CGPA simulator (study more, get better grades)
+open ratemycode   → Rate My Code (always 10/10)
+open rickroll     → Rickroll detector (always detects one)
+open excusegen    → Deadline excuse generator
+open screensaver  → Screensaver gallery (starfield, DVD, plasma)
+open fakeload     → Fake loading screen with presets
+open fortunecook  → IISER fortune cookie
+open fixbug       → Bug fix advisor
+open kbtrainer    → Keyboard shortcut trainer
+open syslog       → System logs viewer
+open clipboard    → Terminal clipboard manager
+open flashcard    → Flashcard quiz app
+open budget       → Budget tracker with chart
+open recipe       → IISER survival cookbook
+open countdown    → Countdown timer with events
+open mealgent     → Random IISER meal generator
+open isstrack     → Live ISS position tracker (updates every 5s)
+open apod         → NASA Astronomy Picture of the Day
+open bookSearch   → Open Library book search
+open exchRate     → Live exchange rates (12 currencies)
+open ipgeo        → IP geolocation lookup
+open randuser     → Random user profile generator
+open sortvis      → Sorting algorithm visualizer (bubble, quick, merge)
+open pathvis      → Pathfinding visualizer (A*, Dijkstra)
+open binconv      → Binary/Hex/Decimal/Octal/ASCII converter
+open truthtable   → Truth table generator (AND OR NOT XOR NAND NOR)
+open eqsolver     → Quadratic and linear equation solver
+open mandelbrot   → Mandelbrot fractal explorer (click to zoom)
+open statsCalc    → Statistics calculator with histogram
+open fibprime     → Fibonacci/prime number visualizer
+open logicgate    → Logic gate simulator (10 gates, toggle inputs)
+open studysched   → Weekly study schedule builder
+open cellaut      → Cellular automaton (Rule 110, Langton's Ant)
 open gameoflife   → Conway's Game of Life
 ```
 
