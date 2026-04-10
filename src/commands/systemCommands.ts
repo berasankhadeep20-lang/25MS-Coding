@@ -191,6 +191,7 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.yellow}exit-fullscreen${c.reset}       ${c.gray}Exit fullscreen mode${c.reset}`,
         `${c.yellow}toggle-fullscreen${c.reset}     ${c.gray}Toggle fullscreen${c.reset}`,
         `${c.yellow}clear${c.reset}                 ${c.gray}Clear terminal${c.reset}`,
+        `${c.cyan}register${c.reset}              ${c.gray}How to join SlashDot${c.reset}`,
       ]),
       '',
     ].join('\r\n'),

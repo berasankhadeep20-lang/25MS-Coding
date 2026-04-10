@@ -260,6 +260,39 @@ export const easterEggs: Record<string, CommandHandler> = {
     }
   },
 
+  //  ──REGISTER ─────────────────────────────────────────────────────────────────────
+  register: (): CommandResult => ({
+    output: [
+      '',
+      `${c.cyan}┌─────────────────────────────────────────────────────┐${c.reset}`,
+      `${c.cyan}│  Join SlashDot — Coding & Design Club               │${c.reset}`,
+      `${c.cyan}│  IISER Kolkata                                      │${c.reset}`,
+      `${c.cyan}└─────────────────────────────────────────────────────┘${c.reset}`,
+      '',
+      `${c.yellow}  Why join?${c.reset}`,
+      `  ${c.white}• Learn to code, design, and build real things${c.reset}`,
+      `  ${c.white}• Work on open source projects${c.reset}`,
+      `  ${c.white}• Participate in hackathons and competitions${c.reset}`,
+      `  ${c.white}• Meet people who also debug at 3am${c.reset}`,
+      `  ${c.white}• Free access to workshops and events${c.reset}`,
+      `  ${c.white}• The glory of being part of SlashDot${c.reset}`,
+      '',
+      `${c.yellow}  Requirements:${c.reset}`,
+      `  ${c.green}✓${c.reset} ${c.white}Be a student at IISER Kolkata${c.reset}`,
+      `  ${c.green}✓${c.reset} ${c.white}Have curiosity${c.reset}`,
+      `  ${c.green}✓${c.reset} ${c.white}That's it. Seriously.${c.reset}`,
+      '',
+      `${c.yellow}  How to join:${c.reset}`,
+      `  ${c.cyan}Email     ${c.reset}slashdot@iiserkol.ac.in`,
+      `  ${c.cyan}Talk to   ${c.reset}Any of the OBs (type 'members' to see them)`,
+      `  ${c.cyan}When      ${c.reset}Recruitment opens after new batch arrives`,
+      '',
+      `${c.gray}  "The best time to join was when you first heard about us.${c.reset}`,
+      `${c.gray}   The second best time is now." — SlashDot proverb${c.reset}`,
+      '',
+    ].join('\r\n'),
+  }),
+
   // ── GIT ─────────────────────────────────────────────────────────────────────
   git: (args: string[]): CommandResult => {
     const sub = args[0]

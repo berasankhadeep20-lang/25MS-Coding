@@ -156,11 +156,13 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
   const [visitorCount, setVisitorCount] = useState<number | null>(null)
  const [iconPositions, setIconPositions] = useState<Record<string, IconPosition>>(() => {
     const positions: Record<string, IconPosition> = {}
-    const COL_W = 72
-    const ROW_H = 78
-    const LEFT_COLS = 7
-    const LEFT_START_X = 6
-    const LEFT_START_Y = 6
+
+    // Left side — all apps in a tight grid
+    const COL_W = 66
+    const ROW_H = 72
+    const LEFT_COLS = 8
+    const LEFT_START_X = 4
+    const LEFT_START_Y = 4
 
     LEFT_ICONS.forEach(function(icon, i) {
       positions[icon.appId] = {
@@ -169,11 +171,15 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
       }
     })
 
-    const RIGHT_START_X = window.innerWidth - 88
+    // Right side — club pages stacked vertically on far right
+    const RIGHT_START_X = window.innerWidth - 82
+    const RIGHT_START_Y = 4
+    const RIGHT_ROW_H = 70
+
     RIGHT_ICONS.forEach(function(icon, i) {
       positions[icon.appId] = {
         x: RIGHT_START_X,
-        y: LEFT_START_Y + i * ROW_H,
+        y: RIGHT_START_Y + i * RIGHT_ROW_H,
       }
     })
 

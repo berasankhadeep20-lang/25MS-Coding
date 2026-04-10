@@ -9,6 +9,7 @@ const ALL_COMMANDS = [
   { label: 'Open Tech Stack',    action: 'open:stack',       icon: '⚙'  },
   { label: 'Open Contact',       action: 'open:contact',     icon: '@'  },
   { label: 'Open Neofetch',      action: 'open:neofetch',    icon: '🖥' },
+  { label: 'How to Join SlashDot', action: 'cmd:register', icon: '📝' },
   { label: 'Open Clock',         action: 'open:clock',       icon: '⏰' },
   { label: 'Open Asteroids',     action: 'open:asteroids',   icon: '🚀' },
   { label: 'Open Pong',          action: 'open:pong',        icon: '🏓' },

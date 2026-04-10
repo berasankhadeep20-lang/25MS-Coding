@@ -61,15 +61,15 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 10px 8px;
+  padding: 4px 2px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 6px;
   cursor: pointer;
   color: #ddd;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  width: 64px;
+  font-size: 9px;
+  width: 60px;
   transition: all 0.12s;
 }
 
