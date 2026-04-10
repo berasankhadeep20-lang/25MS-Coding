@@ -99,6 +99,10 @@ visits            → live visitor counter
 rain on/off       → toggle desktop rain effect
 weather           → live weather from Open-Meteo API (real data!)
 reset             → reset terminal
+challenge         → Today daily coding challenge changes daily
+alias name='cmd'  → Create command shortcuts (e.g. alias gs='git status')
+Ctrl+R            → Search command history
+pipe support      → ls | grep txt (basic pipe operator)
 ```
 
 ## Terminal Customization
@@ -118,6 +122,11 @@ open about        → About page
 open team         → Team roster
 open stack        → Tech stack
 open contact      → Contact info
+open blog         → SlashDot member blog (5 articles)
+open resources    → Curated learning resources (7 categories)
+open halloffame   → SlashDot Hall of Fame
+open rules        → Club constitution
+open newsletter   → SlashDot Newsletter (4 issues)
 open clock        → Live clock with unix time
 open asteroids    → Asteroids game
 open pong         → Pong (2 player)

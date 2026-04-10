@@ -127,6 +127,11 @@ const RIGHT_ICONS: DesktopIcon[] = [
   { appId: 'neofetch',    title: 'neofetch',         label: 'Neofetch',    icon: '🖥'  },
   { appId: 'events',      title: 'events.app',       label: 'Events',      icon: '📅'  },
   { appId: 'showcase',    title: 'showcase.app',     label: 'Showcase',    icon: '🌟'  },
+  { appId: 'blog',        title: 'blog.app',         label: 'Blog',        icon: '📰'  },
+  { appId: 'resources',   title: 'resources.app',    label: 'Resources',   icon: '📚'  },
+  { appId: 'halloffame',  title: 'fame.app',         label: 'Hall of Fame',icon: '🏆'  },
+  { appId: 'rules',       title: 'rules.app',        label: 'Rules',       icon: '📜'  },
+  { appId: 'newsletter',  title: 'newsletter.app',   label: 'Newsletter',  icon: '📬'  },
 ]
 
 const ICONS: DesktopIcon[] = [...LEFT_ICONS, ...RIGHT_ICONS]

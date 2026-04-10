@@ -1,11 +1,16 @@
 import { type CommandHandler, type CommandResult } from '../types'
 import { c } from '../utils/formatOutput'
+import { getDailyChallengeText } from '../components/Desktop/DailyChallenge'
 
 export const easterEggs: Record<string, CommandHandler> = {
 
   'sudo party': (): CommandResult => ({
     output: `\r\n${c.yellow}🎉 PARTY MODE ACTIVATED${c.reset}\r\n${c.magenta}Launching confetti cannon...${c.reset}\r\n`,
     action: { type: 'easter_egg', effect: 'confetti' },
+  }),
+
+  challenge: (): CommandResult => ({
+    output: getDailyChallengeText(),
   }),
 
   matrix: (): CommandResult => ({

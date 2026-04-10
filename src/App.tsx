@@ -9,6 +9,8 @@ import { KernelPanic } from './components/Apps/KernelPanic'
 import { NotificationSystem } from './components/Desktop/NotificationSystem'
 import { CommandPalette } from './components/Desktop/CommandPalette'
 import { Clippy } from './components/Desktop/Clippy'
+import { getDailyChallengeText } from './components/Desktop/DailyChallenge'
+import { LiveReactions } from './components/Desktop/LiveReactions'
 import {
   HomeApp, AboutApp, TeamApp,
   TechStackApp, ContactApp, NeofetchApp, ClockApp,
@@ -46,6 +48,7 @@ import { ISSTrackerApp, APODApp, BookSearchApp, ExchRateApp, IPGeoApp, RandUserA
 import { FlashcardApp, BudgetApp, RecipeApp, CountdownApp, MealGenApp, StudySchedApp } from './components/Apps/ProductivityApps2'
 import { FakeTwitterApp, FakeWhatsAppApp, ConfessionApp, ComplimentApp, InsultApp, DebateApp, LinusCallApp, CGPASimApp, RateMyCodeApp, RickrollApp, ExcuseGenApp, ScreensaverApp, FakeLoadApp, FortuneCookieApp, FixBugApp, KBTrainerApp, SysLogApp, ClipboardApp } from './components/Apps/SocialFunApps'
 import { EventsApp, ShowcaseApp } from './components/Apps/ClubApps'
+import { BlogApp, ResourcesApp, HallOfFameApp, RulesApp, NewsletterApp } from './components/Apps/ClubPages'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
@@ -199,6 +202,11 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'clipboard':    return <ClipboardApp />
     case 'events':       return <EventsApp />
     case 'showcase':     return <ShowcaseApp />
+    case 'blog':         return <BlogApp />
+    case 'resources':    return <ResourcesApp />
+    case 'halloffame':   return <HallOfFameApp />
+    case 'rules':        return <RulesApp />
+    case 'newsletter':   return <NewsletterApp />
     default:             return null
   }
 }
@@ -230,6 +238,7 @@ export default function App() {
   } = useWindowManager()
 
   const handleOpenWindow = useCallback((appId: AppId, title: string) => {
+    window.dispatchEvent(new CustomEvent('slashdot-app-opened', { detail: { appId } }))
     if (isMobile) {
       setMobilePage(appId === 'terminal' ? null : appId)
     } else {
@@ -294,16 +303,21 @@ export default function App() {
         const visits = (mem?.visits ?? 0) + 1
         localStorage.setItem('slashdot-os-memory', JSON.stringify({ ...(mem ?? {}), visits, lastVisit: new Date().toLocaleDateString(), firstVisit: mem?.firstVisit ?? new Date().toLocaleDateString() }))
         setTimeout(() => {
-          if (mem?.name && visits > 1) {
-            window.dispatchEvent(new CustomEvent('slashdot-notify', {
-              detail: { message: `Welcome back, ${mem.name}! Visit #${visits}`, type: 'success' }
-            }))
-          } else {
-            window.dispatchEvent(new CustomEvent('slashdot-notify', {
-              detail: { message: 'Welcome to SlashDot OS! Press Ctrl+K for commands.', type: 'info' }
-            }))
-          }
-        }, 1000)
+        if (mem?.name && visits > 1) {
+          window.dispatchEvent(new CustomEvent('slashdot-notify', {
+            detail: { message: `Welcome back, ${mem.name}! Visit #${visits}`, type: 'success' }
+          }))
+        } else {
+          window.dispatchEvent(new CustomEvent('slashdot-notify', {
+            detail: { message: 'Welcome to SlashDot OS! Type "challenge" for today\'s coding challenge.', type: 'info' }
+          }))
+        }
+      }, 1000)
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('slashdot-terminal-write', {
+          detail: { text: getDailyChallengeText() }
+        }))
+      }, 3000)
       } catch {}
     }} />
   }
@@ -418,6 +432,7 @@ export default function App() {
       <NotificationSystem />
       <CommandPalette onOpenWindow={handleOpenWindow} onRunCommand={handleRunCommand} />
       <Clippy />
+      <LiveReactions />
     </div>
   )
 }

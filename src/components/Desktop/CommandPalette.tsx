@@ -104,8 +104,15 @@ const ALL_COMMANDS = [
   { label: 'KB Shortcut Trainer', action: 'open:kbtrainer',    icon: '⌨'   },
   { label: 'System Logs',         action: 'open:syslog',       icon: '📜'  },
   { label: 'Clipboard Manager',   action: 'open:clipboard',    icon: '📋'  },
-  { label: 'SlashDot Events',        action: 'open:events',     icon: '📅' },
-  { label: 'SlashDot Showcase',      action: 'open:showcase',   icon: '🌟' },
+  { label: 'SlashDot Events',        action: 'open:events',      icon: '📅' },
+  { label: 'SlashDot Showcase',      action: 'open:showcase',    icon: '🌟' },
+  { label: 'SlashDot Blog',          action: 'open:blog',        icon: '📰' },
+  { label: 'Learning Resources',     action: 'open:resources',   icon: '📚' },
+  { label: 'Hall of Fame',           action: 'open:halloffame',  icon: '🏆' },
+  { label: 'Club Constitution',      action: 'open:rules',       icon: '📜' },
+  { label: 'Newsletter',             action: 'open:newsletter',  icon: '📬' },
+  { label: 'Daily Challenge',        action: 'cmd:challenge',    icon: '📅' },
+  { label: 'How to Join SlashDot',   action: 'cmd:register',     icon: '📝' },
   { label: 'Sudo Party 🎉',      action: 'cmd:sudo party',   icon: '🎉' },
   { label: 'Matrix Rain',        action: 'cmd:matrix',       icon: '🟩' },
   { label: 'Neofetch',           action: 'cmd:neofetch',     icon: '🖥' },
@@ -202,6 +209,9 @@ export function CommandPalette({ onOpenWindow, onRunCommand }: Props) {
         fakeload: 'load.app', fortunecook: 'fortune.app', fixbug: 'fixbug.app',
         kbtrainer: 'kb.app', syslog: 'syslog.app', clipboard: 'clipboard.app',
         events: 'events.app', showcase: 'showcase.app',
+        blog: 'blog.app', resources: 'resources.app',
+        halloffame: 'fame.app', rules: 'rules.app',
+        newsletter: 'newsletter.app',
       }
       onOpenWindow(appId, titleMap[appId] ?? appId)
     } else if (action.startsWith('cmd:')) {
