@@ -1,5 +1,19 @@
-export type AppId = 'terminal' | 'home' | 'about' | 'team' | 'stack' | 'contact' | 'neofetch' | 'clock' | 'asteroids' | 'pong' | 'periodic' | 'fourier' | 'gravity' | 'dna' | 'grapher' | 'guestbook' | 'poll' | 'jokes' | 'slashdotai' | 'matrix-calc' | 'physics' | 'molecular' | 'gameoflife' | 'typing' | 'achievements' | 'flappy' | 'dungeon' | 'fileexplorer' | 'settings' | 'snake' | 'notepad' | 'taskmanager' | 'jsonformat' | 'base64' | 'markdown' | 'colorpicker' | 'passgen' | 'diffview' | 'coderunner' | 'lorem' | 'hashgen' | 'paint' | 'asciiart' | 'pixelart' | 'calendar' | 'pomodoro' | 'stopwatch' | 'currency' | 'bmi' | 'agecalc' | 'habittracker' | 'newsticker' | 'leaderboard' | 'githubstats' | 'wikipedia' | 'tamagotchi' | 'stocks' | 'horoscope' | 'lovecalc' | 'magic8' | 'deployed' | 'sortvis' | 'pathvis' | 'binconv' | 'truthtable' | 'eqsolver' | 'mandelbrot' | 'cellaut' | 'statsCalc' | 'fibprime' | 'logicgate' | 'isstrack' | 'apod' | 'bookSearch' | 'exchRate' | 'ipgeo' | 'randuser' | 'flashcard' | 'budget' | 'recipe' | 'countdown' | 'mealgent' | 'studysched' | 'faketwitter' | 'fakewhatsapp' | 'confession' | 'compliment' | 'insult' | 'debate' | 'linuscall' | 'cgpasim' | 'ratemycode' | 'rickroll' | 'excusegen' | 'screensaver' | 'fakeload' | 'fortunecook' | 'fixbug' | 'kbtrainer' | 'syslog' | 'clipboard' | 'events' | 'showcase' | 'blog' | 'resources' | 'halloffame' | 'rules' | 'newsletter' | 'minesweeper' | 'wordle' | 'sortvis' | 'pathvis' | 'binconv' | 'truthtable' | 'eqsolver' | 'mandelbrot' | 'cellaut' | 'statsCalc' | 'fibprime' | 'logicgate' | 'isstrack' | 'apod' | 'bookSearch' | 'exchRate' | 'ipgeo' | 'randuser' | 'flashcard' | 'budget' | 'recipe' | 'countdown' | 'mealgent' | 'studysched' | 'faketwitter' | 'fakewhatsapp' | 'confession' | 'compliment' | 'insult' | 'debate' | 'linuscall' | 'cgpasim' | 'ratemycode' | 'rickroll' | 'excusegen' | 'screensaver' | 'fakeload' | 'fortunecook' | 'fixbug' | 'kbtrainer' | 'syslog' | 'clipboard'
-
+export type AppId =
+  'terminal' | 'home' | 'about' | 'team' | 'stack' | 'contact' | 'neofetch' | 'clock' |
+  'asteroids' | 'pong' | 'flappy' | 'snake' |
+  'periodic' | 'fourier' | 'gravity' | 'dna' | 'physics' | 'molecular' |
+  'sortvis' | 'pathvis' | 'binconv' | 'truthtable' | 'statsCalc' | 'fibprime' | 'logicgate' |
+  'isstrack' | 'apod' | 'ipgeo' | 'randuser' |
+  'guestbook' | 'poll' | 'jokes' | 'slashdotai' |
+  'newsticker' | 'leaderboard' | 'githubstats' | 'wikipedia' |
+  'horoscope' | 'excusegen' | 'screensaver' | 'fortunecook' |
+  'kbtrainer' | 'syslog' | 'clipboard' | 'cgpasim' |
+  'insult' | 'compliment' | 'faketwitter' | 'fakewhatsapp' | 'confession' |
+  'base64' | 'markdown' | 'colorpicker' | 'hashgen' |
+  'paint' | 'asciiart' |
+  'calendar' | 'pomodoro' | 'stopwatch' | 'countdown' | 'mealgent' | 'studysched' | 'flashcard' |
+  'fileexplorer' | 'settings' | 'notepad' | 'taskmanager' |
+  'events' | 'showcase' | 'blog' | 'resources' | 'halloffame' | 'rules' | 'newsletter'
 export interface WindowState {
   id: string
   appId: AppId

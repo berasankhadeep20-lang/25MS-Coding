@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import { WebLinksAddon } from '@xterm/addon-web-links'
@@ -15,6 +15,16 @@ interface Props {
   onEasterEgg: (effect: string) => void
 }
 
+// Default built-in aliases
+const DEFAULT_ALIASES: Record<string, string> = {
+  'll':   'ls -la',
+  'cls':  'clear',
+  '?':    'help',
+  'gs':   'git status',
+  'gl':   'git log',
+  'q':    'exit',
+}
+
 export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const termRef = useRef<Terminal | null>(null)
@@ -22,6 +32,15 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
   const inputRef = useRef('')
   const historyRef = useRef<string[]>([])
   const histIdxRef = useRef(-1)
+  const aliasesRef = useRef<Record<string, string>>({ ...DEFAULT_ALIASES })
+
+  // Load saved aliases from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('slashdot-aliases')
+      if (saved) aliasesRef.current = { ...DEFAULT_ALIASES, ...JSON.parse(saved) }
+    } catch {}
+  }, [])
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -61,7 +80,8 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
     term.open(containerRef.current)
     fitAddon.fit()
 
-    // Listen for async terminal writes
+    // ── Event listeners ──────────────────────────────────────────────────────
+
     const writeHandler = (e: Event) => {
       const { text } = (e as CustomEvent).detail
       term.write(text)
@@ -69,7 +89,6 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
     }
     window.addEventListener('slashdot-terminal-write', writeHandler)
 
-    // Listen for cursor style changes
     const cursorHandler = (e: Event) => {
       const { style } = (e as CustomEvent).detail
       term.options.cursorStyle = style as 'block' | 'bar' | 'underline'
@@ -84,7 +103,6 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
     }
     window.addEventListener('slashdot-font', fontHandler)
 
-    // Listen for theme changes
     const themeHandler = (e: Event) => {
       const { name } = (e as CustomEvent).detail
       const themeColors: Record<string, string> = {
@@ -95,17 +113,24 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         purple: '#b464ff',
       }
       const col = themeColors[name] ?? '#00ff46'
-      term.options.theme = {
-        ...term.options.theme,
-        cursor: col,
-        green:  col,
-      }
+      term.options.theme = { ...term.options.theme, cursor: col, green: col }
     }
     window.addEventListener('slashdot-theme', themeHandler)
+
+    // Listen for alias updates from the alias command
+    const aliasHandler = (e: Event) => {
+      const { name, cmd } = (e as CustomEvent).detail
+      aliasesRef.current[name] = cmd
+      try {
+        localStorage.setItem('slashdot-aliases', JSON.stringify(aliasesRef.current))
+      } catch {}
+    }
+    window.addEventListener('slashdot-alias', aliasHandler)
 
     termRef.current = term
     fitAddonRef.current = fitAddon
 
+    // ── Welcome message ──────────────────────────────────────────────────────
     const welcomeLines = [
       '\r\n\x1b[38;2;0;255;70m' +
       '  ____  _           _     ____        _    \r\n' +
@@ -114,44 +139,100 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
       '  ___) | | (_| \\__ \\ | | | |_| | (_) | |_  \r\n' +
       ' |____/|_|\\__,_|___/_| |_|____/ \\___/ \\__| \r\n' +
       '\x1b[0m',
-      '\x1b[38;2;0;200;255m  SlashDot OS v2026.1 — 25MS Batch Edition\x1b[0m',
-      '\x1b[38;2;120;120;120m  IISER Kolkata  |  Inter-Batch Web Dev Competition 2026\x1b[0m',
+      '\x1b[38;2;0;200;255m  SlashDot OS v2026.1 — Official SlashDot Club Website\x1b[0m',
+      '\x1b[38;2;120;120;120m  IISER Kolkata  |  slashdot-iiserk.github.io\x1b[0m',
       '',
-      "\x1b[38;2;255;220;0m  Type 'help' to see all commands.\x1b[0m",
-      "\x1b[38;2;120;120;120m  Type 'open home' to launch the homepage app.\x1b[0m",
+      "\x1b[38;2;255;220;0m  Type 'help' for commands  |  Ctrl+K for command palette\x1b[0m",
+      "\x1b[38;2;120;120;120m  Type 'challenge' for today's coding challenge\x1b[0m",
       '',
     ]
-    welcomeLines.forEach(function(l) { term.writeln(l) })
+    welcomeLines.forEach(l => term.writeln(l))
     term.write(prompt(getCwd()))
 
+    // ── Helper: resolve aliases and run with pipe support ────────────────────
+    function resolveAndRun(raw: string) {
+      const trimmed = raw.trim()
+
+      // Check alias first (exact match on the whole input or just the command)
+      const [firstWord, ...restWords] = trimmed.split(/\s+/)
+      const aliasedCmd = aliasesRef.current[trimmed] ?? aliasesRef.current[firstWord]
+      const resolved = aliasedCmd
+        ? (restWords.length > 0 && aliasesRef.current[firstWord]
+            ? `${aliasesRef.current[firstWord]} ${restWords.join(' ')}`
+            : aliasedCmd)
+        : trimmed
+
+      // Basic pipe: cmd1 | grep pattern
+      if (resolved.includes(' | grep ')) {
+        const pipeIdx = resolved.indexOf(' | grep ')
+        const leftCmd = resolved.slice(0, pipeIdx).trim()
+        const grepPattern = resolved.slice(pipeIdx + 8).trim()
+        const result = parseAndRun(leftCmd)
+        if (result.output && grepPattern) {
+          const lines = result.output.split('\r\n')
+          const matched = lines.filter(l => l.includes(grepPattern))
+          const output = matched.length > 0
+            ? matched.join('\r\n')
+            : `\x1b[90m(no matches for '${grepPattern}')\x1b[0m`
+          return { ...result, output }
+        }
+        return result
+      }
+
+      return parseAndRun(resolved)
+    }
+
+    // ── Key handler ──────────────────────────────────────────────────────────
     term.onKey(function({ key, domEvent }) {
       const code = domEvent.keyCode
 
+      // Enter
       if (code === 13) {
         playEnter()
         const input = inputRef.current.trim()
         term.writeln('')
+
         if (input) {
           historyRef.current.unshift(input)
           histIdxRef.current = -1
           ;(window as any).__slashdotHistory = historyRef.current
-          const result = parseAndRun(input)
-          if (result.output) term.write(result.output)
-          if (result.action) {
-            if (result.action.type === 'open_window') {
-              onOpenWindow(result.action.appId, result.action.title)
-            } else if (result.action.type === 'clear') {
-              term.clear()
-            } else if (result.action.type === 'easter_egg') {
-              onEasterEgg(result.action.effect)
+
+          // Handle inline alias command without going through parseAndRun
+          if (input.startsWith('alias ')) {
+            const raw = input.slice(6).trim()
+            const match = raw.match(/^(\w+)=["']?(.+?)["']?$/)
+            if (match) {
+              aliasesRef.current[match[1]] = match[2]
+              try { localStorage.setItem('slashdot-aliases', JSON.stringify(aliasesRef.current)) } catch {}
+              term.write(`\r\n\x1b[32m✓ Alias set: ${match[1]} = ${match[2]}\x1b[0m\r\n`)
+            } else {
+              // Show current aliases
+              const entries = Object.entries(aliasesRef.current)
+              term.write('\r\n\x1b[36mCurrent aliases:\x1b[0m\r\n')
+              entries.forEach(([k, v]) => term.write(`  \x1b[33m${k}\x1b[0m = ${v}\r\n`))
+              term.write('\x1b[90mUsage: alias name=\'command\'\x1b[0m\r\n')
+            }
+          } else {
+            const result = resolveAndRun(input)
+            if (result.output) term.write(result.output)
+            if (result.action) {
+              if (result.action.type === 'open_window') {
+                onOpenWindow(result.action.appId, result.action.title)
+              } else if (result.action.type === 'clear') {
+                term.clear()
+              } else if (result.action.type === 'easter_egg') {
+                onEasterEgg(result.action.effect)
+              }
             }
           }
         }
+
         inputRef.current = ''
         term.write(prompt(getCwd()))
         return
       }
 
+      // Backspace
       if (code === 8) {
         if (inputRef.current.length > 0) {
           inputRef.current = inputRef.current.slice(0, -1)
@@ -161,6 +242,7 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         return
       }
 
+      // Arrow Up — history
       if (code === 38) {
         const newIdx = Math.min(histIdxRef.current + 1, historyRef.current.length - 1)
         if (historyRef.current[newIdx] !== undefined) {
@@ -172,6 +254,7 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         return
       }
 
+      // Arrow Down — history
       if (code === 40) {
         const newIdx = histIdxRef.current - 1
         term.write('\r' + prompt(getCwd()) + ' '.repeat(inputRef.current.length) + '\r' + prompt(getCwd()))
@@ -186,6 +269,7 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         return
       }
 
+      // Tab — autocomplete
       if (code === 9) {
         domEvent.preventDefault()
         const completions = getCompletions(inputRef.current)
@@ -201,6 +285,7 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         return
       }
 
+      // Ctrl+C
       if (domEvent.ctrlKey && domEvent.key === 'c') {
         term.writeln('^C')
         inputRef.current = ''
@@ -208,6 +293,7 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         return
       }
 
+      // Ctrl+L — clear
       if (domEvent.ctrlKey && domEvent.key === 'l') {
         term.clear()
         term.write(prompt(getCwd()))
@@ -215,25 +301,72 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         return
       }
 
+      // Ctrl+R — history search
+      if (domEvent.ctrlKey && domEvent.key === 'r') {
+        domEvent.preventDefault()
+        term.writeln('')
+        term.write('\x1b[36m(reverse-search) :\x1b[0m ')
+        // Simple implementation: show last 5 matching entries
+        const hist = historyRef.current
+        if (hist.length === 0) {
+          term.writeln('\x1b[90m(no history)\x1b[0m')
+          term.write(prompt(getCwd()))
+          return
+        }
+        term.writeln('')
+        term.writeln('\x1b[90mRecent commands (type ↑↓ to navigate, Tab to select):\x1b[0m')
+        hist.slice(0, 8).forEach((h, i) => {
+          term.writeln(`  \x1b[33m${i + 1}.\x1b[0m ${h}`)
+        })
+        term.writeln('\x1b[90m(Press ↑↓ to recall commands from history)\x1b[0m')
+        term.write(prompt(getCwd()))
+        inputRef.current = ''
+        return
+      }
+
+      // Ctrl+K — command palette
+      if (domEvent.ctrlKey && domEvent.key === 'k') {
+        domEvent.preventDefault()
+        window.dispatchEvent(new CustomEvent('slashdot-palette-open'))
+        return
+      }
+
+      // Regular printable characters
       if (!domEvent.ctrlKey && !domEvent.altKey && key.length === 1) {
         inputRef.current += key
         term.write(key)
         playKeyClick()
+
+        // Auto-suggestion ghost text
+        const ALL_CMDS = [
+          'help','ls','cd','cat','clear','history','neofetch','whoami','date','ping',
+          'uptime','cal','tree','echo','banner','stats','reset','setname','alias','challenge',
+          'man','open','weather','visits','rain','theme','cursor','font+','font-','crt',
+          'wallpaper','git','vim','ssh','sudo','apt','npm','matrix','hack','nyan',
+          'fortune','quote','members','top','changelog','register','clippy',
+        ]
+        const cur = inputRef.current
+        const suggest = ALL_CMDS.find(cmd => cmd.startsWith(cur) && cmd !== cur)
+        if (suggest && cur.length >= 2) {
+          const ghost = suggest.slice(cur.length)
+          // Write ghost text in dim color, then move cursor back
+          term.write(`\x1b[90m${ghost}\x1b[0m\x1b[${ghost.length}D`)
+        }
       }
     })
 
-    const ro = new ResizeObserver(function() { fitAddon.fit() })
+    const ro = new ResizeObserver(() => fitAddon.fit())
     ro.observe(containerRef.current)
 
-    return function() {
+    return () => {
       ro.disconnect()
       term.dispose()
       window.removeEventListener('slashdot-terminal-write', writeHandler)
       window.removeEventListener('slashdot-cursor', cursorHandler)
       window.removeEventListener('slashdot-font', fontHandler)
       window.removeEventListener('slashdot-theme', themeHandler)
+      window.removeEventListener('slashdot-alias', aliasHandler)
     }
-
   }, [onOpenWindow, onEasterEgg])
 
   return (

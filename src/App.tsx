@@ -21,32 +21,28 @@ import { PeriodicTableApp } from './components/Apps/PeriodicTable'
 import { FourierVizApp } from './components/Apps/FourierViz'
 import { GravitySimApp } from './components/Apps/GravitySim'
 import { DNAViewerApp } from './components/Apps/DNAViewer'
-import { GraphPlotterApp } from './components/Apps/GraphPlotter'
 import { GuestbookApp } from './components/Apps/Guestbook'
 import { PollApp } from './components/Apps/Poll'
 import { JokeGeneratorApp } from './components/Apps/JokeGenerator'
 import { SlashDotAIApp } from './components/Apps/SlashDotAI'
-import { MatrixCalcApp } from './components/Apps/MatrixCalc'
 import { PhysicsSimApp } from './components/Apps/PhysicsSim'
 import { MolecularViewerApp } from './components/Apps/MolecularViewer'
-import { GameOfLifeApp } from './components/Apps/GameOfLife'
-import { TypingTestApp } from './components/Apps/TypingTest'
-import { AchievementsApp } from './components/Apps/Achievements'
 import { FlappyBirdApp } from './components/Apps/FlappyBird'
-import { DungeonCrawlerApp } from './components/Apps/DungeonCrawler'
 import { FileExplorerApp } from './components/Apps/FileExplorer'
 import { SettingsApp } from './components/Apps/Settings'
 import { SnakeApp } from './components/Apps/Snake'
 import { NotepadApp } from './components/Apps/Notepad'
 import { TaskManagerApp } from './components/Apps/TaskManager'
-import { JSONFormatterApp, Base64App, MarkdownApp, ColorPickerApp, PasswordGenApp, DiffViewerApp, CodeRunnerApp, LoremApp, HashGenApp } from './components/Apps/DevTools'
-import { PaintApp, ASCIIArtApp, PixelArtApp } from './components/Apps/CreativeApps'
-import { CalendarApp, PomodoroApp, StopwatchApp, CurrencyApp, BMIApp, AgeCalcApp, HabitTrackerApp } from './components/Apps/LifeApps'
-import { NewsTickerApp, LeaderboardApp, GitHubStatsApp, WikipediaApp, TamagotchiApp, StocksApp, HoroscopeApp, LoveCalcApp, Magic8App, DeployedApp } from './components/Apps/FunApps'
-import { SortVisApp, PathVisApp, BinConvApp, TruthTableApp, EqSolverApp, MandelbrotApp, CellAutApp, StatsCalcApp, FibPrimeApp, LogicGateApp } from './components/Apps/ScienceApps2'
-import { ISSTrackerApp, APODApp, BookSearchApp, ExchRateApp, IPGeoApp, RandUserApp } from './components/Apps/APIApps'
-import { FlashcardApp, BudgetApp, RecipeApp, CountdownApp, MealGenApp, StudySchedApp } from './components/Apps/ProductivityApps2'
-import { FakeTwitterApp, FakeWhatsAppApp, ConfessionApp, ComplimentApp, InsultApp, DebateApp, LinusCallApp, CGPASimApp, RateMyCodeApp, RickrollApp, ExcuseGenApp, ScreensaverApp, FakeLoadApp, FortuneCookieApp, FixBugApp, KBTrainerApp, SysLogApp, ClipboardApp } from './components/Apps/SocialFunApps'
+import { Base64App, MarkdownApp, ColorPickerApp, HashGenApp } from './components/Apps/DevTools'
+import { PaintApp, ASCIIArtApp } from './components/Apps/CreativeApps'
+import { WikipediaApp , HoroscopeApp, NewsTickerApp, GitHubStatsApp, LeaderboardApp,  } from './components/Apps/FunApps'
+import { StudySchedApp } from './components/Apps/ProductivityApps2'
+import { CalendarApp, PomodoroApp, StopwatchApp,  } from './components/Apps/LifeApps'
+import {ExcuseGenApp, ScreensaverApp, FortuneCookieApp, KBTrainerApp, SysLogApp, ClipboardApp, CGPASimApp, InsultApp, ComplimentApp, FakeTwitterApp, FakeWhatsAppApp, ConfessionApp } from './components/Apps/SocialFunApps'
+import { SortVisApp, PathVisApp, BinConvApp, TruthTableApp, StatsCalcApp, FibPrimeApp, LogicGateApp } from './components/Apps/ScienceApps2'
+import { ISSTrackerApp, APODApp, IPGeoApp, RandUserApp } from './components/Apps/APIApps'
+import { MealGenApp, CountdownApp } from './components/Apps/ProductivityApps2'
+import { FlashcardApp } from './components/Apps/ProductivityApps2'
 import { EventsApp, ShowcaseApp } from './components/Apps/ClubApps'
 import { BlogApp, ResourcesApp, HallOfFameApp, RulesApp, NewsletterApp } from './components/Apps/ClubPages'
 import { useWindowManager } from './hooks/useWindowManager'
@@ -100,106 +96,72 @@ function AppContentWithLoader({ appId }: { appId: AppId }) {
 
 function AppContent({ appId }: { appId: AppId }) {
   switch (appId) {
-    case 'home':     return <HomeApp />
-    case 'about':    return <AboutApp />
-    case 'team':     return <TeamApp />
-    case 'stack':    return <TechStackApp />
-    case 'contact':  return <ContactApp />
-    case 'neofetch': return <NeofetchApp />
-    case 'clock':     return <ClockApp />
-    case 'asteroids': return <AsteroidsGame />
-    case 'pong':       return <PongGame />
-    case 'periodic':   return <PeriodicTableApp />
-    case 'fourier':    return <FourierVizApp />
-    case 'gravity':    return <GravitySimApp />
-    case 'dna':        return <DNAViewerApp />
-    case 'grapher':    return <GraphPlotterApp />
-    case 'guestbook':  return <GuestbookApp />
-    case 'poll':       return <PollApp />
-    case 'jokes':      return <JokeGeneratorApp />
-    case 'slashdotai':   return <SlashDotAIApp />
-    case 'matrix-calc':  return <MatrixCalcApp />
+    case 'home':         return <HomeApp />
+    case 'about':        return <AboutApp />
+    case 'team':         return <TeamApp />
+    case 'stack':        return <TechStackApp />
+    case 'contact':      return <ContactApp />
+    case 'neofetch':     return <NeofetchApp />
+    case 'clock':        return <ClockApp />
+    case 'asteroids':    return <AsteroidsGame />
+    case 'pong':         return <PongGame />
+    case 'flappy':       return <FlappyBirdApp />
+    case 'snake':        return <SnakeApp />
+    case 'periodic':     return <PeriodicTableApp />
+    case 'fourier':      return <FourierVizApp />
+    case 'gravity':      return <GravitySimApp />
+    case 'dna':          return <DNAViewerApp />
     case 'physics':      return <PhysicsSimApp />
     case 'molecular':    return <MolecularViewerApp />
-    case 'gameoflife':   return <GameOfLifeApp />
-    case 'typing':       return <TypingTestApp />
-    case 'achievements': return <AchievementsApp />
-    case 'flappy':       return <FlappyBirdApp />
-    case 'dungeon':      return <DungeonCrawlerApp />
-    case 'fileexplorer': return <FileExplorerApp />
-    case 'settings':     return <SettingsApp />
-    case 'snake':        return <SnakeApp />
-    case 'notepad':      return <NotepadApp />
-    case 'taskmanager':  return <TaskManagerApp />
-    case 'jsonformat':   return <JSONFormatterApp />
-    case 'base64':       return <Base64App />
-    case 'markdown':     return <MarkdownApp />
-    case 'colorpicker':  return <ColorPickerApp />
-    case 'passgen':      return <PasswordGenApp />
-    case 'diffview':     return <DiffViewerApp />
-    case 'coderunner':   return <CodeRunnerApp />
-    case 'lorem':        return <LoremApp />
-    case 'hashgen':      return <HashGenApp />
-    case 'paint':        return <PaintApp />
-    case 'asciiart':     return <ASCIIArtApp />
-    case 'pixelart':     return <PixelArtApp />
-    case 'calendar':     return <CalendarApp />
-    case 'pomodoro':     return <PomodoroApp />
-    case 'stopwatch':    return <StopwatchApp />
-    case 'currency':     return <CurrencyApp />
-    case 'bmi':          return <BMIApp />
-    case 'agecalc':      return <AgeCalcApp />
-    case 'habittracker': return <HabitTrackerApp />
-    case 'newsticker':   return <NewsTickerApp />
-    case 'leaderboard':  return <LeaderboardApp />
-    case 'githubstats':  return <GitHubStatsApp />
-    case 'wikipedia':    return <WikipediaApp />
-    case 'tamagotchi':   return <TamagotchiApp />
-    case 'stocks':       return <StocksApp />
-    case 'horoscope':    return <HoroscopeApp />
-    case 'lovecalc':     return <LoveCalcApp />
-    case 'magic8':       return <Magic8App />
-    case 'deployed':     return <DeployedApp />
     case 'sortvis':      return <SortVisApp />
     case 'pathvis':      return <PathVisApp />
     case 'binconv':      return <BinConvApp />
     case 'truthtable':   return <TruthTableApp />
-    case 'eqsolver':     return <EqSolverApp />
-    case 'mandelbrot':   return <MandelbrotApp />
-    case 'cellaut':      return <CellAutApp />
     case 'statsCalc':    return <StatsCalcApp />
     case 'fibprime':     return <FibPrimeApp />
     case 'logicgate':    return <LogicGateApp />
     case 'isstrack':     return <ISSTrackerApp />
     case 'apod':         return <APODApp />
-    case 'bookSearch':   return <BookSearchApp />
-    case 'exchRate':     return <ExchRateApp />
     case 'ipgeo':        return <IPGeoApp />
     case 'randuser':     return <RandUserApp />
-    case 'flashcard':    return <FlashcardApp />
-    case 'budget':       return <BudgetApp />
-    case 'recipe':       return <RecipeApp />
-    case 'countdown':    return <CountdownApp />
-    case 'mealgent':     return <MealGenApp />
-    case 'studysched':   return <StudySchedApp />
-    case 'faketwitter':  return <FakeTwitterApp />
-    case 'fakewhatsapp': return <FakeWhatsAppApp />
-    case 'confession':   return <ConfessionApp />
-    case 'compliment':   return <ComplimentApp />
-    case 'insult':       return <InsultApp />
-    case 'debate':       return <DebateApp />
-    case 'linuscall':    return <LinusCallApp />
-    case 'cgpasim':      return <CGPASimApp />
-    case 'ratemycode':   return <RateMyCodeApp />
-    case 'rickroll':     return <RickrollApp />
+    case 'guestbook':    return <GuestbookApp />
+    case 'poll':         return <PollApp />
+    case 'jokes':        return <JokeGeneratorApp />
+    case 'slashdotai':   return <SlashDotAIApp />
+    case 'newsticker':   return <NewsTickerApp />
+    case 'leaderboard':  return <LeaderboardApp />
+    case 'githubstats':  return <GitHubStatsApp />
+    case 'wikipedia':    return <WikipediaApp />
+    case 'horoscope':    return <HoroscopeApp />
     case 'excusegen':    return <ExcuseGenApp />
     case 'screensaver':  return <ScreensaverApp />
-    case 'fakeload':     return <FakeLoadApp />
     case 'fortunecook':  return <FortuneCookieApp />
-    case 'fixbug':       return <FixBugApp />
     case 'kbtrainer':    return <KBTrainerApp />
     case 'syslog':       return <SysLogApp />
     case 'clipboard':    return <ClipboardApp />
+    case 'cgpasim':      return <CGPASimApp />
+    case 'insult':       return <InsultApp />
+    case 'compliment':   return <ComplimentApp />
+    case 'faketwitter':  return <FakeTwitterApp />
+    case 'fakewhatsapp': return <FakeWhatsAppApp />
+    case 'confession':   return <ConfessionApp />
+    case 'base64':       return <Base64App />
+    case 'markdown':     return <MarkdownApp />
+    case 'colorpicker':  return <ColorPickerApp />
+    case 'hashgen':      return <HashGenApp />
+    case 'paint':        return <PaintApp />
+    case 'asciiart':     return <ASCIIArtApp />
+    case 'calendar':     return <CalendarApp />
+    case 'pomodoro':     return <PomodoroApp />
+    case 'stopwatch':    return <StopwatchApp />
+    case 'countdown':    return <CountdownApp />
+    case 'mealgent':     return <MealGenApp />
+    case 'studysched':   return <StudySchedApp />
+    case 'flashcard':    return <FlashcardApp />
+    case 'fileexplorer': return <FileExplorerApp />
+    case 'settings':     return <SettingsApp />
+    case 'notepad':      return <NotepadApp />
+    case 'taskmanager':  return <TaskManagerApp />
     case 'events':       return <EventsApp />
     case 'showcase':     return <ShowcaseApp />
     case 'blog':         return <BlogApp />

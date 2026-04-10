@@ -13,128 +13,94 @@ interface DesktopIcon {
 }
 
 const LEFT_ICONS: DesktopIcon[] = [
-  // Row 1 — Games
-  { appId: 'asteroids',   title: 'asteroids.exe',    label: 'Asteroids',   icon: '🚀'  },
-  { appId: 'pong',        title: 'pong.exe',         label: 'Pong',        icon: '🏓'  },
-  { appId: 'flappy',      title: 'flappy.exe',       label: 'Flappy {',   icon: '{}'  },
-  { appId: 'snake',       title: 'snake.exe',        label: 'Snake',       icon: '🐍'  },
-  { appId: 'dungeon',     title: 'dungeon.exe',      label: 'Dungeon',     icon: '⚔'   },
-  { appId: 'gameoflife',  title: 'life.exe',         label: "Conway's",   icon: '🔲'  },
-  { appId: 'typing',      title: 'typing.exe',       label: 'Typing',      icon: '⌨'   },
-  // Row 2 — Science
-  { appId: 'periodic',    title: 'periodic.app',     label: 'Periodic',    icon: '⚗'   },
-  { appId: 'fourier',     title: 'fourier.app',      label: 'Fourier',     icon: '〜'  },
-  { appId: 'gravity',     title: 'gravity.app',      label: 'Gravity',     icon: '🪐'  },
-  { appId: 'dna',         title: 'dna.app',          label: 'DNA',         icon: '🧬'  },
-  { appId: 'grapher',     title: 'grapher.app',      label: 'Grapher',     icon: 'f(x)'},
-  { appId: 'physics',     title: 'physics.app',      label: 'Physics',     icon: '⚛'   },
-  { appId: 'molecular',   title: 'molecular.app',    label: 'Molecule',    icon: '🔬'  },
-  { appId: 'matrix-calc', title: 'matrix.app',       label: 'Matrix',      icon: '[M]' },
-  { appId: 'sortvis',     title: 'sort.app',         label: 'Sort Vis',    icon: '⟨⟩'  },
-  { appId: 'pathvis',     title: 'path.app',         label: 'Pathfind',    icon: '🗺'  },
-  { appId: 'binconv',     title: 'binconv.app',      label: 'BinConv',     icon: '01'  },
-  { appId: 'truthtable',  title: 'truth.app',        label: 'Truth Tbl',   icon: '⊕'   },
-  { appId: 'eqsolver',    title: 'eq.app',           label: 'Eq Solver',   icon: '∑'   },
-  { appId: 'mandelbrot',  title: 'mandel.app',       label: 'Mandelbrot',  icon: '🌀'  },
-  { appId: 'cellaut',     title: 'cell.app',         label: 'Cell Aut',    icon: '⬛'  },
-  { appId: 'statsCalc',   title: 'stats.app',        label: 'Statistics',  icon: 'σ'   },
-  { appId: 'fibprime',    title: 'fib.app',          label: 'Fib/Prime',   icon: 'φ'   },
-  { appId: 'logicgate',   title: 'logic.app',        label: 'Logic Gate',  icon: '⋀'   },
-  // Row 3 — Dev Tools
-  { appId: 'jsonformat',  title: 'json.app',         label: 'JSON',        icon: '{ }' },
-  { appId: 'base64',      title: 'base64.app',       label: 'Base64',      icon: 'b64' },
-  { appId: 'markdown',    title: 'markdown.app',     label: 'Markdown',    icon: '.md' },
-  { appId: 'colorpicker', title: 'color.app',        label: 'Colors',      icon: '🎨'  },
-  { appId: 'passgen',     title: 'passgen.app',      label: 'PassGen',     icon: '🔑'  },
-  { appId: 'diffview',    title: 'diff.app',         label: 'Diff',        icon: '±'   },
-  { appId: 'coderunner',  title: 'code.app',         label: 'Code',        icon: '▶'   },
-  { appId: 'lorem',       title: 'lorem.app',        label: 'Lorem',       icon: 'Aa'  },
-  { appId: 'hashgen',     title: 'hash.app',         label: 'Hash',        icon: '#'   },
-  // Row 4 — Creative
-  { appId: 'paint',       title: 'paint.app',        label: 'Paint',       icon: '🖌'  },
-  { appId: 'asciiart',    title: 'ascii.app',        label: 'ASCII Art',   icon: 'A'   },
-  { appId: 'pixelart',    title: 'pixel.app',        label: 'Pixel Art',   icon: '🟦'  },
-  // Row 5 — API / Live
-  { appId: 'isstrack',    title: 'iss.app',          label: 'ISS Track',   icon: '🛸'  },
-  { appId: 'apod',        title: 'apod.app',         label: 'APOD',        icon: '🔭'  },
-  { appId: 'bookSearch',  title: 'books.app',        label: 'Books',       icon: '📚'  },
-  { appId: 'exchRate',    title: 'rates.app',        label: 'Ex Rates',    icon: '💹'  },
-  { appId: 'ipgeo',       title: 'ip.app',           label: 'IP Lookup',   icon: '🌐'  },
-  { appId: 'randuser',    title: 'user.app',         label: 'Rand User',   icon: '👤'  },
-  { appId: 'githubstats', title: 'github.app',       label: 'GitHub',      icon: '🐙'  },
-  { appId: 'wikipedia',   title: 'wiki.app',         label: 'Wikipedia',   icon: 'W'   },
-  // Row 6 — Productivity
-  { appId: 'calendar',    title: 'calendar.app',     label: 'Calendar',    icon: '📅'  },
-  { appId: 'pomodoro',    title: 'pomodoro.app',     label: 'Pomodoro',    icon: '🍅'  },
-  { appId: 'stopwatch',   title: 'stopwatch.app',    label: 'Stopwatch',   icon: '⏱'  },
-  { appId: 'currency',    title: 'currency.app',     label: 'Currency',    icon: '💱'  },
-  { appId: 'bmi',         title: 'bmi.app',          label: 'BMI',         icon: '⚖'   },
-  { appId: 'agecalc',     title: 'age.app',          label: 'Age Calc',    icon: '🎂'  },
-  { appId: 'habittracker',title: 'habits.app',       label: 'Habits',      icon: '✅'  },
-  { appId: 'flashcard',   title: 'flash.app',        label: 'Flashcards',  icon: '🃏'  },
-  { appId: 'budget',      title: 'budget.app',       label: 'Budget',      icon: '💰'  },
-  { appId: 'recipe',      title: 'recipe.app',       label: 'Recipes',     icon: '🍜'  },
-  { appId: 'countdown',   title: 'count.app',        label: 'Countdown',   icon: '⏳'  },
-  { appId: 'mealgent',    title: 'meal.app',         label: 'Meal Gen',    icon: '🍱'  },
-  { appId: 'studysched',  title: 'study.app',        label: 'Study Sched', icon: '📋'  },
-  { appId: 'notepad',     title: 'notepad.app',      label: 'Notepad',     icon: '📝'  },
-  // Row 7 — Social & Fun
-  { appId: 'guestbook',   title: 'guestbook.app',    label: 'Guestbook',   icon: '📖'  },
-  { appId: 'poll',        title: 'poll.app',         label: 'Poll',        icon: '📊'  },
-  { appId: 'jokes',       title: 'jokes.app',        label: 'Jokes',       icon: '😂'  },
-  { appId: 'slashdotai',  title: 'slashdot-ai.app',  label: 'AI Chat',     icon: '🤖'  },
-  { appId: 'newsticker',  title: 'news.app',         label: 'News',        icon: '📰'  },
-  { appId: 'leaderboard', title: 'leaderboard.app',  label: 'Leaderboard', icon: '🏆'  },
-  { appId: 'faketwitter', title: 'twitter.app',      label: 'Twitter',     icon: '🐦'  },
-  { appId: 'fakewhatsapp',title: 'whatsapp.app',     label: 'WhatsApp',    icon: '💬'  },
-  { appId: 'confession',  title: 'confess.app',      label: 'Confessions', icon: '🤫'  },
-  { appId: 'compliment',  title: 'compliment.app',   label: 'Compliments', icon: '💐'  },
-  { appId: 'insult',      title: 'insult.app',       label: 'Roasts',      icon: '🔥'  },
-  { appId: 'debate',      title: 'debate.app',       label: 'Debate',      icon: '⚖'   },
-  { appId: 'tamagotchi',  title: 'tamagotchi.app',   label: 'Tamagotchi',  icon: '🐣'  },
-  { appId: 'stocks',      title: 'stocks.app',       label: 'Stocks',      icon: '📈'  },
-  { appId: 'horoscope',   title: 'horoscope.app',    label: 'Horoscope',   icon: '♈'  },
-  { appId: 'lovecalc',    title: 'love.app',         label: 'Love Calc',   icon: '❤'   },
-  { appId: 'magic8',      title: 'magic8.app',       label: 'Magic 8',     icon: '🎱'  },
-  { appId: 'linuscall',   title: 'linus.app',        label: 'Linus Call',  icon: '📞'  },
-  { appId: 'cgpasim',     title: 'cgpa.app',         label: 'CGPA Sim',    icon: '📊'  },
-  { appId: 'ratemycode',  title: 'rate.app',         label: 'Rate Code',   icon: '⭐'  },
-  { appId: 'rickroll',    title: 'rick.app',         label: 'Rickroll',    icon: '🎵'  },
-  { appId: 'excusegen',   title: 'excuse.app',       label: 'Excuses',     icon: '🙏'  },
-  { appId: 'screensaver', title: 'screen.app',       label: 'Screensaver', icon: '✨'  },
-  { appId: 'fakeload',    title: 'load.app',         label: 'Fake Load',   icon: '⏰'  },
-  { appId: 'fortunecook', title: 'fortune.app',      label: 'Fortune',     icon: '🥠'  },
-  { appId: 'fixbug',      title: 'fixbug.app',       label: 'Fix Bug',     icon: '🐛'  },
-  { appId: 'deployed',    title: 'deployed.app',     label: 'Deployed?',   icon: '🚀'  },
-  // Row 8 — OS Tools
-  { appId: 'fileexplorer',title: 'files.app',        label: 'Files',       icon: '📁'  },
-  { appId: 'taskmanager', title: 'taskmanager.app',  label: 'Task Mgr',    icon: '[%]' },
-  { appId: 'settings',    title: 'settings.app',     label: 'Settings',    icon: '⚙'   },
-  { appId: 'clock',       title: 'clock.app',        label: 'Clock',       icon: '⏰'  },
-  { appId: 'achievements',title: 'achievements.app', label: 'Achievements',icon: '🏆'  },
-  { appId: 'kbtrainer',   title: 'kb.app',           label: 'KB Trainer',  icon: '⌨'   },
-  { appId: 'syslog',      title: 'syslog.app',       label: 'Sys Logs',    icon: '📜'  },
-  { appId: 'clipboard',   title: 'clipboard.app',    label: 'Clipboard',   icon: '📋'  },
+  // Games
+  { appId: 'asteroids',   title: 'asteroids.exe',   label: 'Asteroids',   icon: '🚀' },
+  { appId: 'pong',        title: 'pong.exe',         label: 'Pong',        icon: '🏓' },
+  { appId: 'flappy',      title: 'flappy.exe',       label: 'Flappy {',   icon: '{}' },
+  { appId: 'snake',       title: 'snake.exe',        label: 'Snake',       icon: '🐍' },
+  // Science
+  { appId: 'periodic',    title: 'periodic.app',     label: 'Periodic',    icon: '⚗'  },
+  { appId: 'fourier',     title: 'fourier.app',      label: 'Fourier',     icon: '〜' },
+  { appId: 'gravity',     title: 'gravity.app',      label: 'Gravity',     icon: '🪐' },
+  { appId: 'dna',         title: 'dna.app',          label: 'DNA',         icon: '🧬' },
+  { appId: 'physics',     title: 'physics.app',      label: 'Physics',     icon: '⚛'  },
+  { appId: 'molecular',   title: 'molecular.app',    label: 'Molecule',    icon: '🔬' },
+  { appId: 'sortvis',     title: 'sort.app',         label: 'Sort Vis',    icon: '⟨⟩' },
+  { appId: 'pathvis',     title: 'path.app',         label: 'Pathfind',    icon: '🗺' },
+  { appId: 'binconv',     title: 'binconv.app',      label: 'BinConv',     icon: '01' },
+  { appId: 'truthtable',  title: 'truth.app',        label: 'Truth Tbl',   icon: '⊕'  },
+  { appId: 'statsCalc',   title: 'stats.app',        label: 'Statistics',  icon: 'σ'  },
+  { appId: 'fibprime',    title: 'fib.app',          label: 'Fib/Prime',   icon: 'φ'  },
+  { appId: 'logicgate',   title: 'logic.app',        label: 'Logic Gate',  icon: '⋀'  },
+  // API
+  { appId: 'isstrack',    title: 'iss.app',          label: 'ISS Track',   icon: '🛸' },
+  { appId: 'apod',        title: 'apod.app',         label: 'APOD',        icon: '🔭' },
+  { appId: 'ipgeo',       title: 'ip.app',           label: 'IP Lookup',   icon: '🌐' },
+  { appId: 'randuser',    title: 'user.app',         label: 'Rand User',   icon: '👤' },
+  // Social
+  { appId: 'guestbook',   title: 'guestbook.app',    label: 'Guestbook',   icon: '📖' },
+  { appId: 'poll',        title: 'poll.app',         label: 'Poll',        icon: '📊' },
+  { appId: 'jokes',       title: 'jokes.app',        label: 'Jokes',       icon: '😂' },
+  { appId: 'slashdotai',  title: 'slashdot-ai.app',  label: 'AI Chat',     icon: '🤖' },
+  { appId: 'newsticker',  title: 'news.app',         label: 'News',        icon: '📰' },
+  { appId: 'leaderboard', title: 'leaderboard.app',  label: 'Leaderboard', icon: '🏆' },
+  { appId: 'githubstats', title: 'github.app',       label: 'GitHub',      icon: '🐙' },
+  { appId: 'wikipedia',   title: 'wiki.app',         label: 'Wikipedia',   icon: 'W'  },
+  { appId: 'horoscope',   title: 'horoscope.app',    label: 'Horoscope',   icon: '♈' },
+  { appId: 'excusegen',   title: 'excuse.app',       label: 'Excuses',     icon: '🙏' },
+  { appId: 'screensaver', title: 'screen.app',       label: 'Screensaver', icon: '✨' },
+  { appId: 'fortunecook', title: 'fortune.app',      label: 'Fortune',     icon: '🥠' },
+  { appId: 'cgpasim',     title: 'cgpa.app',         label: 'CGPA Sim',    icon: '📊' },
+  { appId: 'insult',      title: 'insult.app',       label: 'Roasts',      icon: '🔥' },
+  { appId: 'compliment',  title: 'compliment.app',   label: 'Compliments', icon: '💐' },
+  { appId: 'faketwitter', title: 'twitter.app',      label: 'Twitter',     icon: '🐦' },
+  { appId: 'fakewhatsapp',title: 'whatsapp.app',     label: 'WhatsApp',    icon: '💬' },
+  { appId: 'confession',  title: 'confess.app',      label: 'Confessions', icon: '🤫' },
+  // Dev Tools
+  { appId: 'base64',      title: 'base64.app',       label: 'Base64',      icon: 'b64'},
+  { appId: 'markdown',    title: 'markdown.app',     label: 'Markdown',    icon: '.md'},
+  { appId: 'colorpicker', title: 'color.app',        label: 'Colors',      icon: '🎨' },
+  { appId: 'hashgen',     title: 'hash.app',         label: 'Hash',        icon: '#'  },
+  { appId: 'paint',       title: 'paint.app',        label: 'Paint',       icon: '🖌' },
+  { appId: 'asciiart',    title: 'ascii.app',        label: 'ASCII Art',   icon: 'A'  },
+  { appId: 'kbtrainer',   title: 'kb.app',           label: 'KB Trainer',  icon: '⌨'  },
+  { appId: 'syslog',      title: 'syslog.app',       label: 'Sys Logs',    icon: '📜' },
+  { appId: 'clipboard',   title: 'clipboard.app',    label: 'Clipboard',   icon: '📋' },
+  // Productivity
+  { appId: 'calendar',    title: 'calendar.app',     label: 'Calendar',    icon: '📅' },
+  { appId: 'pomodoro',    title: 'pomodoro.app',     label: 'Pomodoro',    icon: '🍅' },
+  { appId: 'stopwatch',   title: 'stopwatch.app',    label: 'Stopwatch',   icon: '⏱' },
+  { appId: 'countdown',   title: 'count.app',        label: 'Countdown',   icon: '⏳' },
+  { appId: 'mealgent',    title: 'meal.app',         label: 'Meal Gen',    icon: '🍱' },
+  { appId: 'studysched',  title: 'study.app',        label: 'Study Sched', icon: '📋' },
+  { appId: 'flashcard',   title: 'flash.app',        label: 'Flashcards',  icon: '🃏' },
+  // OS Tools
+  { appId: 'fileexplorer',title: 'files.app',        label: 'Files',       icon: '📁' },
+  { appId: 'settings',    title: 'settings.app',     label: 'Settings',    icon: '⚙'  },
+  { appId: 'clock',       title: 'clock.app',        label: 'Clock',       icon: '⏰' },
+  { appId: 'notepad',     title: 'notepad.app',      label: 'Notepad',     icon: '📝' },
+  { appId: 'taskmanager', title: 'taskmanager.app',  label: 'Task Mgr',    icon: '[%]'},
 ]
 
 const RIGHT_ICONS: DesktopIcon[] = [
-  { appId: 'terminal',    title: 'terminal.sh',      label: 'Terminal',    icon: '>_'  },
-  { appId: 'home',        title: 'home.exe',         label: 'Home',        icon: '⌂'   },
-  { appId: 'about',       title: 'about.txt',        label: 'About',       icon: '📄'  },
-  { appId: 'team',        title: 'team.db',          label: 'Team',        icon: '👥'  },
-  { appId: 'stack',       title: 'stack.log',        label: 'Tech Stack',  icon: '⚙'   },
-  { appId: 'contact',     title: 'contact.sh',       label: 'Contact',     icon: '@'   },
-  { appId: 'neofetch',    title: 'neofetch',         label: 'Neofetch',    icon: '🖥'  },
-  { appId: 'events',      title: 'events.app',       label: 'Events',      icon: '📅'  },
-  { appId: 'showcase',    title: 'showcase.app',     label: 'Showcase',    icon: '🌟'  },
-  { appId: 'blog',        title: 'blog.app',         label: 'Blog',        icon: '📰'  },
-  { appId: 'resources',   title: 'resources.app',    label: 'Resources',   icon: '📚'  },
-  { appId: 'halloffame',  title: 'fame.app',         label: 'Hall of Fame',icon: '🏆'  },
-  { appId: 'rules',       title: 'rules.app',        label: 'Rules',       icon: '📜'  },
-  { appId: 'newsletter',  title: 'newsletter.app',   label: 'Newsletter',  icon: '📬'  },
+  { appId: 'terminal',    title: 'terminal.sh',      label: 'Terminal',    icon: '>_' },
+  { appId: 'home',        title: 'home.exe',         label: 'Home',        icon: '⌂'  },
+  { appId: 'about',       title: 'about.txt',        label: 'About',       icon: '📄' },
+  { appId: 'team',        title: 'team.db',          label: 'Team',        icon: '👥' },
+  { appId: 'stack',       title: 'stack.log',        label: 'Tech Stack',  icon: '⚙'  },
+  { appId: 'contact',     title: 'contact.sh',       label: 'Contact',     icon: '@'  },
+  { appId: 'neofetch',    title: 'neofetch',         label: 'Neofetch',    icon: '🖥' },
+  { appId: 'events',      title: 'events.app',       label: 'Events',      icon: '📅' },
+  { appId: 'showcase',    title: 'showcase.app',     label: 'Showcase',    icon: '🌟' },
+  { appId: 'blog',        title: 'blog.app',         label: 'Blog',        icon: '📰' },
+  { appId: 'resources',   title: 'resources.app',    label: 'Resources',   icon: '📚' },
+  { appId: 'halloffame',  title: 'fame.app',         label: 'Hall of Fame',icon: '🏆' },
+  { appId: 'rules',       title: 'rules.app',        label: 'Rules',       icon: '📜' },
+  { appId: 'newsletter',  title: 'newsletter.app',   label: 'Newsletter',  icon: '📬' },
 ]
 
 const ICONS: DesktopIcon[] = [...LEFT_ICONS, ...RIGHT_ICONS]
+
 
 interface ContextMenu {
   x: number
@@ -159,13 +125,13 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
   const [muted, setMuted] = useState(false)
   const [raining, setRaining] = useState(false)
   const [visitorCount, setVisitorCount] = useState<number | null>(null)
- const [iconPositions, setIconPositions] = useState<Record<string, IconPosition>>(() => {
+  const [iconPositions, setIconPositions] = useState<Record<string, IconPosition>>(() => {
     const positions: Record<string, IconPosition> = {}
 
-    // Left side — all apps in a tight grid
+    // Left side — tight 7-column grid
     const COL_W = 66
     const ROW_H = 72
-    const LEFT_COLS = 8
+    const LEFT_COLS = 7
     const LEFT_START_X = 4
     const LEFT_START_Y = 4
 
@@ -176,15 +142,16 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
       }
     })
 
-    // Right side — club pages stacked vertically on far right
-    const RIGHT_START_X = window.innerWidth - 82
+    // Right side — 2 columns, stacked vertically
+    const RIGHT_COL_W = 70
+    const RIGHT_START_X = window.innerWidth - 148
     const RIGHT_START_Y = 4
     const RIGHT_ROW_H = 70
 
     RIGHT_ICONS.forEach(function(icon, i) {
       positions[icon.appId] = {
-        x: RIGHT_START_X,
-        y: RIGHT_START_Y + i * RIGHT_ROW_H,
+        x: RIGHT_START_X + (i % 2) * RIGHT_COL_W,
+        y: RIGHT_START_Y + Math.floor(i / 2) * RIGHT_ROW_H,
       }
     })
 
@@ -251,46 +218,28 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
       {raining && <DesktopRain intensity={80} />}
       <div className="scanlines" />
 
-      {/* IISER Kolkata logo — bottom left above taskbar */}
+      {/* SlashDot logo — centred on desktop */}
       <div style={{
         position: 'fixed',
-        bottom: 44,
-        left: 16,
-        zIndex: 2,
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 4,
-        opacity: 0.35,
-        
-        transition: 'opacity 0.2s',
-      }}
-        onMouseEnter={function(e) { (e.currentTarget as HTMLElement).style.opacity = '0.9' }}
-        onMouseLeave={function(e) { (e.currentTarget as HTMLElement).style.opacity = '0.35' }}
-      >
-        <img src="./iiserkol_logo.png" alt="IISER Kolkata" style={{ width: 56, height: 'auto', filter: 'brightness(0.9)' }} />
-        <span style={{ color: '#888', fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.05em' }}>IISER Kolkata</span>
-      </div>
-
-      {/* SlashDot logo — bottom right above taskbar */}
-      <div style={{
-        position: 'fixed',
-        bottom: 44,
-        right: 16,
-        zIndex: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: 4,
-        opacity: 0.35,
-        
-        transition: 'opacity 0.2s',
-      }}
-        onMouseEnter={function(e) { (e.currentTarget as HTMLElement).style.opacity = '0.9' }}
-        onMouseLeave={function(e) { (e.currentTarget as HTMLElement).style.opacity = '0.35' }}
-      >
-        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 80, height: 'auto', filter: 'brightness(0.9)' }} />
-        <span style={{ color: '#888', fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.05em' }}>SlashDot Club</span>
+        gap: 12,
+        opacity: 0.12,
+        pointerEvents: 'none',
+        userSelect: 'none',
+      }}>
+        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 220, height: 'auto', filter: 'brightness(1.2)' }} />
+        <span style={{ color: '#fff', fontFamily: 'JetBrains Mono', fontSize: 14, letterSpacing: '0.3em', fontWeight: 700 }}>
+          SLASHDOT
+        </span>
+        <span style={{ color: '#fff', fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.15em' }}>
+          CODING & DESIGN CLUB • IISER KOLKATA
+        </span>
       </div>
 
       <div className="desktop-icons-layer">

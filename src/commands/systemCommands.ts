@@ -274,6 +274,68 @@ export const systemCommands: Record<string, CommandHandler> = {
     }
   },
 
+  alias: (args: string[]): CommandResult => {
+    if (args.length === 0) {
+      const defaults = [
+        ['ll',  'ls -la',     'List files with details'],
+        ['cls', 'clear',      'Clear terminal'],
+        ['?',   'help',       'Show help'],
+        ['gs',  'git status', 'Git status shorthand'],
+        ['gl',  'git log',    'Git log shorthand'],
+      ]
+      return {
+        output: [
+          '',
+          `${c.cyan}Built-in aliases:${c.reset}`,
+          ...defaults.map(([k, v, d]) => `  ${c.yellow}${k}${c.reset} = ${c.white}${v}${c.reset}  ${c.gray}${d}${c.reset}`),
+          '',
+          `${c.gray}Usage: alias name='command'${c.reset}`,
+          `${c.gray}Example: alias myapp='open slashdotai'${c.reset}`,
+          `${c.gray}Aliases are saved across sessions.${c.reset}`,
+          '',
+        ].join('\r\n'),
+      }
+    }
+    const raw = args.join(' ')
+    const match = raw.match(/^(\w+)=["']?(.+?)["']?$/)
+    if (!match) {
+      return { output: `\r\n${c.red}Usage: alias name='command'${c.reset}\r\n${c.gray}Example: alias gs='git status'${c.reset}\r\n` }
+    }
+    window.dispatchEvent(new CustomEvent('slashdot-alias', { detail: { name: match[1], cmd: match[2] } }))
+    return { output: `\r\n${c.green}✓ Alias created: ${c.yellow}${match[1]}${c.green} = ${c.white}${match[2]}${c.reset}\r\n${c.gray}Saved to session storage.${c.reset}\r\n` }
+  },
+
+  challenge: (): CommandResult => {
+    try {
+      const { getDailyChallengeText } = require('../components/Desktop/DailyChallenge')
+      return { output: getDailyChallengeText() }
+    } catch {
+      const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000)
+      const challenges = [
+        'Two Sum — Given array + target, return indices of two numbers that add up to target.',
+        'Valid Parentheses — Given string of brackets, return true if valid.',
+        'Binary Search — Find target in sorted array in O(log n).',
+        'Maximum Subarray — Find contiguous subarray with largest sum (Kadane\'s).',
+        'Number of Islands — Count islands in a 2D grid using BFS/DFS.',
+        'CGPA Optimiser — Just attend class. O(1) solution.',
+      ]
+      const ch = challenges[dayOfYear % challenges.length]
+      return {
+        output: [
+          '',
+          `${c.cyan}╔══════════════════════════════════════════╗${c.reset}`,
+          `${c.cyan}║  📅 Daily Coding Challenge                ║${c.reset}`,
+          `${c.cyan}╚══════════════════════════════════════════╝${c.reset}`,
+          '',
+          `  ${c.white}${ch}${c.reset}`,
+          '',
+          `  ${c.gray}New challenge every day. Good luck!${c.reset}`,
+          '',
+        ].join('\r\n'),
+      }
+    }
+  },
+
   setname: (args: string[]): CommandResult => {
     const name = args.join(' ').trim()
     if (!name) return { output: `\r\n${c.red}Usage: setname <your name>${c.reset}\r\n` }

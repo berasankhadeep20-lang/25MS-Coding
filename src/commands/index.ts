@@ -12,8 +12,7 @@ const ALL_COMMANDS = {
 
 export const ALL_COMMAND_NAMES = Object.keys(ALL_COMMANDS)
 
-export function parseAndRun(raw: string): CommandResult & { prompt: string } {
-  const input = raw.trim()
+function parseAndRunSingle(input: string): CommandResult & { prompt: string } {
   if (!input) return { output: '', prompt: prompt(getCwd()) }
 
   // Try exact match first (for multi-word commands like 'sudo party')
@@ -43,6 +42,30 @@ export function parseAndRun(raw: string): CommandResult & { prompt: string } {
     ].join('\r\n'),
     prompt: prompt(getCwd()),
   }
+}
+
+export function parseAndRun(raw: string): CommandResult & { prompt: string } {
+  const input = raw.trim()
+  if (!input) return { output: '', prompt: prompt(getCwd()) }
+
+  // Basic pipe support: cmd | grep pattern
+  if (input.includes(' | grep ')) {
+    const pipeIdx = input.indexOf(' | grep ')
+    const leftCmd = input.slice(0, pipeIdx).trim()
+    const pattern = input.slice(pipeIdx + 8).trim()
+    const leftResult = parseAndRunSingle(leftCmd)
+    if (leftResult.output && pattern) {
+      const lines = leftResult.output.split('\r\n')
+      const matched = lines.filter(l => l.includes(pattern))
+      const output = matched.length > 0
+        ? matched.join('\r\n')
+        : `\r\n${c.gray}(no matches for '${pattern}')${c.reset}\r\n`
+      return { ...leftResult, output, prompt: prompt(getCwd()) }
+    }
+    return { ...leftResult, prompt: prompt(getCwd()) }
+  }
+
+  return parseAndRunSingle(input)
 }
 
 export function getCompletions(partial: string): string[] {
