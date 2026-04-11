@@ -33,13 +33,12 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
   }, [])
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (composingRef.current) return // ignore IME composition
+    if (composingRef.current) return
 
     if (e.key === 'Enter') {
       e.preventDefault()
       e.stopPropagation()
       onEnter()
-      // Clear the visible input value
       if (inputRef.current) inputRef.current.value = ''
       return
     }
@@ -47,10 +46,15 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
       e.preventDefault()
       e.stopPropagation()
       onBackspace()
-      // Sync: remove last char from input value too
       if (inputRef.current) {
         inputRef.current.value = inputRef.current.value.slice(0, -1)
       }
+      return
+    }
+    if (e.key === ' ') {
+      e.preventDefault()
+      e.stopPropagation()
+      onChar(' ')
       return
     }
     if (e.key === 'ArrowUp') {
@@ -67,7 +71,8 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
 
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (composingRef.current) return
-    if (e.key === 'Enter') return // handled in keyDown
+    if (e.key === 'Enter') return
+    if (e.key === ' ') return  // already handled in keyDown
     if (e.key.length === 1) {
       onChar(e.key)
     }
