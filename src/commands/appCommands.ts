@@ -107,6 +107,15 @@ export const appCommands: Record<string, CommandHandler> = {
       halloffame:  { appId: 'halloffame',  title: 'fame.app',         preview: 'Loading Hall of Fame...'      },
       rules:       { appId: 'rules',       title: 'rules.app',        preview: 'Loading Constitution...'      },
       newsletter:  { appId: 'newsletter',  title: 'newsletter.app',   preview: 'Loading Newsletter...'        },
+      githubcontrib: { appId: 'githubcontrib', title: 'github-contrib.app', preview: 'Loading GitHub Activity...'   },
+      todayincs:     { appId: 'todayincs',     title: 'cs-history.app',    preview: 'Loading CS History...'        },
+      hackernews:    { appId: 'hackernews',    title: 'hackernews.app',    preview: 'Loading Hacker News...'       },
+      wikirandom:    { appId: 'wikirandom',    title: 'wiki-random.app',   preview: 'Loading Wikipedia...'         },
+      campusmap:     { appId: 'campusmap',     title: 'campus-map.app',    preview: 'Loading Campus Map...'        },
+      lhcrooms:      { appId: 'lhcrooms',      title: 'lhc-rooms.app',     preview: 'Loading LHC Room Status...'   },
+      timetable:     { appId: 'timetable',     title: 'timetable.app',     preview: 'Loading Timetable...'         },
+      roadmap:       { appId: 'roadmap',       title: 'roadmap.app',       preview: 'Loading Roadmap...'           },
+      slashdotfaq:   { appId: 'slashdotfaq',   title: 'slashdot-faq.app',  preview: 'Loading FAQ Bot...'           },
       }
 
     if (!target || !appMap[target]) {

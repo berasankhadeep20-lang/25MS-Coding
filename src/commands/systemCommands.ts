@@ -31,6 +31,15 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.cyan}open rules${c.reset}            ${c.gray}Club constitution${c.reset}`,
         `${c.cyan}open newsletter${c.reset}       ${c.gray}SlashDot newsletter${c.reset}`,
         `${c.cyan}open stack${c.reset}            ${c.gray}Tech stack${c.reset}`,
+        `${c.cyan}open githubcontrib${c.reset}    ${c.gray}GitHub contribution graph${c.reset}`,
+        `${c.cyan}open todayincs${c.reset}        ${c.gray}Today in CS history${c.reset}`,
+        `${c.cyan}open hackernews${c.reset}       ${c.gray}Hacker News top stories${c.reset}`,
+        `${c.cyan}open wikirandom${c.reset}       ${c.gray}Random Wikipedia article${c.reset}`,
+        `${c.cyan}open campusmap${c.reset}        ${c.gray}IISER campus map${c.reset}`,
+        `${c.cyan}open lhcrooms${c.reset}         ${c.gray}LHC room availability${c.reset}`,
+        `${c.cyan}open timetable${c.reset}        ${c.gray}Weekly timetable builder${c.reset}`,
+        `${c.cyan}open roadmap${c.reset}          ${c.gray}SlashDot project roadmap${c.reset}`,
+        `${c.cyan}open slashdotfaq${c.reset}      ${c.gray}Ask anything about SlashDot${c.reset}`,
       ]),
       formatSection('Club Commands', [
         `${c.yellow}whois slashdot${c.reset}       ${c.gray}WHOIS record for SlashDot${c.reset}`,
@@ -42,6 +51,15 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.yellow}visits${c.reset}               ${c.gray}Live visitor counter${c.reset}`,
         `${c.yellow}challenge${c.reset}            ${c.gray}Today's coding challenge${c.reset}`,
         `${c.yellow}alias name='cmd'${c.reset}     ${c.gray}Create command shortcut${c.reset}`,
+        `${c.yellow}open random${c.reset}          ${c.gray}Open a random app${c.reset}`,
+        `${c.yellow}tree /club${c.reset}           ${c.gray}Show all club pages as file tree${c.reset}`,
+        `${c.yellow}ascii slashdot${c.reset}       ${c.gray}Print SlashDot ASCII logo${c.reset}`,
+        `${c.yellow}ls apps${c.reset}              ${c.gray}List all available apps${c.reset}`,
+        `${c.yellow}hn${c.reset}                   ${c.gray}Open Hacker News${c.reset}`,
+        `${c.yellow}wiki random${c.reset}          ${c.gray}Random Wikipedia article${c.reset}`,
+        `${c.yellow}lhc / rooms${c.reset}          ${c.gray}LHC room availability${c.reset}`,
+        `${c.yellow}map${c.reset}                  ${c.gray}IISER campus map${c.reset}`,
+        `${c.yellow}faq${c.reset}                  ${c.gray}SlashDot FAQ bot${c.reset}`,
       ]),
       formatSection('Games', [
         `${c.cyan}open asteroids${c.reset}        ${c.gray}Asteroids (arrow keys + space)${c.reset}`,
@@ -327,6 +345,132 @@ export const systemCommands: Record<string, CommandHandler> = {
       ].join('\r\n'),
     }
   },
+
+  'open random': (): CommandResult => {
+    const APPS = [
+      'asteroids','pong','flappy','snake','periodic','fourier','gravity','dna',
+      'physics','sortvis','pathvis','binconv','truthtable','statsCalc','logicgate',
+      'isstrack','apod','ipgeo','guestbook','poll','jokes','slashdotai',
+      'fortunecook','screensaver','cgpasim','compliment','insult','faketwitter',
+      'paint','asciiart','calendar','pomodoro','stopwatch','countdown','flashcard',
+      'hackernews','wikirandom','todayincs','campusmap','lhcrooms','slashdotfaq',
+    ]
+    const appId = APPS[Math.floor(Math.random() * APPS.length)] as any
+    const titles: Record<string, string> = {
+      asteroids: 'asteroids.exe', pong: 'pong.exe', flappy: 'flappy.exe',
+      hackernews: 'hackernews.app', wikirandom: 'wiki-random.app',
+      todayincs: 'cs-history.app', campusmap: 'campus-map.app',
+      lhcrooms: 'lhc-rooms.app', slashdotfaq: 'slashdot-faq.app',
+    }
+    return {
+      output: `\r\n${c.green}🎲 Opening random app: ${c.yellow}${appId}${c.reset}\r\n`,
+      action: { type: 'open_window', appId, title: titles[appId] ?? `${appId}.app` },
+    }
+  },
+
+  'tree /club': (): CommandResult => ({
+    output: [
+      '',
+      `${c.green}/club${c.reset}`,
+      `${c.green}├── ${c.cyan}about.txt${c.reset}          ${c.gray}About SlashDot${c.reset}`,
+      `${c.green}├── ${c.cyan}team.db${c.reset}            ${c.gray}Office Bearers + Developers${c.reset}`,
+      `${c.green}├── ${c.cyan}members.app${c.reset}        ${c.gray}24 members across 4 batches${c.reset}`,
+      `${c.green}├── ${c.cyan}recruitment.app${c.reset}    ${c.gray}How to join${c.reset}`,
+      `${c.green}├── ${c.cyan}alumni.app${c.reset}         ${c.gray}10 alumni tracked${c.reset}`,
+      `${c.green}├── ${c.cyan}events.app${c.reset}         ${c.gray}13 events (5 completed, 8 upcoming)${c.reset}`,
+      `${c.green}├── ${c.cyan}showcase.app${c.reset}       ${c.gray}7 featured projects${c.reset}`,
+      `${c.green}├── ${c.cyan}blog.app${c.reset}           ${c.gray}5 articles by members${c.reset}`,
+      `${c.green}├── ${c.cyan}resources.app${c.reset}      ${c.gray}40+ curated learning links${c.reset}`,
+      `${c.green}├── ${c.cyan}halloffame.app${c.reset}     ${c.gray}8 Hall of Fame entries${c.reset}`,
+      `${c.green}├── ${c.cyan}rules.app${c.reset}          ${c.gray}10-article constitution${c.reset}`,
+      `${c.green}├── ${c.cyan}newsletter.app${c.reset}     ${c.gray}4 newsletter issues${c.reset}`,
+      `${c.green}├── ${c.cyan}gallery.app${c.reset}        ${c.gray}12 event photos${c.reset}`,
+      `${c.green}├── ${c.cyan}roadmap.app${c.reset}        ${c.gray}Project roadmap (kanban)${c.reset}`,
+      `${c.green}├── ${c.cyan}contact.sh${c.reset}         ${c.gray}Contact info${c.reset}`,
+      `${c.green}└── ${c.cyan}contactform.app${c.reset}    ${c.gray}Contact form → email${c.reset}`,
+      '',
+      `${c.gray}17 files  |  slashdot-iiserk.github.io${c.reset}`,
+      '',
+    ].join('\r\n'),
+  }),
+
+  'ascii slashdot': (): CommandResult => ({
+    output: [
+      '',
+      `${c.green}  ____  _           _     ____        _    ${c.reset}`,
+      `${c.green} / ___|| | __ _ ___| |__ |  _ \\  ___ | |_  ${c.reset}`,
+      `${c.green} \\___ \\| |/ _\` / __| '_ \\| | | |/ _ \\| __| ${c.reset}`,
+      `${c.green}  ___) | | (_| \\__ \\ | | | |_| | (_) | |_  ${c.reset}`,
+      `${c.green} |____/|_|\\__,_|___/_| |_|____/ \\___/ \\__| ${c.reset}`,
+      '',
+      `  ${c.cyan}The Coding & Design Club of IISER Kolkata${c.reset}`,
+      `  ${c.gray}slashdot-iiserk.github.io${c.reset}`,
+      '',
+    ].join('\r\n'),
+  }),
+
+  'ls apps': (): CommandResult => {
+    const apps = [
+      ['home','about','team','contact','events','showcase'],
+      ['blog','resources','halloffame','rules','newsletter','memberlist'],
+      ['recruitment','alumni','gallery','roadmap','campusmap','lhcrooms'],
+      ['timetable','slashdotfaq','githubcontrib','todayincs','hackernews','wikirandom'],
+      ['asteroids','pong','flappy','snake','sortvis','pathvis'],
+      ['binconv','truthtable','statsCalc','logicgate','fibprime','periodic'],
+      ['fourier','gravity','dna','physics','molecular','isstrack'],
+      ['apod','ipgeo','randuser','githubstats','wikipedia','guestbook'],
+      ['poll','jokes','slashdotai','newsticker','leaderboard','horoscope'],
+      ['faketwitter','fakewhatsapp','confession','compliment','insult','screensaver'],
+      ['fortunecook','cgpasim','excusegen','base64','markdown','colorpicker'],
+      ['hashgen','paint','asciiart','calendar','pomodoro','stopwatch'],
+      ['countdown','mealgent','studysched','flashcard','notepad','kbtrainer'],
+      ['syslog','clipboard','fileexplorer','settings','taskmanager','clock'],
+    ]
+    const lines = apps.map(row =>
+      row.map(a => `${c.cyan}${a.padEnd(16)}${c.reset}`).join('')
+    )
+    return {
+      output: [
+        '',
+        `${c.yellow}Available apps (${apps.flat().length} total):${c.reset}`,
+        '',
+        ...lines,
+        '',
+        `${c.gray}Usage: open <appname>   |   Ctrl+K to search${c.reset}`,
+        '',
+      ].join('\r\n'),
+    }
+  },
+
+  hn: (): CommandResult => ({
+    output: `\r\n${c.green}▶ Opening Hacker News...${c.reset}\r\n`,
+    action: { type: 'open_window', appId: 'hackernews' as any, title: 'hackernews.app' },
+  }),
+
+  'wiki random': (): CommandResult => ({
+    output: `\r\n${c.green}▶ Opening Random Wikipedia article...${c.reset}\r\n`,
+    action: { type: 'open_window', appId: 'wikirandom' as any, title: 'wiki-random.app' },
+  }),
+
+  lhc: (): CommandResult => ({
+    output: `\r\n${c.green}▶ Opening LHC Room Status...${c.reset}\r\n`,
+    action: { type: 'open_window', appId: 'lhcrooms' as any, title: 'lhc-rooms.app' },
+  }),
+
+  rooms: (): CommandResult => ({
+    output: `\r\n${c.green}▶ Opening LHC Room Status...${c.reset}\r\n`,
+    action: { type: 'open_window', appId: 'lhcrooms' as any, title: 'lhc-rooms.app' },
+  }),
+
+  map: (): CommandResult => ({
+    output: `\r\n${c.green}▶ Opening Campus Map...${c.reset}\r\n`,
+    action: { type: 'open_window', appId: 'campusmap' as any, title: 'campus-map.app' },
+  }),
+
+  faq: (): CommandResult => ({
+    output: `\r\n${c.green}▶ Opening SlashDot FAQ...${c.reset}\r\n`,
+    action: { type: 'open_window', appId: 'slashdotfaq' as any, title: 'slashdot-faq.app' },
+  }),
 
   alias: (args: string[]): CommandResult => {
     if (args.length === 0) {

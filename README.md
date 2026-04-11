@@ -203,6 +203,24 @@ open taskmanager   Running processes and system stats
 open clock         Live analog and digital clock
 ```
 
+## IISER Tools
+
+```
+open campusmap     Interactive map of IISER Kolkata campus
+open lhcrooms      → LHC lecture hall room availability (G-floor, 1st, 2nd)
+open timetable     → Weekly timetable builder (auto-saved to browser)
+open roadmap       → SlashDot project roadmap (kanban-style)
+open slashdotfaq   → FAQ chatbot — ask anything about the club
+```
+
+## Live Data
+```
+open githubcontrib → GitHub contribution heatmap for SlashDot
+open todayincs     → Today in CS/computing history + tech fact
+open hackernews    → Live Hacker News top/new/ask stories
+open wikirandom    → Random Wikipedia article with image
+```
+
 ---
 
 ## Terminal Commands
@@ -295,6 +313,15 @@ banner <text>      Print large ASCII banner
 ping <host>        Fake ping command
 clear              Clear the terminal screen
 reset              Reset terminal session
+```
+
+Terminal shortcuts:
+```bash
+lhc / rooms        → Quick access to LHC room status
+map                → Open campus map
+faq                → Open FAQ bot
+hn                 → Open Hacker News
+wiki random        → Random Wikipedia article
 ```
 
 ---

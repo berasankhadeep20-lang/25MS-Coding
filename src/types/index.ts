@@ -13,7 +13,8 @@ export type AppId =
   'paint' | 'asciiart' |
   'calendar' | 'pomodoro' | 'stopwatch' | 'countdown' | 'mealgent' | 'studysched' | 'flashcard' |
   'fileexplorer' | 'settings' | 'notepad' | 'taskmanager' |
-  'events' | 'showcase' | 'blog' | 'resources' | 'halloffame' | 'rules' | 'newsletter' | 'memberlist' | 'recruitment' | 'alumni' | 'gallery' | 'contactform'
+  'events' | 'showcase' | 'blog' | 'resources' | 'halloffame' | 'rules' | 'newsletter' | 'memberlist' | 'recruitment' | 'alumni' | 'gallery' | 'contactform' | 'campusmap' | 'timetable' | 'roadmap' | 'slashdotfaq' | 'contactform' | 'campusmap' | 'lhcrooms' | 'timetable' | 'roadmap' | 'slashdotfaq' |
+'githubcontrib' | 'todayincs' | 'hackernews' | 'wikirandom'
 export interface WindowState {
   id: string
   appId: AppId

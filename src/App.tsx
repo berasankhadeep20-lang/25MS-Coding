@@ -11,10 +11,7 @@ import { CommandPalette } from './components/Desktop/CommandPalette'
 import { Clippy } from './components/Desktop/Clippy'
 import { getDailyChallengeText } from './components/Desktop/DailyChallenge'
 import { LiveReactions } from './components/Desktop/LiveReactions'
-import {
-  HomeApp, AboutApp, TeamApp,
-  TechStackApp, ContactApp, NeofetchApp, ClockApp,
-} from './components/Apps/index'
+import { HomeApp, AboutApp, TeamApp,TechStackApp, ContactApp, NeofetchApp, ClockApp} from './components/Apps/index'
 import { AsteroidsGame } from './components/Apps/Asteroids'
 import { PongGame } from './components/Apps/Pong'
 import { PeriodicTableApp } from './components/Apps/PeriodicTable'
@@ -44,6 +41,8 @@ import { ISSTrackerApp, APODApp, IPGeoApp, RandUserApp } from './components/Apps
 import { MealGenApp, CountdownApp } from './components/Apps/ProductivityApps2'
 import { FlashcardApp } from './components/Apps/ProductivityApps2'
 import { EventsApp, ShowcaseApp } from './components/Apps/ClubApps'
+import { GitHubContribApp, TodayInCSApp, HackerNewsApp, WikiRandomApp } from './components/Apps/LiveDataApps'
+import { CampusMapApp, LHCRoomsApp, TimetableApp, RoadmapApp, SlashDotFAQApp } from './components/Apps/ClubUtils'
 import { BlogApp, ResourcesApp, HallOfFameApp, RulesApp, NewsletterApp } from './components/Apps/ClubPages'
 import { MemberListApp, RecruitmentApp, AlumniApp, GalleryApp, ContactFormApp } from './components/Apps/ClubExtra'
 import { useWindowManager } from './hooks/useWindowManager'
@@ -175,6 +174,15 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'alumni':       return <AlumniApp />
     case 'gallery':      return <GalleryApp />
     case 'contactform':  return <ContactFormApp />
+    case 'githubcontrib': return <GitHubContribApp />
+    case 'todayincs':     return <TodayInCSApp />
+    case 'hackernews':    return <HackerNewsApp />
+    case 'wikirandom':    return <WikiRandomApp />
+    case 'campusmap':     return <CampusMapApp />
+    case 'lhcrooms':      return <LHCRoomsApp />
+    case 'timetable':     return <TimetableApp />
+    case 'roadmap':       return <RoadmapApp />
+    case 'slashdotfaq':   return <SlashDotFAQApp />
     default:             return null
   }
 }
@@ -393,6 +401,10 @@ export default function App() {
                   ['alumni',      '🎓', 'Alumni'],
                   ['gallery',     '📸', 'Gallery'],
                   ['contactform', '📧', 'Contact Form'],
+                  ['githubcontrib', '📊', 'GH Activity'],
+                  ['todayincs',     '📅', 'CS History'],
+                  ['hackernews',    '🔥', 'Hacker News'],
+                  ['wikirandom',    '🎲', 'Wiki Random'],
                 ] as [AppId, string, string][]).map(([id, icon, label]) => (
                   <button key={id} className="mobile-app-btn club" onClick={() => setMobilePage(id)}>
                     <span className="mobile-btn-icon">{icon}</span>
@@ -461,6 +473,25 @@ export default function App() {
                   ['horoscope',  '♈', 'Horoscope'],
                 ] as [AppId, string, string][]).map(([id, icon, label]) => (
                   <button key={id} className="mobile-app-btn api" onClick={() => setMobilePage(id)}>
+                    <span className="mobile-btn-icon">{icon}</span>
+                    <span className="mobile-btn-label">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Club Utils */}
+            <div className="mobile-section">
+              <p className="mobile-section-label">// iiser tools</p>
+              <div className="mobile-grid-4">
+                {([
+                  ['campusmap',   '🗺', 'Campus Map'],
+                  ['lhcrooms',    '🏫', 'LHC Rooms'],
+                  ['timetable',   '📋', 'Timetable'],
+                  ['roadmap',     '🗺', 'Roadmap'],
+                  ['slashdotfaq', '🤖', 'FAQ Bot'],
+                ] as [AppId, string, string][]).map(([id, icon, label]) => (
+                  <button key={id} className="mobile-app-btn science" onClick={() => setMobilePage(id)}>
                     <span className="mobile-btn-icon">{icon}</span>
                     <span className="mobile-btn-label">{label}</span>
                   </button>

@@ -32,6 +32,17 @@ const LEFT_ICONS: DesktopIcon[] = [
   { appId: 'statsCalc',   title: 'stats.app',        label: 'Statistics',  icon: 'σ'  },
   { appId: 'fibprime',    title: 'fib.app',          label: 'Fib/Prime',   icon: 'φ'  },
   { appId: 'logicgate',   title: 'logic.app',        label: 'Logic Gate',  icon: '⋀'  },
+  // Live Data
+  { appId: 'githubcontrib', title: 'github-contrib.app', label: 'GH Contrib',  icon: '📊' },
+  { appId: 'todayincs',     title: 'cs-history.app',    label: 'CS History',  icon: '📅' },
+  { appId: 'hackernews',    title: 'hackernews.app',    label: 'Hacker News', icon: '🔥' },
+  { appId: 'wikirandom',    title: 'wiki-random.app',   label: 'Wiki Random', icon: '🎲' },
+  // Club Utilities
+  { appId: 'campusmap',     title: 'campus-map.app',    label: 'Campus Map',  icon: '🗺' },
+  { appId: 'lhcrooms',      title: 'lhc-rooms.app',     label: 'LHC Rooms',   icon: '🏫' },
+  { appId: 'timetable',     title: 'timetable.app',     label: 'Timetable',   icon: '📋' },
+  { appId: 'roadmap',       title: 'roadmap.app',       label: 'Roadmap',     icon: '🗺' },
+  { appId: 'slashdotfaq',   title: 'slashdot-faq.app',  label: 'FAQ Bot',     icon: '🤖' },
   // API
   { appId: 'isstrack',    title: 'iss.app',          label: 'ISS Track',   icon: '🛸' },
   { appId: 'apod',        title: 'apod.app',         label: 'APOD',        icon: '🔭' },

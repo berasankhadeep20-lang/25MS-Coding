@@ -99,6 +99,18 @@ const ALL_COMMANDS = [
   { label: 'Visitor Counter',       action: 'cmd:visits',        icon: '👥' },
   { label: 'Summon Clippy',         action: 'cmd:clippy',        icon: '📎' },
   { label: 'Show Aliases',          action: 'cmd:alias',         icon: '⚡' },
+  { label: 'GitHub Contributions',    action: 'open:githubcontrib', icon: '📊' },
+  { label: 'Today in CS History',     action: 'open:todayincs',     icon: '📅' },
+  { label: 'Hacker News',             action: 'open:hackernews',    icon: '🔥' },
+  { label: 'Random Wikipedia',        action: 'open:wikirandom',    icon: '🎲' },
+  { label: 'IISER Campus Map',        action: 'open:campusmap',     icon: '🗺' },
+  { label: 'LHC Room Status',         action: 'open:lhcrooms',      icon: '🏫' },
+  { label: 'Timetable Builder',       action: 'open:timetable',     icon: '📋' },
+  { label: 'SlashDot Roadmap',        action: 'open:roadmap',       icon: '🗺' },
+  { label: 'FAQ Bot — Ask SlashDot',  action: 'open:slashdotfaq',   icon: '🤖' },
+  { label: 'Open Random App',         action: 'cmd:open random',    icon: '🎲' },
+  { label: 'List All Apps',           action: 'cmd:ls apps',        icon: '📋' },
+  { label: 'Club File Tree',          action: 'cmd:tree /club',     icon: '🌳' },
 ]
 
 interface Props {
@@ -164,6 +176,11 @@ export function CommandPalette({ onOpenWindow, onRunCommand }: Props) {
         resources: 'resources.app', halloffame: 'fame.app', rules: 'rules.app', newsletter: 'newsletter.app',
         memberlist: 'members.app', recruitment: 'recruit.app',
         alumni: 'alumni.app', gallery: 'gallery.app', contactform: 'contactform.app',
+        githubcontrib: 'github-contrib.app', todayincs: 'cs-history.app',
+        hackernews: 'hackernews.app', wikirandom: 'wiki-random.app',
+        campusmap: 'campus-map.app', lhcrooms: 'lhc-rooms.app',
+        timetable: 'timetable.app', roadmap: 'roadmap.app',
+        slashdotfaq: 'slashdot-faq.app',
       }
       
       onOpenWindow(appId, titleMap[appId] ?? appId)
