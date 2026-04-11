@@ -188,6 +188,7 @@ export default function App() {
   const [easterEgg, setEasterEgg] = useState<string | null>(null)
   const [kernelPanic, setKernelPanic] = useState(false)
   const [mobilePage, setMobilePage] = useState<AppId | null>(null)
+  const [mobileView, setMobileView] = useState<'home' | 'terminal'>('home')
   const isMobile = useIsMobile()
 
   const {
@@ -202,7 +203,13 @@ export default function App() {
   const handleOpenWindow = useCallback((appId: AppId, title: string) => {
     window.dispatchEvent(new CustomEvent('slashdot-app-opened', { detail: { appId } }))
     if (isMobile) {
-      setMobilePage(appId === 'terminal' ? null : appId)
+      if (appId === 'terminal') {
+        setMobilePage(null)
+        setMobileView('terminal')
+      } else {
+        setMobilePage(appId)
+        setMobileView('home')
+      }
     } else {
       openWindow(appId, title)
     }
@@ -295,13 +302,35 @@ export default function App() {
         {mobilePage ? (
           <div className="mobile-app-view">
             <div className="mobile-app-header">
-              <button className="mobile-back-btn" onClick={() => setMobilePage(null)}>
+              <button className="mobile-back-btn" onClick={() => { setMobilePage(null); setMobileView('home') }}>
                 ← Back
               </button>
               <span className="mobile-app-title">{mobilePage}.app</span>
             </div>
             <div className="mobile-app-content">
               <AppContentWithLoader appId={mobilePage} />
+            </div>
+          </div>
+        ) : mobileView === 'terminal' ? (
+          <div className="mobile-terminal-view" style={{ display: 'flex', flexDirection: 'column', height: '100dvh' }}>
+            <div className="mobile-app-header">
+              <button className="mobile-back-btn" onClick={() => setMobileView('home')}>
+                ← Back
+              </button>
+              <span className="mobile-app-title">terminal.sh</span>
+              <button
+                className="mobile-palette-btn"
+                style={{ marginLeft: 'auto' }}
+                onClick={() => window.dispatchEvent(new CustomEvent('slashdot-palette-open'))}
+              >
+                ⌘
+              </button>
+            </div>
+            <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+              <TerminalWindow
+                onOpenWindow={handleOpenWindow}
+                onEasterEgg={handleEasterEgg}
+              />
             </div>
           </div>
         ) : (
@@ -477,7 +506,7 @@ export default function App() {
             <div className="mobile-section">
               <button
                 className="mobile-terminal-btn"
-                onClick={() => setMobilePage(null)}
+                onClick={() => { setMobilePage(null); setMobileView('terminal') }}
               >
                 <span style={{ fontFamily: 'JetBrains Mono', fontSize: 18 }}>&gt;_</span>
                 <span>Open Terminal</span>
