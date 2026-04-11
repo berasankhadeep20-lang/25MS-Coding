@@ -338,7 +338,7 @@ export default function App() {
             {/* Header */}
             <div className="mobile-header">
               <div className="mobile-header-left">
-                <img src="./slashdot_logo.png" alt="SlashDot" className="mobile-logo" />
+                <img src="./slashdot_logo.png" alt="SlashDot" className="mobile-logo" style={{ width: 44, height: 44 }} />
                 <div>
                   <p className="mobile-header-title">SlashDot</p>
                   <p className="mobile-header-sub">IISER Kolkata</p>
