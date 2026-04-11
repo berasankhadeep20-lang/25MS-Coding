@@ -83,6 +83,7 @@ const LEFT_ICONS: DesktopIcon[] = [
 ]
 
 const RIGHT_ICONS: DesktopIcon[] = [
+  // Column 1 (rightmost) — main club nav
   { appId: 'terminal',    title: 'terminal.sh',      label: 'Terminal',    icon: '>_' },
   { appId: 'home',        title: 'home.exe',         label: 'Home',        icon: '⌂'  },
   { appId: 'about',       title: 'about.txt',        label: 'About',       icon: '📄' },
@@ -90,6 +91,7 @@ const RIGHT_ICONS: DesktopIcon[] = [
   { appId: 'stack',       title: 'stack.log',        label: 'Tech Stack',  icon: '⚙'  },
   { appId: 'contact',     title: 'contact.sh',       label: 'Contact',     icon: '@'  },
   { appId: 'neofetch',    title: 'neofetch',         label: 'Neofetch',    icon: '🖥' },
+  // Column 2 — club content
   { appId: 'events',      title: 'events.app',       label: 'Events',      icon: '📅' },
   { appId: 'showcase',    title: 'showcase.app',     label: 'Showcase',    icon: '🌟' },
   { appId: 'blog',        title: 'blog.app',         label: 'Blog',        icon: '📰' },
@@ -97,8 +99,13 @@ const RIGHT_ICONS: DesktopIcon[] = [
   { appId: 'halloffame',  title: 'fame.app',         label: 'Hall of Fame',icon: '🏆' },
   { appId: 'rules',       title: 'rules.app',        label: 'Rules',       icon: '📜' },
   { appId: 'newsletter',  title: 'newsletter.app',   label: 'Newsletter',  icon: '📬' },
+  // Column 3 (new) — extra club pages
+  { appId: 'memberlist',  title: 'members.app',      label: 'Members',     icon: '👤' },
+  { appId: 'recruitment', title: 'recruit.app',      label: 'Join Us',     icon: '📝' },
+  { appId: 'alumni',      title: 'alumni.app',       label: 'Alumni',      icon: '🎓' },
+  { appId: 'gallery',     title: 'gallery.app',      label: 'Gallery',     icon: '📸' },
+  { appId: 'contactform', title: 'contactform.app',  label: 'Contact Form',icon: '📧' },
 ]
-
 const ICONS: DesktopIcon[] = [...LEFT_ICONS, ...RIGHT_ICONS]
 
 
@@ -142,16 +149,32 @@ export function Desktop({ windows, onOpenWindow, onFocusWindow, onRestoreWindow 
       }
     })
 
-    // Right side — 2 columns, stacked vertically
-    const RIGHT_COL_W = 70
-    const RIGHT_START_X = window.innerWidth - 148
-    const RIGHT_START_Y = 4
+    // Right side — 3 columns, column-by-column layout
+    const RIGHT_COL_W = 68
     const RIGHT_ROW_H = 70
+    const RIGHT_START_Y = 4
+    const RIGHT_START_X = window.innerWidth - (RIGHT_COL_W * 3) - 4
 
-    RIGHT_ICONS.forEach(function(icon, i) {
+    const col0 = RIGHT_ICONS.slice(0, 7)   // terminal → neofetch  (rightmost col)
+    const col1 = RIGHT_ICONS.slice(7, 14)  // events → newsletter  (middle col)
+    const col2 = RIGHT_ICONS.slice(14)     // memberlist → contactform (3rd from right)
+
+    col0.forEach(function(icon, i) {
       positions[icon.appId] = {
-        x: RIGHT_START_X + (i % 2) * RIGHT_COL_W,
-        y: RIGHT_START_Y + Math.floor(i / 2) * RIGHT_ROW_H,
+        x: RIGHT_START_X + 2 * RIGHT_COL_W,
+        y: RIGHT_START_Y + i * RIGHT_ROW_H,
+      }
+    })
+    col1.forEach(function(icon, i) {
+      positions[icon.appId] = {
+        x: RIGHT_START_X + 1 * RIGHT_COL_W,
+        y: RIGHT_START_Y + i * RIGHT_ROW_H,
+      }
+    })
+    col2.forEach(function(icon, i) {
+      positions[icon.appId] = {
+        x: RIGHT_START_X + 0 * RIGHT_COL_W,
+        y: RIGHT_START_Y + i * RIGHT_ROW_H,
       }
     })
 

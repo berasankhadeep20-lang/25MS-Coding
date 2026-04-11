@@ -18,15 +18,23 @@ export function PaintApp() {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
   }, [])
 
-  function getPos(e: React.MouseEvent<HTMLCanvasElement>) {
+  function getPosFromClient(clientX: number, clientY: number) {
     const rect = canvasRef.current!.getBoundingClientRect()
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top }
+    const scaleX = canvasRef.current!.width / rect.width
+    const scaleY = canvasRef.current!.height / rect.height
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY,
+    }
   }
 
-  function onDown(e: React.MouseEvent<HTMLCanvasElement>) {
+  function getPos(e: React.MouseEvent<HTMLCanvasElement>) {
+    return getPosFromClient(e.clientX, e.clientY)
+  }
+
+  function startAt(x: number, y: number) {
     drawing.current = true
-    const pos = getPos(e)
-    lastPos.current = pos
+    lastPos.current = { x, y }
     const canvas = canvasRef.current!
     const ctx = canvas.getContext('2d')!
     if (tool === 'fill') {
@@ -35,19 +43,47 @@ export function PaintApp() {
     }
   }
 
-  function onMove(e: React.MouseEvent<HTMLCanvasElement>) {
+  function drawTo(x: number, y: number) {
     if (!drawing.current || tool === 'fill') return
     const ctx = canvasRef.current!.getContext('2d')!
-    const pos = getPos(e)
     ctx.beginPath()
     ctx.moveTo(lastPos.current.x, lastPos.current.y)
-    ctx.lineTo(pos.x, pos.y)
+    ctx.lineTo(x, y)
     ctx.strokeStyle = tool === 'eraser' ? '#111' : color
     ctx.lineWidth = tool === 'eraser' ? size * 3 : size
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
     ctx.stroke()
-    lastPos.current = pos
+    lastPos.current = { x, y }
+  }
+
+  function onDown(e: React.MouseEvent<HTMLCanvasElement>) {
+    const pos = getPos(e)
+    startAt(pos.x, pos.y)
+  }
+
+  function onMove(e: React.MouseEvent<HTMLCanvasElement>) {
+    const pos = getPos(e)
+    drawTo(pos.x, pos.y)
+  }
+
+  function onTouchStart(e: React.TouchEvent<HTMLCanvasElement>) {
+    e.preventDefault()
+    const touch = e.touches[0]
+    const pos = getPosFromClient(touch.clientX, touch.clientY)
+    startAt(pos.x, pos.y)
+  }
+
+  function onTouchMove(e: React.TouchEvent<HTMLCanvasElement>) {
+    e.preventDefault()
+    const touch = e.touches[0]
+    const pos = getPosFromClient(touch.clientX, touch.clientY)
+    drawTo(pos.x, pos.y)
+  }
+
+  function onTouchEnd(e: React.TouchEvent<HTMLCanvasElement>) {
+    e.preventDefault()
+    drawing.current = false
   }
 
   function clear() {
@@ -88,7 +124,10 @@ export function PaintApp() {
       <canvas ref={canvasRef} width={680} height={400}
         style={{ flex: 1, width: '100%', cursor: tool === 'eraser' ? 'cell' : 'crosshair' }}
         onMouseDown={onDown} onMouseMove={onMove} onMouseUp={() => { drawing.current = false }}
-        onMouseLeave={() => { drawing.current = false }} />
+        onMouseLeave={() => { drawing.current = false }} 
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}/>
     </div>
   )
 }

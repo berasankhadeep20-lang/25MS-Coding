@@ -97,6 +97,11 @@ open halloffame    Competition winners and notable achievements
 open rules         Club constitution (10 articles)
 open newsletter    Monthly newsletter (4 issues)
 open stack         Tech stack used to build this site
+open memberlist    → Full searchable members list (24 members, filterable by batch)
+open recruitment   → Join SlashDot — timeline, FAQ, perks, how to apply
+open alumni        → Where SlashDot alumni are now (companies, roles, quotes)
+open gallery       → Photo gallery from events (placeholders until OBs send photos)
+open contactform   → Contact form that opens email client pre-filled
 ```
 
 ---
@@ -231,6 +236,9 @@ members            SlashDot team and Office Bearers
 register           How to join SlashDot
 weather            Live weather at IISER Kolkata campus
 visits             Live visitor counter
+whois slashdot     → WHOIS-style record for the club
+cal events         → All upcoming SlashDot events in calendar format
+motd               → Message of the day (changes daily)
 ```
 
 ### Terminal Superpowers

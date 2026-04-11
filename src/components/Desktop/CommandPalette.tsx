@@ -8,6 +8,14 @@ const ALL_COMMANDS = [
   { label: 'Meet the Team',          action: 'open:team',        icon: '👥' },
   { label: 'Tech Stack',             action: 'open:stack',       icon: '⚙'  },
   { label: 'Contact SlashDot',       action: 'open:contact',     icon: '@'  },
+  { label: 'Members List',         action: 'open:memberlist',  icon: '👤' },
+  { label: 'Join SlashDot',        action: 'open:recruitment', icon: '📝' },
+  { label: 'Alumni Network',       action: 'open:alumni',      icon: '🎓' },
+  { label: 'Photo Gallery',        action: 'open:gallery',     icon: '📸' },
+  { label: 'Contact Form',         action: 'open:contactform', icon: '📧' },
+  { label: 'WHOIS SlashDot',       action: 'cmd:whois slashdot', icon: '🔍' },
+  { label: 'Events Calendar',      action: 'cmd:cal events',   icon: '📅' },
+  { label: 'Message of the Day',   action: 'cmd:motd',         icon: '📋' },
   { label: 'Neofetch',               action: 'open:neofetch',    icon: '🖥' },
   { label: 'Clock',                  action: 'open:clock',       icon: '⏰' },
   { label: 'SlashDot Events',        action: 'open:events',      icon: '📅' },
@@ -154,6 +162,8 @@ export function CommandPalette({ onOpenWindow, onRunCommand }: Props) {
         fileexplorer: 'files.app', settings: 'settings.app', notepad: 'notepad.app', taskmanager: 'taskmanager.app',
         events: 'events.app', showcase: 'showcase.app', blog: 'blog.app',
         resources: 'resources.app', halloffame: 'fame.app', rules: 'rules.app', newsletter: 'newsletter.app',
+        memberlist: 'members.app', recruitment: 'recruit.app',
+        alumni: 'alumni.app', gallery: 'gallery.app', contactform: 'contactform.app',
       }
       
       onOpenWindow(appId, titleMap[appId] ?? appId)

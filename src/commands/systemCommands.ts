@@ -16,9 +16,13 @@ export const systemCommands: Record<string, CommandHandler> = {
       formatSection('Club Pages', [
         `${c.cyan}open home${c.reset}             ${c.gray}SlashDot homepage${c.reset}`,
         `${c.cyan}open about${c.reset}            ${c.gray}About the club${c.reset}`,
-        `${c.cyan}open team${c.reset}             ${c.gray}Office Bearers & members${c.reset}`,
-        `${c.cyan}open stack${c.reset}            ${c.gray}Tech stack${c.reset}`,
-        `${c.cyan}open contact${c.reset}          ${c.gray}Get in touch${c.reset}`,
+        `${c.cyan}open team${c.reset}             ${c.gray}Office Bearers & developers${c.reset}`,
+        `${c.cyan}open memberlist${c.reset}       ${c.gray}Full members list (searchable)${c.reset}`,
+        `${c.cyan}open recruitment${c.reset}      ${c.gray}Join SlashDot — how to apply${c.reset}`,
+        `${c.cyan}open alumni${c.reset}           ${c.gray}Where are our alumni now?${c.reset}`,
+        `${c.cyan}open gallery${c.reset}          ${c.gray}Photo gallery from events${c.reset}`,
+        `${c.cyan}open contactform${c.reset}      ${c.gray}Contact us via form${c.reset}`,
+        `${c.cyan}open contact${c.reset}          ${c.gray}Contact info${c.reset}`,
         `${c.cyan}open events${c.reset}           ${c.gray}Club events & hackathons${c.reset}`,
         `${c.cyan}open showcase${c.reset}         ${c.gray}Member project showcase${c.reset}`,
         `${c.cyan}open blog${c.reset}             ${c.gray}SlashDot member blog${c.reset}`,
@@ -26,6 +30,18 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.cyan}open halloffame${c.reset}       ${c.gray}SlashDot Hall of Fame${c.reset}`,
         `${c.cyan}open rules${c.reset}            ${c.gray}Club constitution${c.reset}`,
         `${c.cyan}open newsletter${c.reset}       ${c.gray}SlashDot newsletter${c.reset}`,
+        `${c.cyan}open stack${c.reset}            ${c.gray}Tech stack${c.reset}`,
+      ]),
+      formatSection('Club Commands', [
+        `${c.yellow}whois slashdot${c.reset}       ${c.gray}WHOIS record for SlashDot${c.reset}`,
+        `${c.yellow}cal events${c.reset}           ${c.gray}SlashDot events calendar${c.reset}`,
+        `${c.yellow}motd${c.reset}                 ${c.gray}Message of the day${c.reset}`,
+        `${c.yellow}members${c.reset}              ${c.gray}Team & OBs in terminal${c.reset}`,
+        `${c.yellow}register${c.reset}             ${c.gray}How to join SlashDot${c.reset}`,
+        `${c.yellow}weather${c.reset}              ${c.gray}Live IISER campus weather${c.reset}`,
+        `${c.yellow}visits${c.reset}               ${c.gray}Live visitor counter${c.reset}`,
+        `${c.yellow}challenge${c.reset}            ${c.gray}Today's coding challenge${c.reset}`,
+        `${c.yellow}alias name='cmd'${c.reset}     ${c.gray}Create command shortcut${c.reset}`,
       ]),
       formatSection('Games', [
         `${c.cyan}open asteroids${c.reset}        ${c.gray}Asteroids (arrow keys + space)${c.reset}`,
@@ -214,6 +230,101 @@ export const systemCommands: Record<string, CommandHandler> = {
       output: all
         ? `\r\n${c.cyan}SlashDot OS${c.reset} ${c.yellow}6.8.0-25ms${c.reset} ${c.white}SMP PREEMPT 2026 x86_64 GNU/Linux${c.reset}\r\n`
         : `\r\n${c.cyan}SlashDot OS${c.reset}\r\n`,
+    }
+  },
+
+  'whois slashdot': (): CommandResult => ({
+    output: [
+      '',
+      `${c.green}┌─────────────────────────────────────────────────────────┐${c.reset}`,
+      `${c.green}│  WHOIS slashdot-iiserk.github.io                        │${c.reset}`,
+      `${c.green}└─────────────────────────────────────────────────────────┘${c.reset}`,
+      '',
+      `  ${c.cyan}Domain Name${c.reset}      slashdot-iiserk.github.io`,
+      `  ${c.cyan}Organisation${c.reset}     SlashDot — Coding & Design Club`,
+      `  ${c.cyan}Type${c.reset}             Official Student Club`,
+      `  ${c.cyan}Institute${c.reset}        IISER Kolkata, Mohanpur, WB 741246`,
+      `  ${c.cyan}Founded${c.reset}          Long ago. Revived every year.`,
+      `  ${c.cyan}Status${c.reset}           ${c.green}ACTIVE${c.reset}`,
+      `  ${c.cyan}Members${c.reset}          50+ active members across 7+ batches`,
+      `  ${c.cyan}President${c.reset}        Shuvam Banerji Seal (22MS)`,
+      `  ${c.cyan}Secretary${c.reset}        Anuprovo Debnath (23MS)`,
+      `  ${c.cyan}Treasurer${c.reset}        Abhinav Dhingra (24MS)`,
+      `  ${c.cyan}Email${c.reset}            slashdot@iiserkol.ac.in`,
+      `  ${c.cyan}GitHub${c.reset}           github.com/slashdot-iiserk`,
+      `  ${c.cyan}Registrar${c.reset}        GitHub Pages`,
+      `  ${c.cyan}DNS${c.reset}              Cloudflare`,
+      `  ${c.cyan}SSL${c.reset}              Valid (Let's Encrypt via GitHub)`,
+      `  ${c.cyan}Built With${c.reset}       React 18 · TypeScript · Vite 5 · xterm.js`,
+      `  ${c.cyan}Caffeine Used${c.reset}    Immeasurable`,
+      '',
+      `  ${c.gray}>>> Record last updated: ${new Date().toLocaleDateString('en-IN')}${c.reset}`,
+      '',
+    ].join('\r\n'),
+  }),
+
+  'cal events': (): CommandResult => {
+    const events = [
+      { date: '2026-04-11', name: 'Inter-Batch Website Competition',  status: 'done',     emoji: '✅' },
+      { date: '2026-08-20', name: 'SlashDot Recruitment — 26MS',      status: 'upcoming', emoji: '📅' },
+      { date: '2026-09-15', name: 'Web Development Workshop',          status: 'upcoming', emoji: '📅' },
+      { date: '2026-10-03', name: 'HackSlash 2026 (24-hour Hackathon)',status: 'upcoming', emoji: '⚡' },
+      { date: '2026-11-05', name: 'Open Source Contribution Drive',    status: 'upcoming', emoji: '📅' },
+      { date: '2026-11-25', name: 'UI/UX & Figma Workshop',            status: 'upcoming', emoji: '📅' },
+      { date: '2026-12-10', name: 'Competitive Programming Bootcamp',  status: 'upcoming', emoji: '📅' },
+      { date: '2027-01-15', name: 'AI/ML Workshop',                    status: 'upcoming', emoji: '📅' },
+      { date: '2027-02-20', name: 'SlashDot Annual Showcase 2027',     status: 'upcoming', emoji: '🌟' },
+    ]
+    const now = new Date()
+    return {
+      output: [
+        '',
+        `${c.cyan}╔══════════════════════════════════════════════════════════╗${c.reset}`,
+        `${c.cyan}║  SlashDot Events Calendar                                ║${c.reset}`,
+        `${c.cyan}╚══════════════════════════════════════════════════════════╝${c.reset}`,
+        '',
+        ...events.map(e => {
+          const d = new Date(e.date)
+          const isPast = d < now
+          const dateStr = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+          const color = isPast ? c.gray : d.getTime() - now.getTime() < 30 * 86400000 ? c.yellow : c.white
+          return `  ${e.emoji}  ${color}${dateStr.padEnd(18)}${c.reset} ${isPast ? c.gray : c.white}${e.name}${c.reset}${isPast ? ` ${c.gray}(completed)${c.reset}` : ''}`
+        }),
+        '',
+        `  ${c.gray}Type 'open events' for full event details${c.reset}`,
+        '',
+      ].join('\r\n'),
+    }
+  },
+
+  motd: (): CommandResult => {
+    const messages = [
+      { title: 'Did you know?',       body: 'SlashDot OS has 50+ easter eggs hidden in the terminal. Type random commands to find them.' },
+      { title: 'Tip of the day',      body: 'Press Ctrl+K to open the Command Palette and search all apps and commands instantly.' },
+      { title: 'HackSlash 2026',      body: 'Our annual 24-hour hackathon is coming in October 2026. Start thinking of ideas now.' },
+      { title: 'Join SlashDot',       body: 'Recruitment opens every August for the incoming batch. Type "register" for details.' },
+      { title: 'Did you know?',       body: 'You can pipe commands together: try "help | grep open" to filter the help output.' },
+      { title: 'Daily Challenge',     body: 'Type "challenge" to see today\'s coding problem. A new one appears every day.' },
+      { title: 'Club Fact',           body: 'SlashDot has been running for 7+ batches. The name comes from the characters / and . in file paths.' },
+      { title: 'Terminal Tip',        body: 'Use the ↑ arrow key to recall previous commands. Type "alias" to see command shortcuts.' },
+      { title: 'GitHub',              body: 'SlashDot OS is open source! Check github.com/berasankhadeep20-lang/25MS-Coding' },
+      { title: 'Weather',             body: 'Type "weather" to see live weather at IISER Kolkata campus right now.' },
+    ]
+    const idx = new Date().getDate() % messages.length
+    const m = messages[idx]
+    return {
+      output: [
+        '',
+        `${c.yellow}╔══════════════════════════════════════════╗${c.reset}`,
+        `${c.yellow}║  📋 Message of the Day                   ║${c.reset}`,
+        `${c.yellow}╚══════════════════════════════════════════╝${c.reset}`,
+        '',
+        `  ${c.cyan}${m.title}${c.reset}`,
+        `  ${c.white}${m.body}${c.reset}`,
+        '',
+        `  ${c.gray}${new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}${c.reset}`,
+        '',
+      ].join('\r\n'),
     }
   },
 

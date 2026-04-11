@@ -45,6 +45,7 @@ import { MealGenApp, CountdownApp } from './components/Apps/ProductivityApps2'
 import { FlashcardApp } from './components/Apps/ProductivityApps2'
 import { EventsApp, ShowcaseApp } from './components/Apps/ClubApps'
 import { BlogApp, ResourcesApp, HallOfFameApp, RulesApp, NewsletterApp } from './components/Apps/ClubPages'
+import { MemberListApp, RecruitmentApp, AlumniApp, GalleryApp, ContactFormApp } from './components/Apps/ClubExtra'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
@@ -169,6 +170,11 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'halloffame':   return <HallOfFameApp />
     case 'rules':        return <RulesApp />
     case 'newsletter':   return <NewsletterApp />
+    case 'memberlist':   return <MemberListApp />
+    case 'recruitment':  return <RecruitmentApp />
+    case 'alumni':       return <AlumniApp />
+    case 'gallery':      return <GalleryApp />
+    case 'contactform':  return <ContactFormApp />
     default:             return null
   }
 }
@@ -287,6 +293,19 @@ export default function App() {
           detail: { text: getDailyChallengeText() }
         }))
       }, 3000)
+      setTimeout(() => {
+        const motdMessages = [
+          'Did you know? SlashDot OS has 50+ easter eggs. Type random commands to find them.',
+          'Tip: Press Ctrl+K for the Command Palette. Try "open events" for upcoming events.',
+          'HackSlash 2026 is coming in October. Start thinking of project ideas!',
+          'Type "cal events" to see the full SlashDot events calendar.',
+          'Type "motd" to see the message of the day anytime.',
+        ]
+        const msg = motdMessages[new Date().getDate() % motdMessages.length]
+        window.dispatchEvent(new CustomEvent('slashdot-notify', {
+          detail: { message: msg, type: 'info' }
+        }))
+      }, 5000)
       } catch {}
     }} />
   }
@@ -369,6 +388,11 @@ export default function App() {
                   ['newsletter', '📬', 'Newsletter'],
                   ['contact',    '@',  'Contact'],
                   ['stack',      '⚙',  'Tech Stack'],
+                  ['memberlist',  '👤', 'Members'],
+                  ['recruitment', '📝', 'Join Us'],
+                  ['alumni',      '🎓', 'Alumni'],
+                  ['gallery',     '📸', 'Gallery'],
+                  ['contactform', '📧', 'Contact Form'],
                 ] as [AppId, string, string][]).map(([id, icon, label]) => (
                   <button key={id} className="mobile-app-btn club" onClick={() => setMobilePage(id)}>
                     <span className="mobile-btn-icon">{icon}</span>
