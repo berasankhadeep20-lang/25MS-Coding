@@ -46,15 +46,14 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
       e.preventDefault()
       e.stopPropagation()
       onBackspace()
-      if (inputRef.current) {
-        inputRef.current.value = inputRef.current.value.slice(0, -1)
-      }
+      if (inputRef.current) inputRef.current.value = ''
       return
     }
     if (e.key === ' ') {
       e.preventDefault()
       e.stopPropagation()
       onChar(' ')
+      if (inputRef.current) inputRef.current.value = ''
       return
     }
     if (e.key === 'ArrowUp') {
@@ -72,9 +71,12 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (composingRef.current) return
     if (e.key === 'Enter') return
-    if (e.key === ' ') return  // already handled in keyDown
+    if (e.key === ' ') return
     if (e.key.length === 1) {
+      e.preventDefault()
       onChar(e.key)
+      // Keep visible input empty — xterm shows the actual typed text
+      if (inputRef.current) inputRef.current.value = ''
     }
   }
 
@@ -113,20 +115,21 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
         onKeyPress={handleKeyPress}
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
-        onBlur={() => setTimeout(focus, 100)}
-        placeholder="type command..."
+        onBlur={() => setTimeout(focus, 150)}
+        placeholder=">_ tap here then type"
         style={{
           flex: 1,
           padding: '8px 10px',
           background: '#0a0a0a',
           border: '1px solid #333',
           borderRadius: 6,
-          color: '#00ff46',
+          color: 'transparent',
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: 13,
           outline: 'none',
-          caretColor: '#00ff46',
+          caretColor: 'transparent',
           minHeight: 36,
+          userSelect: 'none',
         }}
       />
       <button
@@ -142,15 +145,17 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
       <button
         onTouchEnd={e => {
           e.preventDefault()
-          onEnter()
+          e.stopPropagation()
           if (inputRef.current) inputRef.current.value = ''
-          focus()
+          onEnter()
+          setTimeout(focus, 80)
         }}
         onMouseDown={e => {
           e.preventDefault()
-          onEnter()
+          e.stopPropagation()
           if (inputRef.current) inputRef.current.value = ''
-          focus()
+          onEnter()
+          setTimeout(focus, 80)
         }}
         style={{ background: '#00ff4620', border: '1px solid #00ff46', borderRadius: 6, color: '#00ff46', padding: '8px 12px', fontFamily: 'JetBrains Mono', fontSize: 14, cursor: 'pointer', minWidth: 40 }}
       >↵</button>
