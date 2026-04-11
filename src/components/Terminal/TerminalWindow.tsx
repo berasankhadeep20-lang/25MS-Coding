@@ -20,78 +20,83 @@ interface MobileKeyboardProps {
 
 function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHistoryDown }: MobileKeyboardProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const lastValueRef = useRef('')
+  const composingRef = useRef(false)
 
-  // Keep the hidden input focused so the keyboard stays open
-  function refocus() {
-    setTimeout(() => inputRef.current?.focus(), 50)
+  function focus() {
+    inputRef.current?.focus({ preventScroll: true })
   }
 
   useEffect(() => {
-    refocus()
+    // Small delay so xterm finishes mounting before we steal focus back
+    const t = setTimeout(focus, 200)
+    return () => clearTimeout(t)
   }, [])
 
-  function handleInput(e: React.FormEvent<HTMLInputElement>) {
-    const el = e.currentTarget
-    const newValue = el.value
-    const prev = lastValueRef.current
-
-    if (newValue.length > prev.length) {
-      // Characters were added
-      const added = newValue.slice(prev.length)
-      for (const ch of added) {
-        if (ch === '\n' || ch === '\r') {
-          onEnter()
-        } else {
-          onChar(ch)
-        }
-      }
-    } else if (newValue.length < prev.length) {
-      // Backspace was pressed
-      const diff = prev.length - newValue.length
-      for (let i = 0; i < diff; i++) onBackspace()
-    }
-
-    lastValueRef.current = newValue
-    // Keep value in sync but don't clear — let the user see what they typed
-    // Actually reset so we always start fresh and avoid autocorrect building up
-    el.value = newValue
-  }
-
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (composingRef.current) return // ignore IME composition
+
     if (e.key === 'Enter') {
       e.preventDefault()
-      lastValueRef.current = ''
-      e.currentTarget.value = ''
+      e.stopPropagation()
       onEnter()
-    } else if (e.key === 'ArrowUp') {
+      // Clear the visible input value
+      if (inputRef.current) inputRef.current.value = ''
+      return
+    }
+    if (e.key === 'Backspace') {
+      e.preventDefault()
+      e.stopPropagation()
+      onBackspace()
+      // Sync: remove last char from input value too
+      if (inputRef.current) {
+        inputRef.current.value = inputRef.current.value.slice(0, -1)
+      }
+      return
+    }
+    if (e.key === 'ArrowUp') {
       e.preventDefault()
       onHistoryUp()
-    } else if (e.key === 'ArrowDown') {
+      return
+    }
+    if (e.key === 'ArrowDown') {
       e.preventDefault()
       onHistoryDown()
+      return
     }
+  }
+
+  function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (composingRef.current) return
+    if (e.key === 'Enter') return // handled in keyDown
+    if (e.key.length === 1) {
+      onChar(e.key)
+    }
+  }
+
+  function handleCompositionStart() { composingRef.current = true }
+  function handleCompositionEnd(e: React.CompositionEvent<HTMLInputElement>) {
+    composingRef.current = false
+    // Send the composed text
+    for (const ch of e.data) onChar(ch)
+    if (inputRef.current) inputRef.current.value = ''
   }
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10,
-        background: '#111',
-        borderTop: '1px solid #1e1e1e',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 6,
-        padding: '6px 8px',
-        paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
-      }}
-      onClick={refocus}
-    >
-      {/* Hidden real input for keyboard capture */}
+    <div style={{
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 20,
+      background: '#111',
+      borderTop: '1px solid #222',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 6,
+      padding: '6px 8px',
+      paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
+    }}>
+      {/* The actual input — visible so iOS doesn't suppress keyboard */}
       <input
         ref={inputRef}
         type="text"
@@ -99,50 +104,50 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
         autoCorrect="off"
         autoCapitalize="off"
         spellCheck={false}
-        onInput={handleInput}
         onKeyDown={handleKeyDown}
-        style={{
-          position: 'absolute',
-          opacity: 0,
-          width: 1,
-          height: 1,
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Visible tap area to refocus keyboard */}
-      <div
+        onKeyPress={handleKeyPress}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
+        onBlur={() => setTimeout(focus, 100)}
+        placeholder="type command..."
         style={{
           flex: 1,
           padding: '8px 10px',
           background: '#0a0a0a',
           border: '1px solid #333',
           borderRadius: 6,
-          color: '#555',
-          fontFamily: 'JetBrains Mono, monospace',
-          fontSize: 12,
-          cursor: 'text',
+          color: '#00ff46',
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: 13,
+          outline: 'none',
+          caretColor: '#00ff46',
           minHeight: 36,
-          display: 'flex',
-          alignItems: 'center',
         }}
-        onClick={refocus}
-      >
-        <span style={{ color: '#333' }}>tap to type...</span>
-      </div>
-
-      {/* Quick action buttons */}
+      />
       <button
-        onMouseDown={e => { e.preventDefault(); onHistoryUp(); refocus() }}
-        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 12, cursor: 'pointer' }}
+        onTouchEnd={e => { e.preventDefault(); onHistoryUp(); focus() }}
+        onMouseDown={e => { e.preventDefault(); onHistoryUp(); focus() }}
+        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 14, cursor: 'pointer', minWidth: 36 }}
       >↑</button>
       <button
-        onMouseDown={e => { e.preventDefault(); onHistoryDown(); refocus() }}
-        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 12, cursor: 'pointer' }}
+        onTouchEnd={e => { e.preventDefault(); onHistoryDown(); focus() }}
+        onMouseDown={e => { e.preventDefault(); onHistoryDown(); focus() }}
+        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 14, cursor: 'pointer', minWidth: 36 }}
       >↓</button>
       <button
-        onMouseDown={e => { e.preventDefault(); onEnter(); lastValueRef.current = ''; if (inputRef.current) inputRef.current.value = ''; refocus() }}
-        style={{ background: '#00ff4620', border: '1px solid #00ff46', borderRadius: 6, color: '#00ff46', padding: '8px 12px', fontFamily: 'JetBrains Mono', fontSize: 12, cursor: 'pointer' }}
+        onTouchEnd={e => {
+          e.preventDefault()
+          onEnter()
+          if (inputRef.current) inputRef.current.value = ''
+          focus()
+        }}
+        onMouseDown={e => {
+          e.preventDefault()
+          onEnter()
+          if (inputRef.current) inputRef.current.value = ''
+          focus()
+        }}
+        style={{ background: '#00ff4620', border: '1px solid #00ff46', borderRadius: 6, color: '#00ff46', padding: '8px 12px', fontFamily: 'JetBrains Mono', fontSize: 14, cursor: 'pointer', minWidth: 40 }}
       >↵</button>
     </div>
   )
@@ -217,6 +222,17 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
     term.loadAddon(linksAddon)
     term.open(containerRef.current)
     fitAddon.fit()
+    // On mobile, prevent xterm from grabbing focus so our input keeps it
+    if (window.innerWidth < 768) {
+      const xtermScreen = containerRef.current?.querySelector('.xterm-screen')
+      xtermScreen?.setAttribute('tabindex', '-1')
+      const xtermHelper = containerRef.current?.querySelector('textarea.xterm-helper-textarea') as HTMLTextAreaElement | null
+      if (xtermHelper) {
+        xtermHelper.setAttribute('tabindex', '-1')
+        xtermHelper.style.opacity = '0'
+        xtermHelper.style.pointerEvents = 'none'
+      }
+    }
 
     // ── Event listeners ──────────────────────────────────────────────────────
 
@@ -515,6 +531,7 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
           onChar={(ch) => {
             inputRef.current += ch
             termRef.current?.write(ch)
+            playKeyClick()
           }}
           onEnter={() => {
             const term = termRef.current

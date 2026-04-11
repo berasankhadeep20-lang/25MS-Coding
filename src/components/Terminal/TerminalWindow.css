@@ -38,3 +38,15 @@
     padding-bottom: 58px;
   }
 }
+
+@media (max-width: 767px) {
+  .terminal-container {
+    position: relative;
+    height: 100%;
+    padding-bottom: 56px;
+    box-sizing: border-box;
+  }
+  .xterm-wrapper {
+    height: 100%;
+  }
+}
