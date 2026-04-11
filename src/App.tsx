@@ -287,65 +287,235 @@ export default function App() {
   // ── Mobile layout ──────────────────────────────────────────────────────────
   if (isMobile) {
     return (
-      <div className="app-root">
+      <div className="app-root mobile-root">
+        <NotificationSystem />
+        {easterEgg === 'confetti' && <Confetti onDone={() => setEasterEgg(null)} />}
+        {easterEgg === 'matrix' && <MatrixRain onDone={() => setEasterEgg(null)} />}
+
         {mobilePage ? (
-          // Mobile app view
           <div className="mobile-app-view">
             <div className="mobile-app-header">
-              <button
-                className="mobile-back-btn"
-                onClick={function() { setMobilePage(null) }}
-              >
-                {'← back'}
+              <button className="mobile-back-btn" onClick={() => setMobilePage(null)}>
+                ← Back
               </button>
-              <span className="mobile-app-title">{mobilePage}</span>
+              <span className="mobile-app-title">{mobilePage}.app</span>
             </div>
             <div className="mobile-app-content">
-              <AppContent appId={mobilePage} />
+              <AppContentWithLoader appId={mobilePage} />
             </div>
           </div>
         ) : (
-          // Mobile terminal view
-          <div className="mobile-terminal-view">
-            <div className="mobile-terminal-header">
-              <span className="mobile-header-logo">SlashDot OS</span>
-              <span className="mobile-header-badge">25MS</span>
+          <div className="mobile-home">
+            {/* Header */}
+            <div className="mobile-header">
+              <div className="mobile-header-left">
+                <img src="./slashdot_logo.png" alt="SlashDot" className="mobile-logo" />
+                <div>
+                  <p className="mobile-header-title">SlashDot</p>
+                  <p className="mobile-header-sub">IISER Kolkata</p>
+                </div>
+              </div>
+              <button
+                className="mobile-palette-btn"
+                onClick={() => window.dispatchEvent(new CustomEvent('slashdot-palette-open'))}
+              >
+                ⌘
+              </button>
             </div>
-            <div className="mobile-terminal-body">
-              <TerminalWindow
-                onOpenWindow={handleOpenWindow}
-                onEasterEgg={handleEasterEgg}
-              />
-            </div>
-            <div className="mobile-nav">
-              {([
-                ['home',    '⌂',  'Home'],
-                ['about',   '📄', 'About'],
-                ['team',    '👥', 'Team'],
-                ['stack',   '⚙',  'Stack'],
-                ['contact', '@',  'Contact'],
-              ] as [AppId, string, string][]).map(function(item) {
-                return (
-                  <button
-                    key={item[0]}
-                    className={'mobile-nav-btn' + (mobilePage === item[0] ? ' active' : '')}
-                    onClick={function() { setMobilePage(item[0]) }}
-                  >
-                    <span className="mobile-nav-icon">{item[1]}</span>
-                    <span className="mobile-nav-label">{item[2]}</span>
+
+            {/* Club quick links — most important */}
+            <div className="mobile-section">
+              <p className="mobile-section-label">// club</p>
+              <div className="mobile-grid-2">
+                {([
+                  ['home',       '⌂',  'Home'],
+                  ['about',      '📄', 'About'],
+                  ['team',       '👥', 'Team'],
+                  ['events',     '📅', 'Events'],
+                  ['showcase',   '🌟', 'Showcase'],
+                  ['blog',       '📰', 'Blog'],
+                  ['resources',  '📚', 'Resources'],
+                  ['halloffame', '🏆', 'Hall of Fame'],
+                  ['rules',      '📜', 'Rules'],
+                  ['newsletter', '📬', 'Newsletter'],
+                  ['contact',    '@',  'Contact'],
+                  ['stack',      '⚙',  'Tech Stack'],
+                ] as [AppId, string, string][]).map(([id, icon, label]) => (
+                  <button key={id} className="mobile-app-btn club" onClick={() => setMobilePage(id)}>
+                    <span className="mobile-btn-icon">{icon}</span>
+                    <span className="mobile-btn-label">{label}</span>
                   </button>
-                )
-              })}
+                ))}
+              </div>
+            </div>
+
+            {/* Games */}
+            <div className="mobile-section">
+              <p className="mobile-section-label">// games</p>
+              <div className="mobile-grid-4">
+                {([
+                  ['asteroids', '🚀', 'Asteroids'],
+                  ['pong',      '🏓', 'Pong'],
+                  ['flappy',    '{}', 'Flappy'],
+                  ['snake',     '🐍', 'Snake'],
+                ] as [AppId, string, string][]).map(([id, icon, label]) => (
+                  <button key={id} className="mobile-app-btn game" onClick={() => setMobilePage(id)}>
+                    <span className="mobile-btn-icon">{icon}</span>
+                    <span className="mobile-btn-label">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Science */}
+            <div className="mobile-section">
+              <p className="mobile-section-label">// science</p>
+              <div className="mobile-grid-4">
+                {([
+                  ['periodic',  '⚗',  'Periodic'],
+                  ['fourier',   '〜', 'Fourier'],
+                  ['gravity',   '🪐', 'Gravity'],
+                  ['dna',       '🧬', 'DNA'],
+                  ['physics',   '⚛',  'Physics'],
+                  ['molecular', '🔬', 'Molecule'],
+                  ['sortvis',   '⟨⟩', 'Sort Vis'],
+                  ['pathvis',   '🗺', 'Pathfind'],
+                  ['binconv',   '01', 'BinConv'],
+                  ['truthtable','⊕',  'Truth Tbl'],
+                  ['statsCalc', 'σ',  'Statistics'],
+                  ['logicgate', '⋀',  'Logic Gate'],
+                ] as [AppId, string, string][]).map(([id, icon, label]) => (
+                  <button key={id} className="mobile-app-btn science" onClick={() => setMobilePage(id)}>
+                    <span className="mobile-btn-icon">{icon}</span>
+                    <span className="mobile-btn-label">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Live data */}
+            <div className="mobile-section">
+              <p className="mobile-section-label">// live data</p>
+              <div className="mobile-grid-4">
+                {([
+                  ['isstrack',   '🛸', 'ISS'],
+                  ['apod',       '🔭', 'APOD'],
+                  ['ipgeo',      '🌐', 'IP Lookup'],
+                  ['randuser',   '👤', 'Rand User'],
+                  ['githubstats','🐙', 'GitHub'],
+                  ['wikipedia',  'W',  'Wikipedia'],
+                  ['newsticker', '📰', 'News'],
+                  ['horoscope',  '♈', 'Horoscope'],
+                ] as [AppId, string, string][]).map(([id, icon, label]) => (
+                  <button key={id} className="mobile-app-btn api" onClick={() => setMobilePage(id)}>
+                    <span className="mobile-btn-icon">{icon}</span>
+                    <span className="mobile-btn-label">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Social */}
+            <div className="mobile-section">
+              <p className="mobile-section-label">// social & fun</p>
+              <div className="mobile-grid-4">
+                {([
+                  ['guestbook',   '📖', 'Guestbook'],
+                  ['poll',        '📊', 'Poll'],
+                  ['jokes',       '😂', 'Jokes'],
+                  ['slashdotai',  '🤖', 'AI Chat'],
+                  ['faketwitter', '🐦', 'Twitter'],
+                  ['fakewhatsapp','💬', 'WhatsApp'],
+                  ['confession',  '🤫', 'Confess'],
+                  ['leaderboard', '🏆', 'Leaderboard'],
+                  ['compliment',  '💐', 'Compliment'],
+                  ['insult',      '🔥', 'Roast'],
+                  ['fortunecook', '🥠', 'Fortune'],
+                  ['screensaver', '✨', 'Screensaver'],
+                  ['cgpasim',     '📊', 'CGPA Sim'],
+                  ['excusegen',   '🙏', 'Excuses'],
+                ] as [AppId, string, string][]).map(([id, icon, label]) => (
+                  <button key={id} className="mobile-app-btn social" onClick={() => setMobilePage(id)}>
+                    <span className="mobile-btn-icon">{icon}</span>
+                    <span className="mobile-btn-label">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Tools */}
+            <div className="mobile-section">
+              <p className="mobile-section-label">// tools & productivity</p>
+              <div className="mobile-grid-4">
+                {([
+                  ['base64',      'b64','Base64'],
+                  ['markdown',    '.md','Markdown'],
+                  ['colorpicker', '🎨', 'Colors'],
+                  ['hashgen',     '#',  'Hash'],
+                  ['paint',       '🖌', 'Paint'],
+                  ['asciiart',    'A',  'ASCII Art'],
+                  ['calendar',    '📅', 'Calendar'],
+                  ['pomodoro',    '🍅', 'Pomodoro'],
+                  ['stopwatch',   '⏱', 'Stopwatch'],
+                  ['countdown',   '⏳', 'Countdown'],
+                  ['flashcard',   '🃏', 'Flashcards'],
+                  ['notepad',     '📝', 'Notepad'],
+                  ['mealgent',    '🍱', 'Meals'],
+                  ['studysched',  '📋', 'Study'],
+                  ['kbtrainer',   '⌨', 'KB Train'],
+                  ['syslog',      '📜', 'Sys Log'],
+                ] as [AppId, string, string][]).map(([id, icon, label]) => (
+                  <button key={id} className="mobile-app-btn tool" onClick={() => setMobilePage(id)}>
+                    <span className="mobile-btn-icon">{icon}</span>
+                    <span className="mobile-btn-label">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Terminal shortcut */}
+            <div className="mobile-section">
+              <button
+                className="mobile-terminal-btn"
+                onClick={() => setMobilePage(null)}
+              >
+                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 18 }}>&gt;_</span>
+                <span>Open Terminal</span>
+                <span style={{ fontSize: 11, opacity: 0.5 }}>type 'help' for all commands</span>
+              </button>
+            </div>
+
+            {/* Footer */}
+            <div className="mobile-footer">
+              <p>SlashDot · Coding & Design Club · IISER Kolkata</p>
+              <p>slashdot-iiserk.github.io</p>
             </div>
           </div>
         )}
 
-        {easterEgg === 'confetti' && (
-          <Confetti onDone={function() { setEasterEgg(null) }} />
+        {/* Bottom nav — always visible */}
+        {mobilePage && (
+          <div className="mobile-bottom-nav">
+            {([
+              ['home',    '⌂',  'Home'],
+              ['events',  '📅', 'Events'],
+              ['showcase','🌟', 'Showcase'],
+              ['blog',    '📰', 'Blog'],
+              ['contact', '@',  'Contact'],
+            ] as [AppId, string, string][]).map(([id, icon, label]) => (
+              <button
+                key={id}
+                className={'mobile-nav-btn' + (mobilePage === id ? ' active' : '')}
+                onClick={() => setMobilePage(id)}
+              >
+                <span className="mobile-nav-icon">{icon}</span>
+                <span className="mobile-nav-label">{label}</span>
+              </button>
+            ))}
+          </div>
         )}
-        {easterEgg === 'matrix' && (
-          <MatrixRain onDone={function() { setEasterEgg(null) }} />
-        )}
+
+        <CommandPalette onOpenWindow={handleOpenWindow} onRunCommand={handleRunCommand} />
       </div>
     )
   }

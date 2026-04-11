@@ -65,7 +65,7 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
         brightWhite: '#ffffff',
       },
       fontFamily: "'JetBrains Mono', 'Share Tech Mono', monospace",
-      fontSize: 13,
+      fontSize: window.innerWidth < 768 ? 11 : 13,
       lineHeight: 1.5,
       cursorBlink: true,
       cursorStyle: 'block',
