@@ -31,3 +31,10 @@
 .xterm-viewport::-webkit-scrollbar-thumb:hover {
   background: #00ff4640;
 }
+
+@media (max-width: 767px) {
+  .terminal-container {
+    position: relative;
+    padding-bottom: 58px;
+  }
+}

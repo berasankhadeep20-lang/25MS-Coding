@@ -10,6 +10,144 @@ import { playKeyClick, playEnter } from '../../utils/sounds'
 import '@xterm/xterm/css/xterm.css'
 import './TerminalWindow.css'
 
+interface MobileKeyboardProps {
+  onChar: (ch: string) => void
+  onEnter: () => void
+  onBackspace: () => void
+  onHistoryUp: () => void
+  onHistoryDown: () => void
+}
+
+function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHistoryDown }: MobileKeyboardProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const lastValueRef = useRef('')
+
+  // Keep the hidden input focused so the keyboard stays open
+  function refocus() {
+    setTimeout(() => inputRef.current?.focus(), 50)
+  }
+
+  useEffect(() => {
+    refocus()
+  }, [])
+
+  function handleInput(e: React.FormEvent<HTMLInputElement>) {
+    const el = e.currentTarget
+    const newValue = el.value
+    const prev = lastValueRef.current
+
+    if (newValue.length > prev.length) {
+      // Characters were added
+      const added = newValue.slice(prev.length)
+      for (const ch of added) {
+        if (ch === '\n' || ch === '\r') {
+          onEnter()
+        } else {
+          onChar(ch)
+        }
+      }
+    } else if (newValue.length < prev.length) {
+      // Backspace was pressed
+      const diff = prev.length - newValue.length
+      for (let i = 0; i < diff; i++) onBackspace()
+    }
+
+    lastValueRef.current = newValue
+    // Keep value in sync but don't clear — let the user see what they typed
+    // Actually reset so we always start fresh and avoid autocorrect building up
+    el.value = newValue
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      lastValueRef.current = ''
+      e.currentTarget.value = ''
+      onEnter()
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      onHistoryUp()
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      onHistoryDown()
+    }
+  }
+
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
+        background: '#111',
+        borderTop: '1px solid #1e1e1e',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+        padding: '6px 8px',
+        paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
+      }}
+      onClick={refocus}
+    >
+      {/* Hidden real input for keyboard capture */}
+      <input
+        ref={inputRef}
+        type="text"
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
+        onInput={handleInput}
+        onKeyDown={handleKeyDown}
+        style={{
+          position: 'absolute',
+          opacity: 0,
+          width: 1,
+          height: 1,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Visible tap area to refocus keyboard */}
+      <div
+        style={{
+          flex: 1,
+          padding: '8px 10px',
+          background: '#0a0a0a',
+          border: '1px solid #333',
+          borderRadius: 6,
+          color: '#555',
+          fontFamily: 'JetBrains Mono, monospace',
+          fontSize: 12,
+          cursor: 'text',
+          minHeight: 36,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+        onClick={refocus}
+      >
+        <span style={{ color: '#333' }}>tap to type...</span>
+      </div>
+
+      {/* Quick action buttons */}
+      <button
+        onMouseDown={e => { e.preventDefault(); onHistoryUp(); refocus() }}
+        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 12, cursor: 'pointer' }}
+      >↑</button>
+      <button
+        onMouseDown={e => { e.preventDefault(); onHistoryDown(); refocus() }}
+        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 12, cursor: 'pointer' }}
+      >↓</button>
+      <button
+        onMouseDown={e => { e.preventDefault(); onEnter(); lastValueRef.current = ''; if (inputRef.current) inputRef.current.value = ''; refocus() }}
+        style={{ background: '#00ff4620', border: '1px solid #00ff46', borderRadius: 6, color: '#00ff46', padding: '8px 12px', fontFamily: 'JetBrains Mono', fontSize: 12, cursor: 'pointer' }}
+      >↵</button>
+    </div>
+  )
+}
+
 interface Props {
   onOpenWindow: (appId: AppId, title: string) => void
   onEasterEgg: (effect: string) => void
@@ -372,6 +510,81 @@ export function TerminalWindow({ onOpenWindow, onEasterEgg }: Props) {
   return (
     <div className="terminal-container">
       <div ref={containerRef} className="xterm-wrapper" />
+      {window.innerWidth < 768 && (
+        <MobileKeyboardCapture
+          onChar={(ch) => {
+            inputRef.current += ch
+            termRef.current?.write(ch)
+          }}
+          onEnter={() => {
+            const term = termRef.current
+            if (!term) return
+            playEnter()
+            const input = inputRef.current.trim()
+            term.writeln('')
+            if (input) {
+              historyRef.current.unshift(input)
+              histIdxRef.current = -1
+              ;(window as any).__slashdotHistory = historyRef.current
+              if (input.startsWith('alias ')) {
+                const raw = input.slice(6).trim()
+                const match = raw.match(/^(\w+)=["']?(.+?)["']?$/)
+                if (match) {
+                  aliasesRef.current[match[1]] = match[2]
+                  try { localStorage.setItem('slashdot-aliases', JSON.stringify(aliasesRef.current)) } catch {}
+                  term.write(`\r\n\x1b[32m✓ Alias set: ${match[1]} = ${match[2]}\x1b[0m\r\n`)
+                } else {
+                  const entries = Object.entries(aliasesRef.current)
+                  term.write('\r\n\x1b[36mCurrent aliases:\x1b[0m\r\n')
+                  entries.forEach(([k, v]) => term.write(`  \x1b[33m${k}\x1b[0m = ${v}\r\n`))
+                  term.write('\x1b[90mUsage: alias name=\'command\'\x1b[0m\r\n')
+                }
+              } else {
+                const result = parseAndRun(input)
+                if (result.output) term.write(result.output)
+                if (result.action) {
+                  if (result.action.type === 'open_window') onOpenWindow(result.action.appId, result.action.title)
+                  else if (result.action.type === 'clear') term.clear()
+                  else if (result.action.type === 'easter_egg') onEasterEgg(result.action.effect)
+                }
+              }
+            }
+            inputRef.current = ''
+            term.write(prompt(getCwd()))
+          }}
+          onBackspace={() => {
+            if (inputRef.current.length > 0) {
+              inputRef.current = inputRef.current.slice(0, -1)
+              termRef.current?.write('\b \b')
+            }
+          }}
+          onHistoryUp={() => {
+            const term = termRef.current
+            if (!term) return
+            const newIdx = Math.min(histIdxRef.current + 1, historyRef.current.length - 1)
+            if (historyRef.current[newIdx] !== undefined) {
+              term.write('\r' + prompt(getCwd()) + ' '.repeat(inputRef.current.length) + '\r' + prompt(getCwd()))
+              histIdxRef.current = newIdx
+              inputRef.current = historyRef.current[newIdx]
+              term.write(inputRef.current)
+            }
+          }}
+          onHistoryDown={() => {
+            const term = termRef.current
+            if (!term) return
+            const newIdx = histIdxRef.current - 1
+            term.write('\r' + prompt(getCwd()) + ' '.repeat(inputRef.current.length) + '\r' + prompt(getCwd()))
+            if (newIdx < 0) {
+              histIdxRef.current = -1
+              inputRef.current = ''
+            } else {
+              histIdxRef.current = newIdx
+              inputRef.current = historyRef.current[newIdx]
+              term.write(inputRef.current)
+            }
+          }}
+        />
+      )}
     </div>
   )
 }
