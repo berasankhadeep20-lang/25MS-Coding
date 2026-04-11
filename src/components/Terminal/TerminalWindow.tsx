@@ -20,72 +20,46 @@ interface MobileKeyboardProps {
 
 function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHistoryDown }: MobileKeyboardProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const composingRef = useRef(false)
 
   function focus() {
     inputRef.current?.focus({ preventScroll: true })
   }
 
   useEffect(() => {
-    // Small delay so xterm finishes mounting before we steal focus back
-    const t = setTimeout(focus, 200)
+    const t = setTimeout(focus, 300)
     return () => clearTimeout(t)
   }, [])
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (composingRef.current) return
-
     if (e.key === 'Enter') {
       e.preventDefault()
       e.stopPropagation()
       onEnter()
       if (inputRef.current) inputRef.current.value = ''
-      return
-    }
-    if (e.key === 'Backspace') {
+    } else if (e.key === 'Backspace') {
       e.preventDefault()
       e.stopPropagation()
       onBackspace()
       if (inputRef.current) inputRef.current.value = ''
-      return
-    }
-    if (e.key === ' ') {
-      e.preventDefault()
-      e.stopPropagation()
-      onChar(' ')
-      if (inputRef.current) inputRef.current.value = ''
-      return
-    }
-    if (e.key === 'ArrowUp') {
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       onHistoryUp()
-      return
-    }
-    if (e.key === 'ArrowDown') {
+    } else if (e.key === 'ArrowDown') {
       e.preventDefault()
       onHistoryDown()
-      return
     }
   }
 
-  function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (composingRef.current) return
-    if (e.key === 'Enter') return
-    if (e.key === ' ') return
-    if (e.key.length === 1) {
-      e.preventDefault()
-      onChar(e.key)
-      // Keep visible input empty — xterm shows the actual typed text
-      if (inputRef.current) inputRef.current.value = ''
+  function handleInput(e: React.FormEvent<HTMLInputElement>) {
+    const val = e.currentTarget.value
+    if (!val) return
+    // Send each character to xterm
+    for (const ch of val) {
+      if (ch === ' ') onChar(' ')
+      else if (ch.length === 1) onChar(ch)
     }
-  }
-
-  function handleCompositionStart() { composingRef.current = true }
-  function handleCompositionEnd(e: React.CompositionEvent<HTMLInputElement>) {
-    composingRef.current = false
-    // Send the composed text
-    for (const ch of e.data) onChar(ch)
-    if (inputRef.current) inputRef.current.value = ''
+    // Always reset — xterm displays the actual input
+    e.currentTarget.value = ''
   }
 
   return (
@@ -95,7 +69,7 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
       left: 0,
       right: 0,
       zIndex: 20,
-      background: '#111',
+      background: '#0d0d0d',
       borderTop: '1px solid #222',
       display: 'flex',
       alignItems: 'center',
@@ -103,61 +77,62 @@ function MobileKeyboardCapture({ onChar, onEnter, onBackspace, onHistoryUp, onHi
       padding: '6px 8px',
       paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
     }}>
-      {/* The actual input — visible so iOS doesn't suppress keyboard */}
       <input
         ref={inputRef}
         type="text"
+        inputMode="text"
         autoComplete="off"
         autoCorrect="off"
-        autoCapitalize="off"
+        autoCapitalize="none"
         spellCheck={false}
+        enterKeyHint="send"
         onKeyDown={handleKeyDown}
-        onKeyPress={handleKeyPress}
-        onCompositionStart={handleCompositionStart}
-        onCompositionEnd={handleCompositionEnd}
-        onBlur={() => setTimeout(focus, 150)}
-        placeholder=">_ tap here then type"
+        onInput={handleInput}
+        onBlur={() => setTimeout(focus, 200)}
+        placeholder=">_ tap to type"
         style={{
           flex: 1,
-          padding: '8px 10px',
-          background: '#0a0a0a',
+          padding: '9px 12px',
+          background: '#111',
           border: '1px solid #333',
-          borderRadius: 6,
-          color: 'transparent',
+          borderRadius: 8,
+          color: '#00ff46',
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: 13,
           outline: 'none',
-          caretColor: 'transparent',
-          minHeight: 36,
-          userSelect: 'none',
+          minHeight: 38,
+          WebkitAppearance: 'none',
         }}
       />
       <button
-        onTouchEnd={e => { e.preventDefault(); onHistoryUp(); focus() }}
-        onMouseDown={e => { e.preventDefault(); onHistoryUp(); focus() }}
-        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 14, cursor: 'pointer', minWidth: 36 }}
+        onTouchStart={e => e.preventDefault()}
+        onTouchEnd={e => { e.preventDefault(); onHistoryUp(); setTimeout(focus, 80) }}
+        onMouseDown={e => { e.preventDefault(); onHistoryUp(); setTimeout(focus, 80) }}
+        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', width: 38, height: 38, fontFamily: 'JetBrains Mono', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
       >↑</button>
       <button
-        onTouchEnd={e => { e.preventDefault(); onHistoryDown(); focus() }}
-        onMouseDown={e => { e.preventDefault(); onHistoryDown(); focus() }}
-        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', padding: '8px 10px', fontFamily: 'JetBrains Mono', fontSize: 14, cursor: 'pointer', minWidth: 36 }}
+        onTouchStart={e => e.preventDefault()}
+        onTouchEnd={e => { e.preventDefault(); onHistoryDown(); setTimeout(focus, 80) }}
+        onMouseDown={e => { e.preventDefault(); onHistoryDown(); setTimeout(focus, 80) }}
+        style={{ background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, color: '#888', width: 38, height: 38, fontFamily: 'JetBrains Mono', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
       >↓</button>
       <button
+        onTouchStart={e => e.preventDefault()}
         onTouchEnd={e => {
           e.preventDefault()
           e.stopPropagation()
-          if (inputRef.current) inputRef.current.value = ''
           onEnter()
+          if (inputRef.current) inputRef.current.value = ''
           setTimeout(focus, 80)
         }}
         onMouseDown={e => {
           e.preventDefault()
           e.stopPropagation()
-          if (inputRef.current) inputRef.current.value = ''
           onEnter()
+          if (inputRef.current) inputRef.current.value = ''
           setTimeout(focus, 80)
         }}
-        style={{ background: '#00ff4620', border: '1px solid #00ff46', borderRadius: 6, color: '#00ff46', padding: '8px 12px', fontFamily: 'JetBrains Mono', fontSize: 14, cursor: 'pointer', minWidth: 40 }}
+        style={{ background: '#00ff4620', border: '1px solid #00ff46', borderRadius: 6, color: '#00ff46', width: 44, height: 38, fontFamily: 'JetBrains Mono', fontSize: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
       >↵</button>
     </div>
   )
