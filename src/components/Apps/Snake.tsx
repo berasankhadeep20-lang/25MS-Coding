@@ -68,6 +68,37 @@ export function SnakeApp() {
       if (!s.started) { s.started = true; setDisplay(d => ({ ...d, started: true })) }
     }
     window.addEventListener('keydown', onKey)
+    // ── Mobile swipe ──────────────────────────────────────────────────────────
+    let touchStartX = 0
+    let touchStartY = 0
+
+    function onTouchStart(e: TouchEvent) {
+      touchStartX = e.touches[0].clientX
+      touchStartY = e.touches[0].clientY
+    }
+
+    function onTouchEnd(e: TouchEvent) {
+      const dx = e.changedTouches[0].clientX - touchStartX
+      const dy = e.changedTouches[0].clientY - touchStartY
+      const absDx = Math.abs(dx)
+      const absDy = Math.abs(dy)
+      if (Math.max(absDx, absDy) < 20) return
+      if (absDx > absDy) {
+        // horizontal
+        if (dx > 0) window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }))
+        else         window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }))
+      } else {
+        // vertical
+        if (dy > 0) window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }))
+        else         window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }))
+      }
+    }
+
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchend',   onTouchEnd,   { passive: true })
+
+    window.removeEventListener('touchstart', onTouchStart)
+    window.removeEventListener('touchend',   onTouchEnd)
 
     function tick() {
       const s = stateRef.current
@@ -188,3 +219,23 @@ export function SnakeApp() {
     </div>
   )
 }
+
+{window.innerWidth < 768 && (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, padding: '10px 0', background: '#0a0a0a', flexShrink: 0 }}>
+          <button
+            onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true })) }}
+            style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>▲</button>
+          <div style={{ display: 'flex', gap: 4 }}>
+            <button
+              onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true })) }}
+              style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>◀</button>
+            <div style={{ width: 54, height: 54, background: '#0d0d0d', border: '1px solid #222', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#333', fontFamily: 'JetBrains Mono', fontSize: 10 }}>🐍</div>
+            <button
+              onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })) }}
+              style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>▶</button>
+          </div>
+          <button
+            onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true })) }}
+            style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>▼</button>
+        </div>
+      )}
