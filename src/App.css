@@ -223,9 +223,10 @@ input, textarea { cursor: text; }
 }
 
 .mobile-logo {
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
+  filter: drop-shadow(0 0 10px #00ff4650);
 }
 
 .mobile-header-title {
@@ -570,5 +571,20 @@ input, textarea { cursor: text; }
   }
   .mobile-home {
     padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-app-content canvas {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+  }
+
+  .mobile-app-content .game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 }

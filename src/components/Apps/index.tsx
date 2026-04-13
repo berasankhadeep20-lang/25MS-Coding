@@ -10,7 +10,7 @@ export function HomeApp() {
       <div className="app-divider" />
 
       <div style={{ textAlign: 'center', padding: '12px 0' }}>
-        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 80, marginBottom: 10, opacity: 0.95 }} />
+        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 80, height: 80, objectFit: 'contain', marginBottom: 10, filter: 'drop-shadow(0 0 14px #00ff4650)' }} />
         <p style={{ color: '#00ff46', fontFamily: 'JetBrains Mono', fontSize: 20, fontWeight: 700, margin: '0 0 4px', letterSpacing: '0.15em' }}>SLASHDOT</p>
         <p style={{ color: '#aaa', fontFamily: 'JetBrains Mono', fontSize: 11, margin: '0 0 2px' }}>The Coding & Designing Club of IISER Kolkata</p>
         <p style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 10, margin: '0 0 12px' }}>Est. somewhere between 2 AM and 4 AM, over coffee</p>
@@ -67,6 +67,9 @@ export function AboutApp() {
     <div className="app-body">
       <p className="app-label cyan">// about.txt — About SlashDot</p>
       <div className="app-divider" />
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 4px' }}>
+        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 60, height: 60, objectFit: 'contain', filter: 'drop-shadow(0 0 10px #00ff4640)', opacity: 0.9 }} />
+      </div>
 
       <p style={{ color: '#d0d0d0', fontFamily: 'JetBrains Mono', fontSize: 13, lineHeight: 1.9, marginBottom: 10 }}>
         Hola! You've stepped into the cynosure for the perks of cool coding skills.
@@ -141,6 +144,9 @@ export function TeamApp() {
     <div className="app-body">
       <p className="app-label cyan">// team.db — The SlashDot Team</p>
       <div className="app-divider" />
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '8px 0 4px' }}>
+        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 0 8px #ffd70030)', opacity: 0.85 }} />
+      </div>
 
       <p className="app-label yellow">// office bearers 2025-26</p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 16 }}>
@@ -267,6 +273,10 @@ export function ContactApp() {
     <div className="app-body">
       <p className="app-label cyan">// contact.sh — Get in Touch</p>
       <div className="app-divider" />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px 0 4px', gap: 4 }}>
+        <img src="./slashdot_logo.png" alt="SlashDot" style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 0 8px #00ff4630)', opacity: 0.9 }} />
+        <span style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 10 }}>slashdot@iiserkol.ac.in</span>
+      </div>
 
       <p className="app-label yellow">// club contact</p>
       <div style={{ background: '#111', border: '1px solid #1e1e1e', borderRadius: 8, padding: '10px 14px', marginBottom: 14 }}>

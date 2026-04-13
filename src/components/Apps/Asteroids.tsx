@@ -134,6 +134,79 @@ export function AsteroidsGame() {
     window.addEventListener('keydown', e => onKey(e, true))
     window.addEventListener('keyup', e => onKey(e, false))
 
+    // ── Mobile touch controls ────────────────────────────────────────────────
+    let lastTap = 0
+    let thrustTouch = false
+
+    function onTouchStart(e: TouchEvent) {
+      e.preventDefault()
+      const s = stateRef.current
+      // Tap to start/restart
+      if (!s.started || s.gameOver) {
+        initGame(W, H)
+        setDisplay({ score: 0, lives: 3, level: 1, gameOver: false, started: true })
+        return
+      }
+      // Double tap = shoot
+      const now = Date.now()
+      if (now - lastTap < 280) {
+        s.keys[' '] = true
+        setTimeout(() => { s.keys[' '] = false }, 80)
+      }
+      lastTap = now
+      // Determine control zone from first touch
+      const touch = e.touches[0]
+      const rect = canvas!.getBoundingClientRect()
+      const rx = (touch.clientX - rect.left) / rect.width
+      const ry = (touch.clientY - rect.top) / rect.height
+      if (ry < 0.4) {
+        // Top area = thrust
+        s.keys['ArrowUp'] = true
+        thrustTouch = true
+      } else if (rx < 0.35) {
+        s.keys['ArrowLeft'] = true
+      } else if (rx > 0.65) {
+        s.keys['ArrowRight'] = true
+      } else {
+        // Centre bottom = shoot
+        s.keys[' '] = true
+        setTimeout(() => { s.keys[' '] = false }, 80)
+      }
+    }
+
+    function onTouchEnd(e: TouchEvent) {
+      e.preventDefault()
+      const s = stateRef.current
+      s.keys['ArrowLeft'] = false
+      s.keys['ArrowRight'] = false
+      if (thrustTouch) { s.keys['ArrowUp'] = false; thrustTouch = false }
+    }
+
+    function onTouchMove(e: TouchEvent) {
+      e.preventDefault()
+      const s = stateRef.current
+      const touch = e.touches[0]
+      const rect = canvas!.getBoundingClientRect()
+      const rx = (touch.clientX - rect.left) / rect.width
+      const ry = (touch.clientY - rect.top) / rect.height
+      s.keys['ArrowLeft']  = rx < 0.35 && ry >= 0.4
+      s.keys['ArrowRight'] = rx > 0.65 && ry >= 0.4
+      if (thrustTouch) s.keys['ArrowUp'] = ry < 0.4
+    }
+
+    canvas?.addEventListener('touchstart', onTouchStart, { passive: false })
+    canvas?.addEventListener('touchend',   onTouchEnd,   { passive: false })
+    canvas?.addEventListener('touchmove',  onTouchMove,  { passive: false })
+
+    return () => {
+      cancelAnimationFrame(animRef.current)
+      window.removeEventListener('keydown', e => onKey(e, true))
+      window.removeEventListener('keyup', e => onKey(e, false))
+      canvas?.removeEventListener('touchstart', onTouchStart)
+      canvas?.removeEventListener('touchend',   onTouchEnd)
+      canvas?.removeEventListener('touchmove',  onTouchMove)
+    }
+
     function wrap(v: Vec2) {
       if (v.x < 0) v.x += W
       if (v.x > W) v.x -= W
@@ -205,8 +278,14 @@ export function AsteroidsGame() {
         ctx.fillText('ASTEROIDS', W / 2, H / 2 - 40)
         ctx.font = '14px JetBrains Mono'
         ctx.fillStyle = '#aaa'
-        ctx.fillText('Press ENTER to start', W / 2, H / 2)
-        ctx.fillText('Arrow keys to move  |  Space to shoot', W / 2, H / 2 + 28)
+        if (window.innerWidth < 768) {
+          ctx.fillText('Tap to start', W / 2, H / 2)
+          ctx.fillText('Left/Right = rotate  |  Top = thrust', W / 2, H / 2 + 28)
+          ctx.fillText('Double tap = shoot', W / 2, H / 2 + 52)
+        } else {
+          ctx.fillText('Press ENTER to start', W / 2, H / 2)
+          ctx.fillText('Arrow keys to move  |  Space to shoot', W / 2, H / 2 + 28)
+        }
         animRef.current = requestAnimationFrame(loop)
         return
       }
@@ -223,7 +302,7 @@ export function AsteroidsGame() {
         ctx.fillText('Score: ' + s.score, W / 2, H / 2)
         ctx.fillStyle = '#aaa'
         ctx.font = '13px JetBrains Mono'
-        ctx.fillText('Press ENTER to restart', W / 2, H / 2 + 36)
+        ctx.fillText(window.innerWidth < 768 ? 'Tap to restart' : 'Press ENTER to restart', W / 2, H / 2 + 36)
         animRef.current = requestAnimationFrame(loop)
         return
       }
@@ -391,15 +470,22 @@ export function AsteroidsGame() {
         style={{ flex: 1, display: 'block', width: '100%', height: '100%' }}
         tabIndex={0}
       />
-      <div style={{
-        padding: '4px 16px', borderTop: '1px solid #1e1e1e',
-        fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#555',
-        display: 'flex', gap: 24,
-      }}>
-        <span>↑ Thrust</span>
-        <span>← → Rotate</span>
-        <span>Space Shoot</span>
-        <span>Enter Start</span>
+      <div style={{ padding: '4px 16px', borderTop: '1px solid #1e1e1e', fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+        {window.innerWidth < 768 ? (
+          <>
+            <span>Top = Thrust</span>
+            <span>Left/Right = Rotate</span>
+            <span>Centre = Shoot</span>
+            <span>Double tap = Shoot</span>
+          </>
+        ) : (
+          <>
+            <span>↑ Thrust</span>
+            <span>← → Rotate</span>
+            <span>Space Shoot</span>
+            <span>Enter Start</span>
+          </>
+        )}
       </div>
     </div>
   )
