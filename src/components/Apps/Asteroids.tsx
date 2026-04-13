@@ -40,10 +40,8 @@ function randomAsteroid(W: number, H: number, radius: number, avoidPos?: Vec2): 
 
   const speed = (Math.random() * 0.8 + 0.3) * (40 / radius)
   const angle = Math.random() * Math.PI * 2
-  const numV = Math.floor(Math.random() * 5) + 7
-  const vertices = Array.from({ length: numV }, () =>
-    radius * (0.7 + Math.random() * 0.4)
-  )
+  const numV  = Math.floor(Math.random() * 5) + 7
+  const vertices = Array.from({ length: numV }, () => radius * (0.7 + Math.random() * 0.4))
   return {
     pos,
     vel: { x: Math.cos(angle) * speed, y: Math.sin(angle) * speed },
@@ -56,7 +54,7 @@ function randomAsteroid(W: number, H: number, radius: number, avoidPos?: Vec2): 
 
 export function AsteroidsGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const stateRef = useRef({
+  const stateRef  = useRef({
     ship: null as Ship | null,
     bullets: [] as Bullet[],
     asteroids: [] as Asteroid[],
@@ -72,6 +70,7 @@ export function AsteroidsGame() {
   })
   const animRef = useRef<number>(0)
   const [display, setDisplay] = useState({ score: 0, lives: 3, level: 1, gameOver: false, started: false })
+  const isMobile = window.innerWidth < 768
 
   function initGame(W: number, H: number) {
     const s = stateRef.current
@@ -82,27 +81,25 @@ export function AsteroidsGame() {
       alive: true,
       invincible: 180,
     }
-    s.bullets = []
-    s.particles = []
-    s.score = 0
-    s.lives = 3
-    s.level = 1
-    s.gameOver = false
-    s.started = true
+    s.bullets      = []
+    s.particles    = []
+    s.score        = 0
+    s.lives        = 3
+    s.level        = 1
+    s.gameOver     = false
+    s.started      = true
     s.shootCooldown = 0
-    s.respawnTimer = 0
-    s.asteroids = Array.from({ length: 4 }, () =>
-      randomAsteroid(W, H, 40, s.ship!.pos)
-    )
+    s.respawnTimer  = 0
+    s.asteroids = Array.from({ length: 4 }, () => randomAsteroid(W, H, 40, s.ship!.pos))
   }
 
   function spawnParticles(pos: Vec2, count: number, particles: Particle[]) {
     for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2
+      const a = Math.random() * Math.PI * 2
       const speed = Math.random() * 3 + 1
       particles.push({
         pos: { x: pos.x, y: pos.y },
-        vel: { x: Math.cos(angle) * speed, y: Math.sin(angle) * speed },
+        vel: { x: Math.cos(a) * speed, y: Math.sin(a) * speed },
         life: 60,
         maxLife: 60,
       })
@@ -113,16 +110,14 @@ export function AsteroidsGame() {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
-
     const W = canvas.width
     const H = canvas.height
 
-    const onKey = (e: KeyboardEvent, down: boolean) => {
-      stateRef.current.keys[e.key] = down
-      if (down && (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
-        e.preventDefault()
-      }
-      if (down && e.key === 'Enter') {
+    // ── Keyboard ──────────────────────────────────────────────────────────────
+    const onKeyDown = (e: KeyboardEvent) => {
+      stateRef.current.keys[e.key] = true
+      if ([' ', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault()
+      if (e.key === 'Enter') {
         const s = stateRef.current
         if (!s.started || s.gameOver) {
           initGame(W, H)
@@ -130,37 +125,42 @@ export function AsteroidsGame() {
         }
       }
     }
+    const onKeyUp = (e: KeyboardEvent) => { stateRef.current.keys[e.key] = false }
+    window.addEventListener('keydown', onKeyDown)
+    window.addEventListener('keyup',   onKeyUp)
 
-    window.addEventListener('keydown', e => onKey(e, true))
-    window.addEventListener('keyup', e => onKey(e, false))
-
-    // ── Mobile touch controls ────────────────────────────────────────────────
-    let lastTap = 0
+    // ── Touch controls ────────────────────────────────────────────────────────
+    let lastTap    = 0
     let thrustTouch = false
 
     function onTouchStart(e: TouchEvent) {
       e.preventDefault()
       const s = stateRef.current
-      // Tap to start/restart
       if (!s.started || s.gameOver) {
         initGame(W, H)
         setDisplay({ score: 0, lives: 3, level: 1, gameOver: false, started: true })
         return
       }
-      // Double tap = shoot
       const now = Date.now()
       if (now - lastTap < 280) {
+        // Double tap = shoot
         s.keys[' '] = true
         setTimeout(() => { s.keys[' '] = false }, 80)
       }
       lastTap = now
-      // Determine control zone from first touch
+
       const touch = e.touches[0]
-      const rect = canvas!.getBoundingClientRect()
+      const rect  = canvas!.getBoundingClientRect()
       const rx = (touch.clientX - rect.left) / rect.width
-      const ry = (touch.clientY - rect.top) / rect.height
-      if (ry < 0.4) {
-        // Top area = thrust
+      const ry = (touch.clientY - rect.top)  / rect.height
+
+      // Clear directional keys first
+      s.keys['ArrowLeft']  = false
+      s.keys['ArrowRight'] = false
+      s.keys['ArrowUp']    = false
+      thrustTouch = false
+
+      if (ry < 0.35) {
         s.keys['ArrowUp'] = true
         thrustTouch = true
       } else if (rx < 0.35) {
@@ -177,53 +177,49 @@ export function AsteroidsGame() {
     function onTouchEnd(e: TouchEvent) {
       e.preventDefault()
       const s = stateRef.current
-      s.keys['ArrowLeft'] = false
+      s.keys['ArrowLeft']  = false
       s.keys['ArrowRight'] = false
-      if (thrustTouch) { s.keys['ArrowUp'] = false; thrustTouch = false }
+      if (thrustTouch) {
+        s.keys['ArrowUp'] = false
+        thrustTouch = false
+      }
     }
 
     function onTouchMove(e: TouchEvent) {
       e.preventDefault()
-      const s = stateRef.current
+      const s     = stateRef.current
       const touch = e.touches[0]
-      const rect = canvas!.getBoundingClientRect()
+      const rect  = canvas!.getBoundingClientRect()
       const rx = (touch.clientX - rect.left) / rect.width
-      const ry = (touch.clientY - rect.top) / rect.height
-      s.keys['ArrowLeft']  = rx < 0.35 && ry >= 0.4
-      s.keys['ArrowRight'] = rx > 0.65 && ry >= 0.4
-      if (thrustTouch) s.keys['ArrowUp'] = ry < 0.4
+      const ry = (touch.clientY - rect.top)  / rect.height
+
+      s.keys['ArrowLeft']  = rx < 0.35 && ry >= 0.35
+      s.keys['ArrowRight'] = rx > 0.65 && ry >= 0.35
+      if (thrustTouch) s.keys['ArrowUp'] = ry < 0.35
     }
 
-    canvas?.addEventListener('touchstart', onTouchStart, { passive: false })
-    canvas?.addEventListener('touchend',   onTouchEnd,   { passive: false })
-    canvas?.addEventListener('touchmove',  onTouchMove,  { passive: false })
+    canvas.addEventListener('touchstart', onTouchStart, { passive: false })
+    canvas.addEventListener('touchend',   onTouchEnd,   { passive: false })
+    canvas.addEventListener('touchmove',  onTouchMove,  { passive: false })
 
-    return () => {
-      cancelAnimationFrame(animRef.current)
-      window.removeEventListener('keydown', e => onKey(e, true))
-      window.removeEventListener('keyup', e => onKey(e, false))
-      canvas?.removeEventListener('touchstart', onTouchStart)
-      canvas?.removeEventListener('touchend',   onTouchEnd)
-      canvas?.removeEventListener('touchmove',  onTouchMove)
-    }
-
+    // ── Helpers ───────────────────────────────────────────────────────────────
     function wrap(v: Vec2) {
-      if (v.x < 0) v.x += W
-      if (v.x > W) v.x -= W
-      if (v.y < 0) v.y += H
-      if (v.y > H) v.y -= H
+      if (v.x < 0)  v.x += W
+      if (v.x > W)  v.x -= W
+      if (v.y < 0)  v.y += H
+      if (v.y > H)  v.y -= H
     }
 
-    function drawShip(ctx: CanvasRenderingContext2D, ship: Ship) {
+    function drawShip(ship: Ship) {
       if (!ship.alive) return
       if (ship.invincible > 0 && Math.floor(ship.invincible / 5) % 2 === 0) return
       ctx.save()
       ctx.translate(ship.pos.x, ship.pos.y)
       ctx.rotate(ship.angle)
-      ctx.strokeStyle = '#00ff46'
-      ctx.lineWidth = 2
-      ctx.shadowColor = '#00ff46'
-      ctx.shadowBlur = 8
+      ctx.strokeStyle  = '#00ff46'
+      ctx.lineWidth    = 2
+      ctx.shadowColor  = '#00ff46'
+      ctx.shadowBlur   = 8
       ctx.beginPath()
       ctx.moveTo(20, 0)
       ctx.lineTo(-12, -10)
@@ -243,14 +239,14 @@ export function AsteroidsGame() {
       ctx.restore()
     }
 
-    function drawAsteroid(ctx: CanvasRenderingContext2D, a: Asteroid) {
+    function drawAsteroid(a: Asteroid) {
       ctx.save()
       ctx.translate(a.pos.x, a.pos.y)
       ctx.rotate(a.angle)
       ctx.strokeStyle = '#00c8ff'
-      ctx.lineWidth = 1.5
+      ctx.lineWidth   = 1.5
       ctx.shadowColor = '#00c8ff'
-      ctx.shadowBlur = 4
+      ctx.shadowBlur  = 4
       ctx.beginPath()
       const step = (Math.PI * 2) / a.vertices.length
       a.vertices.forEach((r, i) => {
@@ -263,33 +259,57 @@ export function AsteroidsGame() {
       ctx.restore()
     }
 
+    // ── Draw mobile zone overlay ──────────────────────────────────────────────
+    function drawMobileZones() {
+      // Subtle zone indicators
+      ctx.fillStyle = 'rgba(255,255,255,0.03)'
+      ctx.fillRect(0, 0, W * 0.35, H)          // left = rotate left
+      ctx.fillRect(W * 0.65, 0, W * 0.35, H)   // right = rotate right
+      ctx.fillStyle = 'rgba(0,255,70,0.04)'
+      ctx.fillRect(0, 0, W, H * 0.35)           // top = thrust
+
+      ctx.fillStyle = 'rgba(0,255,70,0.2)'
+      ctx.font = '10px JetBrains Mono'
+      ctx.textAlign = 'center'
+      ctx.fillText('▲ THRUST', W / 2, 16)
+      ctx.fillStyle = 'rgba(200,200,200,0.2)'
+      ctx.textAlign = 'left'
+      ctx.fillText('◀', 8, H / 2)
+      ctx.textAlign = 'right'
+      ctx.fillText('▶', W - 8, H / 2)
+      ctx.textAlign = 'center'
+      ctx.fillText('● SHOOT', W / 2, H - 10)
+    }
+
+    // ── Main loop ─────────────────────────────────────────────────────────────
     function loop() {
-      if (!ctx) return
       const s = stateRef.current
       ctx.fillStyle = 'rgba(0,0,0,0.15)'
       ctx.fillRect(0, 0, W, H)
 
+      // Start screen
       if (!s.started) {
         ctx.fillStyle = '#0a0a0a'
         ctx.fillRect(0, 0, W, H)
         ctx.fillStyle = '#00ff46'
         ctx.font = 'bold 28px JetBrains Mono'
         ctx.textAlign = 'center'
-        ctx.fillText('ASTEROIDS', W / 2, H / 2 - 40)
+        ctx.fillText('ASTEROIDS', W / 2, H / 2 - 50)
         ctx.font = '14px JetBrains Mono'
         ctx.fillStyle = '#aaa'
-        if (window.innerWidth < 768) {
-          ctx.fillText('Tap to start', W / 2, H / 2)
-          ctx.fillText('Left/Right = rotate  |  Top = thrust', W / 2, H / 2 + 28)
-          ctx.fillText('Double tap = shoot', W / 2, H / 2 + 52)
+        if (isMobile) {
+          ctx.fillText('Tap to start', W / 2, H / 2 - 10)
+          ctx.fillText('Top = Thrust  |  Left/Right = Rotate', W / 2, H / 2 + 16)
+          ctx.fillText('Centre = Shoot  |  Double tap = Shoot', W / 2, H / 2 + 38)
         } else {
-          ctx.fillText('Press ENTER to start', W / 2, H / 2)
-          ctx.fillText('Arrow keys to move  |  Space to shoot', W / 2, H / 2 + 28)
+          ctx.fillText('Press ENTER to start', W / 2, H / 2 - 10)
+          ctx.fillText('Arrow keys to move  |  Space to shoot', W / 2, H / 2 + 16)
         }
         animRef.current = requestAnimationFrame(loop)
         return
       }
 
+      // Game over screen
       if (s.gameOver) {
         ctx.fillStyle = '#0a0a0a'
         ctx.fillRect(0, 0, W, H)
@@ -302,7 +322,7 @@ export function AsteroidsGame() {
         ctx.fillText('Score: ' + s.score, W / 2, H / 2)
         ctx.fillStyle = '#aaa'
         ctx.font = '13px JetBrains Mono'
-        ctx.fillText(window.innerWidth < 768 ? 'Tap to restart' : 'Press ENTER to restart', W / 2, H / 2 + 36)
+        ctx.fillText(isMobile ? 'Tap to restart' : 'Press ENTER to restart', W / 2, H / 2 + 36)
         animRef.current = requestAnimationFrame(loop)
         return
       }
@@ -327,7 +347,7 @@ export function AsteroidsGame() {
         if ((s.keys[' '] || s.keys['Space']) && s.shootCooldown <= 0) {
           s.bullets.push({
             pos: { x: ship.pos.x + Math.cos(ship.angle) * 22, y: ship.pos.y + Math.sin(ship.angle) * 22 },
-            vel: { x: Math.cos(ship.angle) * 8 + ship.vel.x, y: Math.sin(ship.angle) * 8 + ship.vel.y },
+            vel: { x: Math.cos(ship.angle) * 8 + ship.vel.x,  y: Math.sin(ship.angle) * 8 + ship.vel.y  },
             life: 60,
           })
           s.shootCooldown = 12
@@ -370,7 +390,7 @@ export function AsteroidsGame() {
         return p.life > 0
       })
 
-      // Bullet-asteroid collision
+      // Bullet-asteroid collisions
       s.bullets.forEach((b, bi) => {
         s.asteroids.forEach((a, ai) => {
           if (Math.hypot(b.pos.x - a.pos.x, b.pos.y - a.pos.y) < a.radius) {
@@ -379,8 +399,9 @@ export function AsteroidsGame() {
             const newAsteroids: Asteroid[] = []
             if (a.radius > 20) {
               for (let i = 0; i < 2; i++) {
-                newAsteroids.push(randomAsteroid(W, H, a.radius / 2))
-                newAsteroids[i].pos = { x: a.pos.x, y: a.pos.y }
+                const child = randomAsteroid(W, H, a.radius / 2)
+                child.pos = { x: a.pos.x, y: a.pos.y }
+                newAsteroids.push(child)
               }
             }
             s.asteroids.splice(ai, 1)
@@ -391,7 +412,7 @@ export function AsteroidsGame() {
         })
       })
 
-      // Ship-asteroid collision
+      // Ship-asteroid collisions
       if (ship.alive && ship.invincible <= 0) {
         s.asteroids.forEach(a => {
           if (Math.hypot(ship.pos.x - a.pos.x, ship.pos.y - a.pos.y) < a.radius + 12) {
@@ -412,25 +433,24 @@ export function AsteroidsGame() {
       // Next level
       if (s.asteroids.length === 0) {
         s.level++
-        s.asteroids = Array.from({ length: 3 + s.level }, () =>
-          randomAsteroid(W, H, 40, ship.pos)
-        )
+        s.asteroids = Array.from({ length: 3 + s.level }, () => randomAsteroid(W, H, 40, ship.pos))
         setDisplay(d => ({ ...d, level: s.level }))
       }
 
-      // Draw
-      if (ctx) drawShip(ctx, ship)
+      // Draw everything
+      drawShip(ship)
 
       s.bullets.forEach(b => {
         ctx.beginPath()
         ctx.arc(b.pos.x, b.pos.y, 2, 0, Math.PI * 2)
-        ctx.fillStyle = '#ffd700'
+        ctx.fillStyle   = '#ffd700'
         ctx.shadowColor = '#ffd700'
-        ctx.shadowBlur = 6
+        ctx.shadowBlur  = 6
         ctx.fill()
+        ctx.shadowBlur = 0
       })
 
-      s.asteroids.forEach(a => { if (ctx) drawAsteroid(ctx, a) })
+      s.asteroids.forEach(a => drawAsteroid(a))
 
       s.particles.forEach(p => {
         const alpha = p.life / p.maxLife
@@ -440,46 +460,55 @@ export function AsteroidsGame() {
         ctx.fill()
       })
 
+      // Mobile zone hints (subtle)
+      if (isMobile && s.started && !s.gameOver) {
+        drawMobileZones()
+      }
+
       animRef.current = requestAnimationFrame(loop)
     }
 
+    // ── Start ─────────────────────────────────────────────────────────────────
     animRef.current = requestAnimationFrame(loop)
 
+    // ── Cleanup ───────────────────────────────────────────────────────────────
     return () => {
       cancelAnimationFrame(animRef.current)
-      window.removeEventListener('keydown', e => onKey(e, true))
-      window.removeEventListener('keyup', e => onKey(e, false))
-      canvas?.removeEventListener('touchstart', onTouchStart)
-      canvas?.removeEventListener('touchend',   onTouchEnd)
-      canvas?.removeEventListener('touchmove',  onTouchMove)
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('keyup',   onKeyUp)
+      canvas.removeEventListener('touchstart', onTouchStart)
+      canvas.removeEventListener('touchend',   onTouchEnd)
+      canvas.removeEventListener('touchmove',  onTouchMove)
     }
   }, [])
 
   return (
     <div style={{ background: '#0a0a0a', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '6px 16px', borderBottom: '1px solid #1e1e1e',
-        fontFamily: 'JetBrains Mono, monospace', fontSize: 12,
-      }}>
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 16px', borderBottom: '1px solid #1e1e1e', fontFamily: 'JetBrains Mono', fontSize: 12 }}>
         <span style={{ color: '#00ff46' }}>Score: {display.score}</span>
         <span style={{ color: '#ffd700' }}>Level: {display.level}</span>
         <span style={{ color: '#ff5050' }}>{'♥ '.repeat(display.lives)}</span>
       </div>
+
+      {/* Canvas */}
       <canvas
         ref={canvasRef}
         width={640}
         height={420}
-        style={{ flex: 1, display: 'block', width: '100%', height: '100%' }}
+        style={{ flex: 1, display: 'block', width: '100%', height: '100%', touchAction: 'none' }}
         tabIndex={0}
       />
+
+      {/* Footer hint */}
       <div style={{ padding: '4px 16px', borderTop: '1px solid #1e1e1e', fontFamily: 'JetBrains Mono', fontSize: 11, color: '#555', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-        {window.innerWidth < 768 ? (
+        {isMobile ? (
           <>
             <span>Top = Thrust</span>
             <span>Left/Right = Rotate</span>
             <span>Centre = Shoot</span>
             <span>Double tap = Shoot</span>
+            <span>Tap = Start</span>
           </>
         ) : (
           <>
