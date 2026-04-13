@@ -449,6 +449,9 @@ export function AsteroidsGame() {
       cancelAnimationFrame(animRef.current)
       window.removeEventListener('keydown', e => onKey(e, true))
       window.removeEventListener('keyup', e => onKey(e, false))
+      canvas?.removeEventListener('touchstart', onTouchStart)
+      canvas?.removeEventListener('touchend',   onTouchEnd)
+      canvas?.removeEventListener('touchmove',  onTouchMove)
     }
   }, [])
 

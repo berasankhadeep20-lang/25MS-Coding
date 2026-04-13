@@ -29,21 +29,36 @@ export function SnakeApp() {
     frame: 0,
   })
   const frameRef = useRef<number>(0)
-  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const tickRef  = useRef<ReturnType<typeof setInterval> | null>(null)
   const [display, setDisplay] = useState({ score: 0, best: 0, dead: false, started: false })
-  const [speed, setSpeed] = useState(150)
+  const [speed, setSpeed]     = useState(150)
+  const isMobile = window.innerWidth < 768
 
   function reset() {
     const s = stateRef.current
-    s.snake = [{ x: 12, y: 10 }, { x: 11, y: 10 }, { x: 10, y: 10 }]
-    s.dir = 'right'
+    s.snake   = [{ x: 12, y: 10 }, { x: 11, y: 10 }, { x: 10, y: 10 }]
+    s.dir     = 'right'
     s.nextDir = 'right'
-    s.food = randomFood(s.snake)
-    s.score = 0
-    s.dead = false
+    s.food    = randomFood(s.snake)
+    s.score   = 0
+    s.dead    = false
     s.started = true
-    s.frame = 0
+    s.frame   = 0
     setDisplay(d => ({ ...d, score: 0, dead: false, started: true }))
+  }
+
+  // D-pad button press helper — dispatch a synthetic keydown
+  function press(key: string) {
+    const s = stateRef.current
+    // If dead or not started, restart on any dpad press
+    if (!s.started || s.dead) { reset(); return }
+    const map: Record<string, Dir> = {
+      ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
+    }
+    const newDir = map[key]
+    if (!newDir) return
+    const opposites: Record<Dir, Dir> = { up: 'down', down: 'up', left: 'right', right: 'left' }
+    if (newDir !== opposites[s.dir]) s.nextDir = newDir
   }
 
   useEffect(() => {
@@ -51,6 +66,7 @@ export function SnakeApp() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
 
+    // ── Keyboard ──────────────────────────────────────────────────────────────
     const onKey = (e: KeyboardEvent) => {
       const s = stateRef.current
       const map: Record<string, Dir> = {
@@ -68,7 +84,8 @@ export function SnakeApp() {
       if (!s.started) { s.started = true; setDisplay(d => ({ ...d, started: true })) }
     }
     window.addEventListener('keydown', onKey)
-    // ── Mobile swipe ──────────────────────────────────────────────────────────
+
+    // ── Touch swipe ───────────────────────────────────────────────────────────
     let touchStartX = 0
     let touchStartY = 0
 
@@ -84,36 +101,34 @@ export function SnakeApp() {
       const absDy = Math.abs(dy)
       if (Math.max(absDx, absDy) < 20) return
       if (absDx > absDy) {
-        // horizontal
-        if (dx > 0) window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }))
-        else         window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }))
+        press(dx > 0 ? 'ArrowRight' : 'ArrowLeft')
       } else {
-        // vertical
-        if (dy > 0) window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }))
-        else         window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }))
+        press(dy > 0 ? 'ArrowDown' : 'ArrowUp')
       }
     }
 
-    window.addEventListener('touchstart', onTouchStart, { passive: true })
-    window.addEventListener('touchend',   onTouchEnd,   { passive: true })
+    // Only add swipe on the canvas itself so it doesn't conflict with D-pad buttons
+    canvas.addEventListener('touchstart', onTouchStart, { passive: true })
+    canvas.addEventListener('touchend',   onTouchEnd,   { passive: true })
 
-    window.removeEventListener('touchstart', onTouchStart)
-    window.removeEventListener('touchend',   onTouchEnd)
-
+    // ── Game tick ─────────────────────────────────────────────────────────────
     function tick() {
       const s = stateRef.current
       if (!s.started || s.dead) return
       s.dir = s.nextDir
       const head = s.snake[0]
       const newHead: Pos = {
-        up:    { x: head.x, y: head.y - 1 },
-        down:  { x: head.x, y: head.y + 1 },
-        left:  { x: head.x - 1, y: head.y },
-        right: { x: head.x + 1, y: head.y },
+        up:    { x: head.x,     y: head.y - 1 },
+        down:  { x: head.x,     y: head.y + 1 },
+        left:  { x: head.x - 1, y: head.y     },
+        right: { x: head.x + 1, y: head.y     },
       }[s.dir]
 
-      if (newHead.x < 0 || newHead.x >= COLS || newHead.y < 0 || newHead.y >= ROWS ||
-          s.snake.some(p => p.x === newHead.x && p.y === newHead.y)) {
+      if (
+        newHead.x < 0 || newHead.x >= COLS ||
+        newHead.y < 0 || newHead.y >= ROWS ||
+        s.snake.some(p => p.x === newHead.x && p.y === newHead.y)
+      ) {
         s.dead = true
         if (s.score > s.best) s.best = s.score
         setDisplay(d => ({ ...d, dead: true, best: s.best }))
@@ -132,40 +147,60 @@ export function SnakeApp() {
 
     tickRef.current = setInterval(tick, speed)
 
+    // ── Draw loop ─────────────────────────────────────────────────────────────
     function draw() {
       const s = stateRef.current
-      ctx.fillStyle = '#0a0a0a'
-      ctx.fillRect(0, 0, canvas!.width, canvas!.height)
+      const W = canvas!.width
+      const H = canvas!.height
 
+      ctx.fillStyle = '#0a0a0a'
+      ctx.fillRect(0, 0, W, H)
+
+      // Grid
       ctx.strokeStyle = '#111'
       ctx.lineWidth = 0.5
-      for (let x = 0; x <= COLS; x++) { ctx.beginPath(); ctx.moveTo(x * CELL, 0); ctx.lineTo(x * CELL, ROWS * CELL); ctx.stroke() }
-      for (let y = 0; y <= ROWS; y++) { ctx.beginPath(); ctx.moveTo(0, y * CELL); ctx.lineTo(COLS * CELL, y * CELL); ctx.stroke() }
+      for (let x = 0; x <= COLS; x++) {
+        ctx.beginPath(); ctx.moveTo(x * CELL, 0); ctx.lineTo(x * CELL, H); ctx.stroke()
+      }
+      for (let y = 0; y <= ROWS; y++) {
+        ctx.beginPath(); ctx.moveTo(0, y * CELL); ctx.lineTo(W, y * CELL); ctx.stroke()
+      }
 
+      // Start screen
       if (!s.started) {
         ctx.fillStyle = '#00ff46'
         ctx.font = 'bold 20px JetBrains Mono'
         ctx.textAlign = 'center'
-        ctx.fillText('SNAKE', COLS * CELL / 2, ROWS * CELL / 2 - 20)
+        ctx.fillText('SNAKE', W / 2, H / 2 - 24)
         ctx.fillStyle = '#aaa'
         ctx.font = '12px JetBrains Mono'
-        ctx.fillText('Press arrow keys or WASD to start', COLS * CELL / 2, ROWS * CELL / 2 + 8)
-        ctx.fillText('Press Enter to restart', COLS * CELL / 2, ROWS * CELL / 2 + 28)
+        if (isMobile) {
+          ctx.fillText('Use D-pad below or swipe', W / 2, H / 2 + 4)
+          ctx.fillStyle = '#00ff46'
+          ctx.fillText('Tap D-pad to start', W / 2, H / 2 + 24)
+        } else {
+          ctx.fillText('Arrow keys / WASD to move', W / 2, H / 2 + 4)
+          ctx.fillStyle = '#00ff46'
+          ctx.fillText('Any key to start', W / 2, H / 2 + 24)
+        }
+        frameRef.current = requestAnimationFrame(draw)
+        return
       }
 
+      // Game over screen
       if (s.dead) {
         ctx.fillStyle = 'rgba(0,0,0,0.65)'
-        ctx.fillRect(0, 0, canvas!.width, canvas!.height)
+        ctx.fillRect(0, 0, W, H)
         ctx.fillStyle = '#ff5050'
         ctx.font = 'bold 22px JetBrains Mono'
         ctx.textAlign = 'center'
-        ctx.fillText('GAME OVER', COLS * CELL / 2, ROWS * CELL / 2 - 16)
+        ctx.fillText('GAME OVER', W / 2, H / 2 - 20)
         ctx.fillStyle = '#ffd700'
         ctx.font = '13px JetBrains Mono'
-        ctx.fillText(`Score: ${s.score}   Best: ${s.best}`, COLS * CELL / 2, ROWS * CELL / 2 + 12)
+        ctx.fillText(`Score: ${s.score}   Best: ${s.best}`, W / 2, H / 2 + 6)
         ctx.fillStyle = '#aaa'
         ctx.font = '11px JetBrains Mono'
-        ctx.fillText('Press Enter to restart', COLS * CELL / 2, ROWS * CELL / 2 + 36)
+        ctx.fillText(isMobile ? 'Tap D-pad to restart' : 'Press Enter to restart', W / 2, H / 2 + 28)
         frameRef.current = requestAnimationFrame(draw)
         return
       }
@@ -177,7 +212,7 @@ export function SnakeApp() {
       ctx.fillRect(s.food.x * CELL + 2, s.food.y * CELL + 2, CELL - 4, CELL - 4)
       ctx.shadowBlur = 0
 
-      // Snake
+      // Snake body
       s.snake.forEach((p, i) => {
         const isHead = i === 0
         ctx.fillStyle = isHead ? '#ffd700' : '#00ff46'
@@ -194,48 +229,82 @@ export function SnakeApp() {
 
     return () => {
       window.removeEventListener('keydown', onKey)
+      canvas.removeEventListener('touchstart', onTouchStart)
+      canvas.removeEventListener('touchend',   onTouchEnd)
       cancelAnimationFrame(frameRef.current)
       if (tickRef.current) clearInterval(tickRef.current)
     }
   }, [speed])
 
+  // D-pad button style
+  const dBtn = (color: string): React.CSSProperties => ({
+    width: 56,
+    height: 56,
+    background: '#111',
+    border: `1px solid ${color}40`,
+    borderRadius: 12,
+    color,
+    fontSize: 22,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    WebkitTapHighlightColor: 'transparent',
+    userSelect: 'none',
+    flexShrink: 0,
+  })
+
   return (
     <div style={{ background: '#0a0a0a', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {/* Header */}
       <div style={{ padding: '6px 16px', borderBottom: '1px solid #1e1e1e', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ color: '#00ff46', fontFamily: 'JetBrains Mono', fontSize: 12, fontWeight: 700 }}>🐍 Snake</span>
         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
           <span style={{ color: '#ffd700', fontFamily: 'JetBrains Mono', fontSize: 12 }}>Score: {display.score}</span>
           <span style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 12 }}>Best: {display.best}</span>
-          <span style={{ color: '#444', fontFamily: 'JetBrains Mono', fontSize: 10 }}>Speed:</span>
-          <input type="range" min={80} max={300} step={10} value={speed}
-            onChange={e => { if (tickRef.current) clearInterval(tickRef.current); setSpeed(Number(e.target.value)) }}
-            style={{ width: 70 }} />
+          {!isMobile && (
+            <>
+              <span style={{ color: '#444', fontFamily: 'JetBrains Mono', fontSize: 10 }}>Speed:</span>
+              <input type="range" min={80} max={300} step={10} value={speed}
+                onChange={e => { if (tickRef.current) clearInterval(tickRef.current); setSpeed(Number(e.target.value)) }}
+                style={{ width: 70 }} />
+            </>
+          )}
         </div>
       </div>
-      <canvas ref={canvasRef} width={COLS * CELL} height={ROWS * CELL} style={{ flex: 1, width: '100%' }} tabIndex={0} />
-      <div style={{ padding: '4px 16px', borderTop: '1px solid #1e1e1e', fontFamily: 'JetBrains Mono', fontSize: 10, color: '#333' }}>
-        Arrow keys / WASD to move • Enter to restart
-      </div>
+
+      {/* Canvas */}
+      <canvas
+        ref={canvasRef}
+        width={COLS * CELL}
+        height={ROWS * CELL}
+        style={{ flex: 1, width: '100%', touchAction: 'none' }}
+        tabIndex={0}
+      />
+
+      {/* Mobile D-pad */}
+      {isMobile && (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '12px 0 10px', background: '#0d0d0d', borderTop: '1px solid #1a1a1a', flexShrink: 0 }}>
+          <button style={dBtn('#00ff46')}
+            onTouchStart={e => { e.preventDefault(); press('ArrowUp') }}>▲</button>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <button style={dBtn('#00ff46')}
+              onTouchStart={e => { e.preventDefault(); press('ArrowLeft') }}>◀</button>
+            <div style={{ width: 56, height: 56, background: '#111', border: '1px solid #1e1e1e', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>🐍</div>
+            <button style={dBtn('#00ff46')}
+              onTouchStart={e => { e.preventDefault(); press('ArrowRight') }}>▶</button>
+          </div>
+          <button style={dBtn('#00ff46')}
+            onTouchStart={e => { e.preventDefault(); press('ArrowDown') }}>▼</button>
+        </div>
+      )}
+
+      {/* Desktop footer hint */}
+      {!isMobile && (
+        <div style={{ padding: '4px 16px', borderTop: '1px solid #1e1e1e', fontFamily: 'JetBrains Mono', fontSize: 10, color: '#333' }}>
+          Arrow keys / WASD to move · Enter to restart
+        </div>
+      )}
     </div>
   )
 }
-
-{window.innerWidth < 768 && (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, padding: '10px 0', background: '#0a0a0a', flexShrink: 0 }}>
-          <button
-            onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true })) }}
-            style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>▲</button>
-          <div style={{ display: 'flex', gap: 4 }}>
-            <button
-              onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true })) }}
-              style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>◀</button>
-            <div style={{ width: 54, height: 54, background: '#0d0d0d', border: '1px solid #222', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#333', fontFamily: 'JetBrains Mono', fontSize: 10 }}>🐍</div>
-            <button
-              onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })) }}
-              style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>▶</button>
-          </div>
-          <button
-            onTouchStart={e => { e.preventDefault(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true })) }}
-            style={{ width: 54, height: 54, background: '#111', border: '1px solid #333', borderRadius: 10, color: '#00ff46', fontSize: 22, cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}>▼</button>
-        </div>
-      )}
