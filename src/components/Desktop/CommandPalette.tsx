@@ -25,6 +25,8 @@ const ALL_COMMANDS = [
   { label: 'Hall of Fame',           action: 'open:halloffame',  icon: '🏆' },
   { label: 'Club Constitution',      action: 'open:rules',       icon: '📜' },
   { label: 'Newsletter',             action: 'open:newsletter',  icon: '📬' },
+  { label: 'Submit Feedback',       action: 'open:feedback', icon: '💬' },
+  { label: 'View Club Feedback',    action: 'open:feedback', icon: '📋' },
   { label: 'Asteroids',              action: 'open:asteroids',   icon: '🚀' },
   { label: 'Pong',                   action: 'open:pong',        icon: '🏓' },
   { label: 'Flappy { }',             action: 'open:flappy',      icon: '{}' },
@@ -180,7 +182,7 @@ export function CommandPalette({ onOpenWindow, onRunCommand }: Props) {
         hackernews: 'hackernews.app', wikirandom: 'wiki-random.app',
         campusmap: 'campus-map.app', lhcrooms: 'lhc-rooms.app',
         timetable: 'timetable.app', roadmap: 'roadmap.app',
-        slashdotfaq: 'slashdot-faq.app',
+        slashdotfaq: 'slashdot-faq.app', feedback: 'feedback.app',
       }
       
       onOpenWindow(appId, titleMap[appId] ?? appId)

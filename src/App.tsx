@@ -45,6 +45,7 @@ import { GitHubContribApp, TodayInCSApp, HackerNewsApp, WikiRandomApp } from './
 import { CampusMapApp, LHCRoomsApp, TimetableApp, RoadmapApp, SlashDotFAQApp } from './components/Apps/ClubUtils'
 import { BlogApp, ResourcesApp, HallOfFameApp, RulesApp, NewsletterApp } from './components/Apps/ClubPages'
 import { MemberListApp, RecruitmentApp, AlumniApp, GalleryApp, ContactFormApp } from './components/Apps/ClubExtra'
+import { FeedbackApp } from './components/Apps/Feedbackapp'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
@@ -174,6 +175,7 @@ function AppContent({ appId }: { appId: AppId }) {
     case 'alumni':       return <AlumniApp />
     case 'gallery':      return <GalleryApp />
     case 'contactform':  return <ContactFormApp />
+    case 'feedback':     return <FeedbackApp />
     case 'githubcontrib': return <GitHubContribApp />
     case 'todayincs':     return <TodayInCSApp />
     case 'hackernews':    return <HackerNewsApp />
@@ -401,6 +403,7 @@ export default function App() {
                   ['alumni',      '🎓', 'Alumni'],
                   ['gallery',     '📸', 'Gallery'],
                   ['contactform', '📧', 'Contact Form'],
+                  ['feedback',    '💬', 'Feedback'],
                   ['githubcontrib', '📊', 'GH Activity'],
                   ['todayincs',     '📅', 'CS History'],
                   ['hackernews',    '🔥', 'Hacker News'],

@@ -67,6 +67,7 @@ export const appCommands: Record<string, CommandHandler> = {
       alumni:      { appId: 'alumni',      title: 'alumni.app',      preview: 'Loading Alumni...'            },
       gallery:     { appId: 'gallery',     title: 'gallery.app',     preview: 'Loading Gallery...'           },
       contactform: { appId: 'contactform', title: 'contactform.app', preview: 'Loading Contact Form...'      },
+      feedback: { appId: 'feedback', title: 'feedback.app', preview: 'Loading Feedback...' },
       leaderboard: { appId: 'leaderboard', title: 'leaderboard.app',  preview: 'Loading Leaderboard...'       },
       githubstats: { appId: 'githubstats', title: 'github.app',       preview: 'Fetching GitHub stats...'     },
       wikipedia:   { appId: 'wikipedia',   title: 'wiki.app',         preview: 'Loading Wikipedia...'         },

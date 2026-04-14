@@ -223,6 +223,14 @@ open wikirandom    → Random Wikipedia article with image
 
 ---
 
+## Feedback System
+
+```
+open feedback       → Open feedback form to submit suggestions or report issues
+feedback            → Terminal command to open feedback form
+```
+
+
 ## Terminal Commands
 
 ### Navigation

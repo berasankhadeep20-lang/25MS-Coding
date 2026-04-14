@@ -40,6 +40,7 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.cyan}open timetable${c.reset}        ${c.gray}Weekly timetable builder${c.reset}`,
         `${c.cyan}open roadmap${c.reset}          ${c.gray}SlashDot project roadmap${c.reset}`,
         `${c.cyan}open slashdotfaq${c.reset}      ${c.gray}Ask anything about SlashDot${c.reset}`,
+        `${c.cyan}open feedback${c.reset}         ${c.gray}Submit feedback about SlashDot${c.reset}`,
       ]),
       formatSection('Club Commands', [
         `${c.yellow}whois slashdot${c.reset}       ${c.gray}WHOIS record for SlashDot${c.reset}`,
@@ -60,6 +61,7 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.yellow}lhc / rooms${c.reset}          ${c.gray}LHC room availability${c.reset}`,
         `${c.yellow}map${c.reset}                  ${c.gray}IISER campus map${c.reset}`,
         `${c.yellow}faq${c.reset}                  ${c.gray}SlashDot FAQ bot${c.reset}`,
+        `${c.yellow}feedback${c.reset}             ${c.gray}Open feedback form${c.reset}`,
       ]),
       formatSection('Games', [
         `${c.cyan}open asteroids${c.reset}        ${c.gray}Asteroids (arrow keys + space)${c.reset}`,
@@ -470,6 +472,11 @@ export const systemCommands: Record<string, CommandHandler> = {
   faq: (): CommandResult => ({
     output: `\r\n${c.green}▶ Opening SlashDot FAQ...${c.reset}\r\n`,
     action: { type: 'open_window', appId: 'slashdotfaq' as any, title: 'slashdot-faq.app' },
+  }),
+
+  feedback: (): CommandResult => ({
+    output: `\r\n${c.green}▶ Opening Feedback app...${c.reset}\r\n`,
+    action: { type: 'open_window', appId: 'feedback' as any, title: 'feedback.app' },
   }),
 
   alias: (args: string[]): CommandResult => {
