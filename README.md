@@ -260,7 +260,7 @@ register            How to join SlashDot
 weather             Live IISER campus weather
 visits              Live visitor counter
 feedback            Open feedback app
-challenge           Today's coding challenge
+challenge           Today coding challenge
 open random         Random app
 tree /club          ASCII file tree of all club pages
 ascii slashdot      SlashDot ASCII logo
