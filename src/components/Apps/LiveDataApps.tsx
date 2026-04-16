@@ -2,96 +2,207 @@ import { useState, useEffect } from 'react'
 
 // ─── GITHUB CONTRIBUTION GRAPH ────────────────────────────────────────────────
 export function GitHubContribApp() {
-  const [data, setData] = useState<number[][]>([])
+  const [weeks, setWeeks]   = useState<number[][]>([])
+  const [total, setTotal]   = useState(0)
   const [loading, setLoading] = useState(true)
-  const [total, setTotal] = useState(0)
+  const [error, setError]   = useState('')
+  const [usingReal, setUsingReal] = useState(false)
+
+  // The GitHub username to show contributions for
+  const GH_USER = 'berasankhadeep20-lang'
 
   useEffect(() => {
-    // Generate realistic-looking contribution data
-    // In production this would fetch from GitHub API
-    const weeks: number[][] = []
+    const token = import.meta.env.VITE_GH_TOKEN
+
+    if (!token) {
+      // No token — fall back to generated data
+      setWeeks(generateFakeData().weeks)
+      setTotal(generateFakeData().total)
+      setLoading(false)
+      return
+    }
+
+    fetchContributions(token)
+  }, [])
+
+  function generateFakeData() {
+    const w: number[][] = []
     let t = 0
-    for (let w = 0; w < 52; w++) {
+    for (let i = 0; i < 52; i++) {
       const days: number[] = []
       for (let d = 0; d < 7; d++) {
-        // Simulate more activity on weekdays
         const isWeekend = d === 0 || d === 6
-        const base = isWeekend ? 0.2 : 0.5
         const rand = Math.random()
-        const count = rand < base ? 0 : rand < 0.7 ? 1 : rand < 0.85 ? 2 : rand < 0.95 ? 4 : 8
+        const count = rand < (isWeekend ? 0.7 : 0.3) ? 0
+          : rand < 0.75 ? 1
+          : rand < 0.88 ? 3
+          : rand < 0.96 ? 6 : 9
         days.push(count)
         t += count
       }
-      weeks.push(days)
+      w.push(days)
     }
-    setData(weeks)
-    setTotal(t)
+    return { weeks: w, total: t }
+  }
+
+  async function fetchContributions(token: string) {
+    setLoading(true)
+    setError('')
+
+    // Calculate date range: last 52 weeks
+    const to   = new Date()
+    const from = new Date()
+    from.setFullYear(from.getFullYear() - 1)
+
+    const query = `
+      query($login: String!, $from: DateTime!, $to: DateTime!) {
+        user(login: $login) {
+          contributionsCollection(from: $from, to: $to) {
+            contributionCalendar {
+              totalContributions
+              weeks {
+                contributionDays {
+                  contributionCount
+                  date
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+
+    try {
+      const res = await fetch('https://api.github.com/graphql', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          variables: {
+            login: GH_USER,
+            from: from.toISOString(),
+            to: to.toISOString(),
+          },
+        }),
+      })
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+      const data = await res.json()
+
+      if (data.errors) {
+        throw new Error(data.errors[0]?.message ?? 'GraphQL error')
+      }
+
+      const calendar = data?.data?.user?.contributionsCollection?.contributionCalendar
+      if (!calendar) throw new Error('No contribution data returned')
+
+      const fetchedWeeks: number[][] = calendar.weeks.map(
+        (w: any) => w.contributionDays.map((d: any) => d.contributionCount)
+      )
+
+      setWeeks(fetchedWeeks)
+      setTotal(calendar.totalContributions)
+      setUsingReal(true)
+    } catch (e: any) {
+      // Fall back to generated data silently
+      const fake = generateFakeData()
+      setWeeks(fake.weeks)
+      setTotal(fake.total)
+      setError(e.message)
+    }
+
     setLoading(false)
-  }, [])
+  }
 
   function getColor(count: number): string {
     if (count === 0) return '#161b22'
-    if (count === 1) return '#0e4429'
-    if (count <= 3) return '#006d32'
-    if (count <= 6) return '#26a641'
+    if (count <= 2)  return '#0e4429'
+    if (count <= 5)  return '#006d32'
+    if (count <= 8)  return '#26a641'
     return '#39d353'
   }
 
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-  const DAYS = ['','Mon','','Wed','','Fri','']
+  const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
 
   return (
     <div className="app-body" style={{ padding: '12px 16px' }}>
-      <p className="app-label cyan">// github-contrib.app — SlashDot GitHub Activity</p>
+      <p className="app-label cyan">// github-contrib.app — GitHub Contributions</p>
       <p style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 10, marginBottom: 14 }}>
-        github.com/slashdot-iiserk · {total} contributions in the last year
+        github.com/{GH_USER} ·{' '}
+        {loading ? 'Loading...' : `${total} contributions in the last year`}
+        {usingReal && <span style={{ color: '#00ff46', marginLeft: 8 }}>● live</span>}
+        {error && !usingReal && <span style={{ color: '#555', marginLeft: 8 }}>(simulated)</span>}
       </p>
+
       {loading ? (
-        <p style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 12 }}>Loading...</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {[...Array(7)].map((_, i) => (
+            <div key={i} style={{ height: 11, background: '#111', borderRadius: 2, width: `${60 + Math.random() * 40}%`, animation: 'pulse 1.5s infinite' }} />
+          ))}
+        </div>
       ) : (
         <div style={{ overflowX: 'auto' }}>
-          <div style={{ display: 'flex', gap: 2, marginBottom: 4 }}>
-            <div style={{ width: 24 }} />
-            {data.map((_, i) => {
-              const monthIdx = Math.floor(i / 4.33)
-              const showLabel = i % 4 === 0 && monthIdx < 12
+          {/* Month labels */}
+          <div style={{ display: 'flex', gap: 2, marginBottom: 4, paddingLeft: 28 }}>
+            {weeks.map((_, wi) => {
+              const monthIdx = Math.floor((wi / weeks.length) * 12)
+              const show = wi === 0 || Math.floor(((wi - 1) / weeks.length) * 12) !== monthIdx
               return (
-                <div key={i} style={{ width: 11, fontFamily: 'JetBrains Mono', fontSize: 8, color: '#555', textAlign: 'left' }}>
-                  {showLabel ? MONTHS[monthIdx % 12] : ''}
+                <div key={wi} style={{ width: 11, fontFamily: 'JetBrains Mono', fontSize: 7, color: '#555' }}>
+                  {show ? MONTHS[monthIdx % 12] : ''}
                 </div>
               )
             })}
           </div>
+
           <div style={{ display: 'flex', gap: 4 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'space-around' }}>
-              {DAYS.map((d, i) => (
-                <div key={i} style={{ height: 11, fontFamily: 'JetBrains Mono', fontSize: 8, color: '#555', width: 20, textAlign: 'right', lineHeight: '11px' }}>{d}</div>
+            {/* Day labels */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {DAY_LABELS.map((d, i) => (
+                <div key={i} style={{ height: 11, fontFamily: 'JetBrains Mono', fontSize: 7, color: '#555', width: 22, textAlign: 'right', lineHeight: '11px' }}>
+                  {d}
+                </div>
               ))}
             </div>
+
+            {/* Grid */}
             <div style={{ display: 'flex', gap: 2 }}>
-              {data.map((week, wi) => (
+              {weeks.map((week, wi) => (
                 <div key={wi} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {week.map((count, di) => (
-                    <div key={di} title={`${count} contributions`}
-                      style={{ width: 11, height: 11, borderRadius: 2, background: getColor(count), cursor: 'default' }} />
+                    <div key={di}
+                      title={`${count} contribution${count !== 1 ? 's' : ''}`}
+                      style={{ width: 11, height: 11, borderRadius: 2, background: getColor(count), cursor: 'default', transition: 'transform 0.1s' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.4)' }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)' }}
+                    />
                   ))}
                 </div>
               ))}
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 8 }}>
+
+          {/* Legend */}
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 10 }}>
             <span style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 9 }}>Less</span>
-            {[0,1,3,5,8].map(n => (
+            {[0, 2, 4, 7, 10].map(n => (
               <div key={n} style={{ width: 11, height: 11, borderRadius: 2, background: getColor(n) }} />
             ))}
             <span style={{ color: '#555', fontFamily: 'JetBrains Mono', fontSize: 9 }}>More</span>
           </div>
         </div>
       )}
+
+      {/* Stats */}
       <div style={{ marginTop: 14, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
         {[
-          { label: 'Repositories', value: '12', color: '#00ff46' },
-          { label: 'Contributions', value: String(total), color: '#00c8ff' },
+          { label: 'Contributions', value: loading ? '...' : String(total), color: '#00ff46' },
+          { label: 'Repositories', value: '12+', color: '#00c8ff' },
           { label: 'Members', value: '24+', color: '#ffd700' },
         ].map(s => (
           <div key={s.label} style={{ background: '#111', border: '1px solid #1e1e1e', borderRadius: 8, padding: '10px', textAlign: 'center' }}>
@@ -103,7 +214,6 @@ export function GitHubContribApp() {
     </div>
   )
 }
-
 // ─── TODAY IN CS HISTORY ──────────────────────────────────────────────────────
 const CS_HISTORY: Record<string, { year: number; event: string; significance: string }[]> = {
   '1-1':  [{ year: 1983, event: 'ARPANET switches to TCP/IP', significance: 'Birth of the modern internet' }],

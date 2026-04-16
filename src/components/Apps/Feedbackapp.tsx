@@ -147,6 +147,9 @@ export function FeedbackApp() {
     setFeedbacks(updated)
     saveFeedbacks(updated)
     setSubmitted(true)
+    window.dispatchEvent(new CustomEvent('slashdot-notify', {
+      detail: { message: '🎉 Thank you for your feedback! The OBs will read it.', type: 'success' }
+    }))
     // Reset form
     setName(''); setAnon(false); setRating(0); setMessage(''); setCategory(CATEGORIES[0])
   }
