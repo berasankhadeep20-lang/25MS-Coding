@@ -1,54 +1,39 @@
 # SlashDot OS
 
-> **The official website of SlashDot** — The Coding & Designing Club of IISER Kolkata.
-> Built as a browser-based operating system by the 25MS batch.
+> The official website of **SlashDot — Coding & Design Club, IISER Kolkata**  
+> Built by the 25MS batch for the **Inter-Batch Website Development Competition 2026**
 
-[![Deploy](https://github.com/berasankhadeep20-lang/25MS-Coding/actions/workflows/deploy.yml/badge.svg)](https://github.com/berasankhadeep20-lang/25MS-Coding/actions)
-
-**Live Site:** https://berasankhadeep20-lang.github.io/25MS-Coding/
-**Club Website:** https://slashdot-iiserk.github.io/
-**Contact:** slashdot@iiserkol.ac.in
+**Live:** https://berasankhadeep20-lang.github.io/25MS-Coding/  
+**Repo:** https://github.com/berasankhadeep20-lang/25MS-Coding
 
 ---
 
-## About SlashDot
+## What is this?
 
-SlashDot is the official coding and designing club of IISER Kolkata. We build things, run workshops,
-host hackathons, and celebrate programmers and designers of all skill levels.
+SlashDot OS is a browser-based operating system simulator that serves as the official club website. It features a real terminal emulator (xterm.js), 80+ apps, draggable windows, games, science tools, live data, and 50+ easter eggs — all wrapped in a hacker-aesthetic desktop environment.
 
-> "Simplicity is the soul of efficiency."
-
----
-
-## About This Website
-
-SlashDot OS reimagines the club website as a fully functional browser-based operating system.
-Every section of the website is an app window you can drag, resize, and minimize.
-Navigate using the terminal or click the desktop icons.
-
-This is the 25MS batch entry to the **Inter-Batch Website Development Competition 2026**.
-It is now also the **official SlashDot Club website**.
+Works on both desktop and mobile. On mobile it switches to a scrollable app grid with a touch-friendly terminal.
 
 ---
 
-## Office Bearers 2025-26
+## Tech Stack
 
-| Name               | Role      | Batch | Email                        |
-|--------------------|-----------|-------|------------------------------|
-| Shuvam Banerji Seal | President | 22MS  | sbs22ms076@iiserkol.ac.in    |
-| Anuprovo Debnath   | Secretary | 23MS  | ad23ms110@iiserkol.ac.in     |
-| Abhinav Dhingra    | Treasurer | 24MS  | ad24ms110@iiserkol.ac.in     |
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 + TypeScript |
+| Bundler | Vite 5 |
+| Terminal | xterm.js 5.5 + FitAddon + WebLinksAddon |
+| Animations | Framer Motion |
+| Games | Canvas API |
+| Audio | Web Audio API |
+| Deployment | GitHub Pages |
 
-## Website Developers (25MS Batch)
-
-| Name             | Role             | Email                         |
-|------------------|------------------|-------------------------------|
-| Sankhadeep Bera  | Lead Developer   | sb25ms227@iiserkol.ac.in      |
-| S. Bari          | Systems Developer | shayan.bari.0001@gmail.com   |
+**APIs used (all free, no key required):**
+Open-Meteo · NASA APOD (DEMO_KEY) · Hacker News Firebase · Wikipedia REST · wheretheiss.at · randomuser.me · ipapi.co · api.github.com · countapi.xyz
 
 ---
 
-## Quick Start
+## Getting Started
 
 ```bash
 git clone https://github.com/berasankhadeep20-lang/25MS-Coding.git
@@ -57,349 +42,14 @@ npm install
 npm run dev
 ```
 
-**Note:** If you see stale UI after pulling, delete `node_modules/.vite` and restart dev server.
-
-**Note:** All image paths use `./` relative paths for GitHub Pages compatibility.
-
----
-
-## Tech Stack
-
-| Tool              | Version | Purpose                              |
-|-------------------|---------|--------------------------------------|
-| React             | 18      | UI framework                         |
-| TypeScript        | 5       | Type safety                          |
-| Vite              | 5       | Build tool and dev server            |
-| xterm.js          | 5.5     | Terminal emulator                    |
-| Framer Motion     | 11      | Window animations                    |
-| Canvas API        | -       | Games and science visualizers        |
-| Web Audio API     | -       | Sound effects                        |
-| Open-Meteo API    | -       | Live weather data (free, no key)     |
-| GitHub Actions    | -       | CI/CD pipeline                       |
-| GitHub Pages      | -       | Hosting                              |
-
----
-
-## Club Pages
-
-These are the main sections of the website, accessible via terminal or desktop icons.
-
-```
-open home          Club homepage with stats and quick links
-open about         About SlashDot, what we do, membership info
-open team          Office Bearers, developers, and alumni
-open contact       Contact information and how to join
-open events        Past and upcoming events (workshops, hackathons)
-open showcase      Member project gallery
-open blog          Articles written by SlashDot members
-open resources     Curated learning resources (7 categories, 40+ links)
-open halloffame    Competition winners and notable achievements
-open rules         Club constitution (10 articles)
-open newsletter    Monthly newsletter (4 issues)
-open stack         Tech stack used to build this site
-open memberlist    → Full searchable members list (24 members, filterable by batch)
-open recruitment   → Join SlashDot — timeline, FAQ, perks, how to apply
-open alumni        → Where SlashDot alumni are now (companies, roles, quotes)
-open gallery       → Photo gallery from events (placeholders until OBs send photos)
-open contactform   → Contact form that opens email client pre-filled
-```
-
----
-
-## All Apps
-
-### Games
-
-```
-open asteroids     Asteroids — arrow keys to move, space to shoot
-open pong          Pong 2-player — W/S for left, up/down for right
-open flappy        Flappy { } — space bar to flap
-open snake         Snake — arrow keys or WASD
-```
-
-### Science and Mathematics
-
-```
-open periodic      Interactive periodic table with element details
-open fourier       Fourier transform visualizer
-open gravity       N-body gravity simulator
-open dna           DNA sequence viewer and analyzer
-open physics       Physics simulator with multiple scenarios
-open molecular     3D molecular structure viewer
-open sortvis       Sorting algorithm visualizer (bubble, quick, merge)
-open pathvis       Pathfinding visualizer (A-star and Dijkstra)
-open binconv       Binary, Hex, Decimal, Octal, ASCII converter
-open truthtable    Logic truth table generator (AND OR NOT XOR NAND NOR)
-open statsCalc     Statistics calculator with histogram
-open fibprime      Fibonacci and prime number visualizer
-open logicgate     Logic gate simulator with 10 gate types
-```
-
-### Live Data (Real APIs)
-
-```
-open isstrack      Live ISS position tracker — updates every 5 seconds
-open apod          NASA Astronomy Picture of the Day
-open ipgeo         IP geolocation lookup
-open randuser      Random user profile generator
-open githubstats   Live GitHub repository statistics
-open wikipedia     Wikipedia article search
-```
-
-### Social and Community
-
-```
-open guestbook     Sign the guestbook
-open poll          Community polls
-open jokes         Joke generator
-open slashdotai    SlashDot AI chatbot
-open newsticker    IISER campus news ticker
-open leaderboard   Terminal user leaderboard
-open horoscope     IISER horoscope (satirical)
-open faketwitter   Fake IISER Twitter feed
-open fakewhatsapp  WhatsApp chat with SlashDot Bot
-open confession    Anonymous confession wall (session only)
-open compliment    Compliment generator
-open insult        Friendly roast generator
-open screensaver   Screensaver gallery (starfield, DVD logo, plasma)
-open fortunecook   IISER fortune cookie
-open cgpasim       CGPA simulator
-open excusegen     Deadline excuse generator
-```
-
-### Developer Tools
-
-```
-open base64        Base64 encoder and decoder
-open markdown      Markdown previewer with live rendering
-open colorpicker   Color picker with HEX, RGB, and HSL values
-open hashgen       Hash generator (MD5, SHA256, SHA512)
-open paint         Canvas paint application
-open asciiart      ASCII art generator
-open kbtrainer     Keyboard shortcut trainer with quiz mode
-open syslog        System logs viewer (boot, errors, activity)
-open clipboard     Terminal command clipboard manager
-```
-
-### Productivity
-
-```
-open calendar      Calendar with event management
-open pomodoro      Pomodoro timer with work and break cycles
-open stopwatch     Stopwatch with lap tracking
-open countdown     Countdown timer with saved events
-open mealgent      Random IISER meal plan generator
-open studysched    Weekly study schedule builder
-open flashcard     Flashcard quiz app with custom cards
-open notepad       Notepad with multiple tabs
-```
-
-### OS Tools
-
-```
-open fileexplorer  Virtual filesystem explorer
-open settings      System settings (theme, cursor, font, CRT)
-open taskmanager   Running processes and system stats
-open clock         Live analog and digital clock
-```
-
-## IISER Tools
-
-```
-open campusmap     Interactive map of IISER Kolkata campus
-open lhcrooms      → LHC lecture hall room availability (G-floor, 1st, 2nd)
-open timetable     → Weekly timetable builder (auto-saved to browser)
-open roadmap       → SlashDot project roadmap (kanban-style)
-open slashdotfaq   → FAQ chatbot — ask anything about the club
-```
-
-## Live Data
-```
-open githubcontrib → GitHub contribution heatmap for SlashDot
-open todayincs     → Today in CS/computing history + tech fact
-open hackernews    → Live Hacker News top/new/ask stories
-open wikirandom    → Random Wikipedia article with image
-```
-
----
-
-## Feedback System
-
-```
-open feedback       → Open feedback form to submit suggestions or report issues
-feedback            → Terminal command to open feedback form
-```
-
-
-## Terminal Commands
-
-### Navigation
-
+Build and deploy:
 ```bash
-ls [path]          List directory contents
-cd <path>          Change directory
-pwd                Print working directory
-cat <file>         Read a file
-tree               Show directory tree
+npm run build
+npm run deploy
 ```
 
-### System
-
-```bash
-neofetch           System info with ASCII art
-whoami             Who are you?
-setname <name>     Set your display name (remembered across visits)
-date               Current date and time
-uptime             System uptime
-stats              Quick system stats
-cal                Calendar for current month
-```
-
-### Club
-
-```bash
-members            SlashDot team and Office Bearers
-register           How to join SlashDot
-weather            Live weather at IISER Kolkata campus
-visits             Live visitor counter
-whois slashdot     → WHOIS-style record for the club
-cal events         → All upcoming SlashDot events in calendar format
-motd               → Message of the day (changes daily)
-```
-
-### Terminal Superpowers
-
-```bash
-alias name='cmd'   Create a command shortcut
-alias              Show all current aliases
-challenge          Today's daily coding challenge (changes every day)
-history            Show command history
-man <command>      Manual page for a command
-```
-
-### Aliases (Built-in)
-
-```bash
-ll                 Short for: ls -la
-cls                Short for: clear
-?                  Short for: help
-gs                 Short for: git status
-gl                 Short for: git log
-```
-
-### Pipe Support
-
-```bash
-ls | grep txt      Filter ls output for lines containing "txt"
-help | grep open   Search help output
-members | grep 25  Filter members list
-```
-
-### Customization
-
-```bash
-theme green        Switch terminal to green theme (default)
-theme amber        Switch terminal to amber theme
-theme blue         Switch terminal to blue theme
-theme red          Switch terminal to red theme
-theme purple       Switch terminal to purple theme
-rain on            Enable desktop rain
-rain off           Disable desktop rain
-cursor block       Block cursor style
-cursor bar         Bar cursor style
-cursor underline   Underline cursor style
-font+              Increase terminal font size
-font-              Decrease terminal font size
-crt                Toggle CRT scanline effect
-```
-
-### Utility
-
-```bash
-echo <text>        Print text to terminal
-banner <text>      Print large ASCII banner
-ping <host>        Fake ping command
-clear              Clear the terminal screen
-reset              Reset terminal session
-```
-
-Terminal shortcuts:
-```bash
-lhc / rooms        → Quick access to LHC room status
-map                → Open campus map
-faq                → Open FAQ bot
-hn                 → Open Hacker News
-wiki random        → Random Wikipedia article
-```
-
----
-
-## Keyboard Shortcuts
-
-```
-Ctrl+K             Open Command Palette (search all apps and commands)
-Ctrl+C             Cancel current terminal input
-Ctrl+L             Clear terminal screen
-Ctrl+R             Show recent command history
-Tab                Autocomplete command name
-Up / Down arrows   Navigate command history
-```
-
----
-
-## Easter Eggs (50+)
-
-There are over 50 hidden easter eggs. Some to get you started:
-
-```
-sudo party         Launch confetti cannon
-matrix             Enter the Matrix
-hack               Look like a movie hacker
-nyan               Nyan cat in the terminal
-vim                The authentic Vim experience
-cowsay <text>      A cow says something
-sl                 You probably meant ls
-fortune            Random programming quote
-quote              Another quote
-clippy             Summon Clippy the assistant
-sudo give me marks Academic desperation
-iiser wifi         The definitive WiFi explanation
-procrastinate      For when you need permission
-changelog          Read the changelog
-panic              Kernel panic (recoverable)
-sudo rm -rf /      Classic mistake
-```
-
-Type random commands to discover the rest.
-
----
-
-## Live Reactions
-
-When any app is opened, a floating emoji reaction appears briefly on the desktop,
-giving visitors a sense of what others are exploring.
-
-## Daily Challenge
-
-Every day a new coding challenge appears in the terminal when SlashDot OS boots.
-Type `challenge` at any time to see today's problem.
-
----
-
-## APIs Used
-
-All APIs used are free and require no authentication keys.
-
-| API                  | Used For                        |
-|----------------------|---------------------------------|
-| Open-Meteo           | Live weather at IISER Kolkata   |
-| wheretheiss.at       | Real-time ISS position          |
-| NASA APOD            | Astronomy picture of the day    |
-| ipapi.co             | IP address geolocation          |
-| randomuser.me        | Random user profile generation  |
-| GitHub API           | Repository statistics           |
-| Wikipedia API        | Article search and summaries    |
-| CountAPI             | Visitor counter                 |
+> **Note:** Image paths use `./` not `/` for GitHub Pages subpath compatibility.  
+> Vite cache issues? Delete `node_modules/.vite` and restart.
 
 ---
 
@@ -408,112 +58,333 @@ All APIs used are free and require no authentication keys.
 ```
 src/
 ├── components/
-│   ├── Boot/
-│   │   └── BootScreen.tsx          Boot animation and loading sequence
+│   ├── Apps/
+│   │   ├── index.tsx              Home, About, Team, TechStack, Contact, Neofetch, Clock
+│   │   ├── Asteroids.tsx          Touch zones + D-pad (fixed mobile)
+│   │   ├── Pong.tsx               Drag controls on mobile
+│   │   ├── Snake.tsx              Swipe + D-pad on mobile
+│   │   ├── FlappyBird.tsx
+│   │   ├── DungeonCrawler.tsx     ASCII RPG
+│   │   ├── GameOfLife.tsx         Conway's Game of Life
+│   │   ├── TypingTest.tsx
+│   │   ├── Achievements.tsx
+│   │   ├── PeriodicTable.tsx
+│   │   ├── FourierViz.tsx
+│   │   ├── GravitySim.tsx
+│   │   ├── DNAViewer.tsx
+│   │   ├── PhysicsSim.tsx
+│   │   ├── MolecularViewer.tsx
+│   │   ├── GraphPlotter.tsx
+│   │   ├── MatrixCalc.tsx
+│   │   ├── ScienceApps2.tsx       SortVis, PathVis, BinConv, TruthTable, EqSolver,
+│   │   │                          Mandelbrot, CellAut, StatsCalc, FibPrime, LogicGate
+│   │   ├── APIApps.tsx            ISS, APOD, BookSearch, ExchRate, IPGeo, RandUser
+│   │   ├── DevTools.tsx           JSONFormat, Base64, Markdown, ColorPicker, PassGen,
+│   │   │                          DiffViewer, CodeRunner, Lorem, HashGen
+│   │   ├── CreativeApps.tsx       Paint (touch-fixed), ASCIIArt, PixelArt
+│   │   ├── LifeApps.tsx           Calendar, Pomodoro, Stopwatch, Currency, BMI, AgeCalc, HabitTracker
+│   │   ├── FunApps.tsx            NewsTicker, Leaderboard, GitHubStats, Wikipedia, Tamagotchi,
+│   │   │                          Stocks, Horoscope, LoveCalc, Magic8, Deployed
+│   │   ├── SocialFunApps.tsx      FakeTwitter, FakeWhatsApp, Confession, Compliment, Insult,
+│   │   │                          Debate, LinusCall, CGPASim, RateMyCode, Rickroll, ExcuseGen,
+│   │   │                          Screensaver, FakeLoad, FortuneCookie, FixBug, KBTrainer,
+│   │   │                          SysLog, Clipboard
+│   │   ├── ProductivityApps2.tsx  Flashcard, Budget, Recipe, Countdown, MealGen, StudySched
+│   │   ├── ClubApps.tsx           Events, Showcase
+│   │   ├── ClubPages.tsx          Blog, Resources, HallOfFame, Rules, Newsletter
+│   │   ├── ClubExtra.tsx          MemberList, Recruitment, Alumni, Gallery, ContactForm
+│   │   ├── LiveDataApps.tsx       GitHubContrib, TodayInCS, HackerNews, WikiRandom
+│   │   ├── ClubUtils.tsx          CampusMap, LHCRooms, Timetable, Roadmap, SlashDotFAQ
+│   │   └── FeedbackApp.tsx        ⭐ Feedback system
+│   ├── Boot/BootScreen.tsx        Animated boot sequence
 │   ├── Desktop/
-│   │   ├── Desktop.tsx             Main desktop with icon grid
-│   │   ├── Desktop.css
-│   │   ├── Particles.tsx           Background particle animation
-│   │   ├── DesktopRain.tsx         Rain effect (weather-triggered)
-│   │   ├── EasterEggs.tsx          Confetti and Matrix rain effects
-│   │   ├── NotificationSystem.tsx  Toast notifications
-│   │   ├── CommandPalette.tsx      Ctrl+K command palette
-│   │   ├── Clippy.tsx              Clippy assistant
-│   │   ├── LiveReactions.tsx       Floating emoji reactions
-│   │   └── DailyChallenge.tsx      Daily coding challenge data
-│   ├── Terminal/
-│   │   ├── TerminalWindow.tsx      xterm.js terminal with superpowers
-│   │   └── TerminalWindow.css
-│   ├── WindowManager/
-│   │   └── AppWindow.tsx           Draggable, resizable window manager
-│   └── Apps/
-│       ├── index.tsx               Home, About, Team, Contact, Neofetch, Clock
-│       ├── Asteroids.tsx
-│       ├── Pong.tsx
-│       ├── FlappyBird.tsx
-│       ├── Snake.tsx
-│       ├── PeriodicTable.tsx
-│       ├── FourierViz.tsx
-│       ├── GravitySim.tsx
-│       ├── DNAViewer.tsx
-│       ├── PhysicsSim.tsx
-│       ├── MolecularViewer.tsx
-│       ├── ScienceApps2.tsx        Sort, Path, BinConv, TruthTable, Stats, Fib, Logic
-│       ├── APIApps.tsx             ISS, APOD, IP, RandomUser
-│       ├── DevTools.tsx            Base64, Markdown, ColorPicker, HashGen
-│       ├── CreativeApps.tsx        Paint, ASCIIArt
-│       ├── LifeApps.tsx            Calendar, Pomodoro, Stopwatch, Countdown, Meal, Study
-│       ├── ProductivityApps2.tsx   Flashcard
-│       ├── SocialFunApps.tsx       Twitter, WhatsApp, Confession, Compliment, etc.
-│       ├── FunApps.tsx             News, Leaderboard, GitHub, Wikipedia, Horoscope
-│       ├── ClubApps.tsx            Events, Showcase
-│       └── ClubPages.tsx           Blog, Resources, Hall of Fame, Rules, Newsletter
+│   │   ├── Desktop.tsx            Draggable icons, taskbar, right-click menu
+│   │   ├── Particles.tsx
+│   │   ├── DesktopRain.tsx
+│   │   ├── EasterEggs.tsx         Confetti + Matrix rain
+│   │   ├── NotificationSystem.tsx Toast notifications
+│   │   ├── CommandPalette.tsx     Ctrl+K search
+│   │   ├── Clippy.tsx
+│   │   ├── LiveReactions.tsx
+│   │   └── DailyChallenge.tsx
+│   ├── Terminal/TerminalWindow.tsx xterm.js + mobile keyboard capture
+│   └── WindowManager/AppWindow.tsx Draggable, resizable, minimizable windows
 ├── commands/
-│   ├── index.ts                    parseAndRun with pipe support
-│   ├── systemCommands.ts           ls, cd, cat, help, alias, challenge, etc.
-│   ├── appCommands.ts              open command and app registry
-│   └── easterEggs.ts              50+ easter egg commands
+│   ├── index.ts                   parseAndRun — pipe support
+│   ├── systemCommands.ts          All terminal commands
+│   ├── appCommands.ts             open <app> command
+│   └── easterEggs.ts              50+ easter eggs
 ├── data/
-│   ├── team.ts                    Team member data
-│   ├── techStack.ts               Tech stack entries
-│   └── filesystem.ts              Virtual filesystem structure
+│   ├── team.ts
+│   ├── techStack.ts
+│   └── filesystem.ts              Virtual filesystem
 ├── hooks/
-│   ├── useWindowManager.ts        Window state management
-│   └── useBootSequence.ts         Boot animation logic
-├── types/
-│   └── index.ts                   TypeScript types including AppId
+│   ├── useWindowManager.ts
+│   └── useBootSequence.ts
+├── types/index.ts                 AppId union type
 └── utils/
-    ├── asciiArt.ts                ASCII art strings
-    ├── formatOutput.ts            Terminal output formatting helpers
-    ├── sounds.ts                  Web Audio API sound effects
-    └── achievements.ts            Achievement system logic
+    ├── asciiArt.ts
+    ├── formatOutput.ts            Terminal color helpers
+    ├── sounds.ts
+    ├── achievements.ts
+    └── memory.ts
 ```
 
 ---
 
-## Mobile Support
+## Club Pages
 
-SlashDot OS includes a fully mobile-optimized layout. On screens under 768px:
-
-- The OS switches to a scrollable app grid organized by category
-- All club pages are prominently featured at the top
-- A bottom navigation bar provides quick access to key pages
-- The terminal is available via a dedicated button
-- All app content is touch-optimized and scrollable
-- Safe area insets are handled for notched devices
+| App | Command | Description |
+|-----|---------|-------------|
+| Home | `open home` | Club homepage |
+| About | `open about` | About SlashDot |
+| Team | `open team` | Office Bearers + developers |
+| Members | `open memberlist` | 24 members, searchable by batch/domain |
+| Join Us | `open recruitment` | Recruitment timeline, FAQ accordion, perks |
+| Alumni | `open alumni` | Where SlashDot alumni are now |
+| Gallery | `open gallery` | Photo gallery (placeholder until OBs send photos) |
+| Contact Form | `open contactform` | Pre-filled mailto form |
+| **Feedback** | **`open feedback`** | **Star ratings, categories, helpful votes** |
+| Events | `open events` | Club events and hackathons |
+| Showcase | `open showcase` | Member project showcase |
+| Blog | `open blog` | Member articles |
+| Resources | `open resources` | Curated learning links |
+| Hall of Fame | `open halloffame` | SlashDot Hall of Fame |
+| Rules | `open rules` | Club constitution |
+| Newsletter | `open newsletter` | Club newsletter |
+| Tech Stack | `open stack` | This website's tech stack |
+| Contact | `open contact` | Contact info |
 
 ---
 
-## Deployment
+## Feedback System
 
-The site deploys automatically to GitHub Pages on every push to `main` via GitHub Actions.
+**File:** `src/components/Apps/FeedbackApp.tsx`  
+**Desktop icon:** 3rd column from right (col2), below contactform  
+**Mobile:** Club section grid  
+**Terminal:** `feedback` or `open feedback`  
+**Command Palette:** "Submit Feedback", "View Club Feedback"
 
+### Features
+
+**View tab:**
+- All feedback cards with star ratings, category badge, relative timestamp
+- "Helpful" upvote button (one per entry per browser, persisted)
+- Filter by category · Sort by Recent / Rating / Helpful
+- Rating distribution bar chart (5★ → 1★ breakdown)
+
+**Submit tab:**
+- Name field (optional) + anonymous checkbox
+- 9-category dropdown
+- Interactive 5-star rating with hover effect + label (Terrible / Poor / Okay / Good / Excellent)
+- 500-character message with live counter
+- Validation: requires rating + ≥10 char message
+- Success screen with options to submit another or view all
+
+**Categories:**
+General Feedback · HackSlash / Hackathon · Workshop / Talk · Club Website · Events & Activities · Recruitment Process · Suggestion / Idea · Bug Report · Other
+
+**Data storage (localStorage):**
+```
+slashdot-feedback           JSON array of FeedbackEntry objects
+slashdot-feedback-helped    JSON array of voted entry IDs (prevent double-voting)
+```
+
+**Pre-seeded entries:** 5 realistic entries so the app never looks empty on first open.
+
+**FeedbackEntry schema:**
+```ts
+{
+  id: string           // unique ID
+  name: string         // display name or "Anonymous"
+  category: string     // one of the 9 categories
+  rating: number       // 1–5
+  message: string      // feedback text
+  timestamp: string    // ISO date string
+  helpful: number      // upvote count
+}
+```
+
+---
+
+## IISER Tools
+
+| App | Command | Description |
+|-----|---------|-------------|
+| Campus Map | `open campusmap` / `map` | SVG map, 12 buildings, click for info |
+| LHC Rooms | `open lhcrooms` / `lhc` / `rooms` | G01–G06, 101–109, 201–215 availability |
+| Timetable | `open timetable` | Weekly builder, saved to localStorage |
+| Roadmap | `open roadmap` | Kanban: Done / In Progress / Planned / Ideas |
+| FAQ Bot | `open slashdotfaq` / `faq` | 10 pre-programmed club Q&A + chat UI |
+
+**LHC Room numbering:** G-floor = G01–G06, 1st floor = 101–109, 2nd floor = 201–215.
+
+---
+
+## Live Data
+
+| App | Command | API |
+|-----|---------|-----|
+| GitHub Contributions | `open githubcontrib` | Generated heatmap |
+| Today in CS | `open todayincs` | Wikipedia REST API |
+| Hacker News | `open hackernews` / `hn` | hacker-news.firebaseio.com |
+| Wiki Random | `open wikirandom` / `wiki random` | Wikipedia REST API |
+| ISS Tracker | `open isstrack` | wheretheiss.at |
+| NASA APOD | `open apod` | api.nasa.gov (DEMO_KEY) |
+| IP Lookup | `open ipgeo` | ipapi.co |
+
+---
+
+## Games
+
+| Game | Mobile Controls |
+|------|----------------|
+| Asteroids | Top zone = thrust · Left/right zones = rotate · Centre = shoot · Double tap = shoot · D-pad buttons below canvas |
+| Pong | Drag left half = P1 · Drag right half = P2 · ▲▼ button pairs as alternative |
+| Snake | Swipe on canvas · D-pad buttons below canvas · Tap D-pad to restart when dead |
+| Flappy { | Tap to flap |
+| Dungeon Crawler | On-screen buttons |
+| Game of Life | Touch to toggle cells |
+
+---
+
+## Terminal Reference
+
+### Club
 ```bash
-npm run build      Build for production
-npm run preview    Preview production build locally
+whois slashdot      WHOIS-style club record
+cal events          Upcoming events calendar
+motd                Message of the day (changes daily)
+members             Team inline in terminal
+register            How to join SlashDot
+weather             Live IISER campus weather
+visits              Live visitor counter
+feedback            Open feedback app
+challenge           Today's coding challenge
+open random         Random app
+tree /club          ASCII file tree of all club pages
+ascii slashdot      SlashDot ASCII logo
+ls apps             All 80+ apps in a grid
+hn                  Hacker News
+wiki random         Random Wikipedia article
+lhc / rooms         LHC room availability
+map                 Campus map
+faq                 FAQ bot
 ```
 
-The `base` path in `vite.config.ts` is set to `/25MS-Coding/` for GitHub Pages compatibility.
-All asset paths use `./` prefix to work correctly with the base path.
+### System
+```bash
+ls / cd / pwd / cat / tree    Filesystem navigation
+whoami / uname -a / date      System info
+uptime / history / ping       More system info
+neofetch                      System info + ASCII art
+setname <name>                Set username
+clear / cls / reset           Clear terminal
+alias name='cmd'              Persistent command alias
+theme <name>                  green amber blue red purple
+cursor block/bar/underline    Cursor style
+font+ / font-                 Font size
+crt on/off                    CRT effect
+fullscreen                    Enter fullscreen
+Ctrl+K                        Command Palette
+Ctrl+R                        Recent history
+Tab                           Autocomplete
+↑ ↓                           Command history
+cmd | grep pattern            Pipe + filter
+```
+
+### Easter Eggs (50+)
+```bash
+sudo party · matrix · hack · nyan · vim <file> · npm install
+git blame · ls -la · import antigravity · sudo make me coffee
+sudo give me marks · leetcode · iiser wifi · sudo party
+cowsay <text> · sl · fortune · procrastinate · panic
+# ... and 40 more — explore!
+```
 
 ---
 
-## Known Notes
+## Office Bearers
 
-- Delete `node_modules/.vite` if the dev server shows stale cached content after a pull
-- The visitor counter uses CountAPI which has rate limits on the free tier
-- NASA APOD uses `DEMO_KEY` which allows 30 requests per hour per IP
-- The RISC-V emulator (S. Bari's project) runs RV32IMAF compiled to WASM via Emscripten
+| Name | Batch | Role | Email |
+|------|-------|------|-------|
+| Shuvam Banerji Seal | 22MS | President | sbs22ms076@iiserkol.ac.in |
+| Anuprovo Debnath | 23MS | Secretary | ad23ms110@iiserkol.ac.in |
+| Abhinav Dhingra | 24MS | Treasurer | ad24ms110@iiserkol.ac.in |
+| Sankhadeep Bera | 25MS | Lead Developer | sb25ms227@iiserkol.ac.in |
+| S. Bari | 25MS | Systems Developer | shayan.bari.0001@gmail.com |
+
+---
+
+## Desktop Icon Layout
+
+**Left side — 7-column grid:**
+Games · Science · API Apps · Social & Fun · Dev Tools · Productivity · OS Tools
+
+**Right side — 3 columns:**
+- Col 1 (rightmost): terminal, home, about, team, stack, contact, neofetch
+- Col 2 (middle): events, showcase, blog, resources, halloffame, rules, newsletter
+- Col 3 (leftmost): memberlist, recruitment, alumni, gallery, contactform, feedback
+
+---
+
+## Mobile Layout
+
+**3 views:**
+1. **Home** — scrollable grid: Club · Games · Science · Live Data · IISER Tools · Social · Tools
+2. **Terminal** — xterm.js + mobile keyboard + quick-command bar
+3. **App** — full-screen with back button + bottom nav bar
+
+**Mobile terminal keyboard:**
+- `onInput` captures all characters including space
+- `onKeyDown` handles Enter/Backspace/Arrows
+- `enterKeyHint="send"` shows Go button
+- ↑ ↓ ↵ buttons for history + enter
+- Quick commands: `help` `open home` `open events` `challenge` `weather` `members` `open showcase` `open blog`
+
+---
+
+## localStorage Keys
+
+```
+slashdot-os-memory          OS state: name, visits, firstVisit, lastVisit
+slashdot-aliases            Custom terminal aliases (JSON object)
+slashdot-timetable          Weekly timetable grid (JSON object)
+slashdot-feedback           Feedback entries (JSON array)
+slashdot-feedback-helped    Voted entry IDs (JSON array)
+```
+
+---
+
+## Adding a New App (Checklist)
+
+- [ ] Create `src/components/Apps/YourApp.tsx`, export `YourApp()`
+- [ ] Add `'yourapp'` to `AppId` in `src/types/index.ts`
+- [ ] Add `case 'yourapp': return <YourApp />` in `AppContent` in `App.tsx`
+- [ ] Add import in `App.tsx`
+- [ ] Add to `appMap` in `src/commands/appCommands.ts`
+- [ ] Add icon to `LEFT_ICONS` or `RIGHT_ICONS` in `Desktop.tsx`
+- [ ] Add button to mobile grid in `App.tsx`
+- [ ] Add entry to `help` in `systemCommands.ts`
+- [ ] Add entry to `ALL_COMMANDS` in `CommandPalette.tsx`
+
+---
+
+## Known Issues / TODOs
+
+- [ ] OBs to send real team member photos for TeamApp
+- [ ] OBs to populate real events in EventsApp
+- [ ] OBs to add real projects to ShowcaseApp
+- [ ] Persistent guestbook needs a backend (JSONBin or Firebase)
+- [ ] GitHub contribution graph shows generated data (real API needs OAuth)
+- [ ] PWA service worker needs verification after deploy
+- [ ] `npm install html2canvas` for `screenshot` command
 
 ---
 
 ## License
 
-GPL-3.0 — see LICENSE file
+MIT — built with ☕ and questionable sleep schedules by the 25MS batch.
 
----
-
-*SlashDot Coding and Design Club*
-*IISER Kolkata, Mohanpur, West Bengal 741246*
-*Inter-Batch Website Development Competition 2026*
-*Built with React, TypeScript, and way too much caffeine*
+**SlashDot · Coding & Design Club · IISER Kolkata**  
+slashdot-iiserk.github.io · slashdot@iiserkol.ac.in
