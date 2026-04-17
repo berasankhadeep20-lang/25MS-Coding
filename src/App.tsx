@@ -46,7 +46,7 @@ import { CampusMapApp, LHCRoomsApp, TimetableApp, RoadmapApp, SlashDotFAQApp } f
 import { BlogApp, ResourcesApp, HallOfFameApp, RulesApp, NewsletterApp } from './components/Apps/ClubPages'
 import { MemberListApp, RecruitmentApp, AlumniApp, GalleryApp, ContactFormApp } from './components/Apps/ClubExtra'
 import { FeedbackApp } from './components/Apps/Feedbackapp'
-import ClubCommunity from './components/Apps/ClubCommunity';
+import ClubCommunity from './components/Apps/ClubCommunity'
 import { useWindowManager } from './hooks/useWindowManager'
 import { AppId } from './types'
 import './App.css'
