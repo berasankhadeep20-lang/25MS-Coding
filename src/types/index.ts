@@ -14,7 +14,7 @@ export type AppId =
   'calendar' | 'pomodoro' | 'stopwatch' | 'countdown' | 'mealgent' | 'studysched' | 'flashcard' |
   'fileexplorer' | 'settings' | 'notepad' | 'taskmanager' |
   'events' | 'showcase' | 'blog' | 'resources' | 'halloffame' | 'rules' | 'newsletter' | 'memberlist' | 'recruitment' | 'alumni' | 'gallery' | 'contactform' | 'feedback' | 'campusmap' | 'timetable' | 'roadmap' | 'slashdotfaq' | 'campusmap' | 'lhcrooms' | 'timetable' | 'roadmap' | 'slashdotfaq' |
-'githubcontrib' | 'todayincs' | 'hackernews' | 'wikirandom'
+'githubcontrib' | 'todayincs' | 'hackernews' | 'wikirandom' | 'clubcommunity'
 export interface WindowState {
   id: string
   appId: AppId

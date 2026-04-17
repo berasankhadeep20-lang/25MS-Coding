@@ -36,6 +36,7 @@ export const appCommands: Record<string, CommandHandler> = {
       stack:       { appId: 'stack',       title: 'stack.log',        preview: 'Reading stack.log...'         },
       contact:     { appId: 'contact',     title: 'contact.sh',       preview: 'Executing contact.sh...'      },
       clock:       { appId: 'clock',       title: 'clock.app',        preview: 'Opening clock...'             },
+      clubcommunity: { appId: 'clubcommunity', title: 'community.app', preview: 'Opening Community Hub...' },
       asteroids:   { appId: 'asteroids',   title: 'asteroids.exe',    preview: 'Loading Asteroids...'         },
       pong:        { appId: 'pong',        title: 'pong.exe',         preview: 'Loading Pong...'              },
       flappy:      { appId: 'flappy',      title: 'flappy.exe',       preview: 'Loading Flappy Bracket...'    },

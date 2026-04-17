@@ -88,6 +88,11 @@ const ALL_COMMANDS = [
   { label: 'Task Manager',          action: 'open:taskmanager',  icon: '[%]'},
   { label: 'Daily Challenge',       action: 'cmd:challenge',     icon: '📅' },
   { label: 'How to Join SlashDot',  action: 'cmd:register',      icon: '📝' },
+  { label: 'Community Hub',          action: 'open:clubcommunity', icon: '🌐' },
+  { label: 'Discussion Forum',       action: 'open:clubcommunity', icon: '💬' },
+  { label: 'Project Collaboration',  action: 'open:clubcommunity', icon: '🚀' },
+  { label: 'Community Events',       action: 'open:clubcommunity', icon: '📅' },
+  { label: 'Community Members',      action: 'open:clubcommunity', icon: '👥' },
   { label: 'Show Members',          action: 'cmd:members',       icon: '👥' },
   { label: 'Live Weather',          action: 'cmd:weather',       icon: '🌍' },
   { label: 'Sudo Party 🎉',         action: 'cmd:sudo party',    icon: '🎉' },
@@ -183,6 +188,7 @@ export function CommandPalette({ onOpenWindow, onRunCommand }: Props) {
         campusmap: 'campus-map.app', lhcrooms: 'lhc-rooms.app',
         timetable: 'timetable.app', roadmap: 'roadmap.app',
         slashdotfaq: 'slashdot-faq.app', feedback: 'feedback.app',
+        clubcommunity: 'community.app',
       }
       
       onOpenWindow(appId, titleMap[appId] ?? appId)
