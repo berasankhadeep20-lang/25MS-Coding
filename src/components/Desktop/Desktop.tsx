@@ -117,6 +117,7 @@ const RIGHT_ICONS: DesktopIcon[] = [
   { appId: 'gallery',     title: 'gallery.app',      label: 'Gallery',     icon: '📸' },
   { appId: 'contactform', title: 'contactform.app',  label: 'Contact Form',icon: '📧' },
   { appId: 'feedback',    title: 'feedback.app',    label: 'Feedback',     icon: '💬' },
+  { appId: 'clubcommunity', title: 'clubcommunity.app', label: 'Club Community', icon: '🌐' }
 ]
 const ICONS: DesktopIcon[] = [...LEFT_ICONS, ...RIGHT_ICONS]
 

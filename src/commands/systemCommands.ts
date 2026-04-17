@@ -57,6 +57,9 @@ export const systemCommands: Record<string, CommandHandler> = {
         `${c.yellow}ascii slashdot${c.reset}       ${c.gray}Print SlashDot ASCII logo${c.reset}`,
         `${c.yellow}ls apps${c.reset}              ${c.gray}List all available apps${c.reset}`,
         `${c.yellow}hn${c.reset}                   ${c.gray}Open Hacker News${c.reset}`,
+        `${c.yellow}community${c.reset}         ${c.gray}Open Community Hub (Forum, Projects, Events)${c.reset}`,
+        `${c.yellow}forum${c.reset}             ${c.gray}Discussion forum & project collaboration${c.reset}`,
+        `${c.yellow}projects${c.reset}          ${c.gray}View & manage projects${c.reset}`,
         `${c.yellow}wiki random${c.reset}          ${c.gray}Random Wikipedia article${c.reset}`,
         `${c.yellow}lhc / rooms${c.reset}          ${c.gray}LHC room availability${c.reset}`,
         `${c.yellow}map${c.reset}                  ${c.gray}IISER campus map${c.reset}`,
@@ -509,6 +512,21 @@ export const systemCommands: Record<string, CommandHandler> = {
     window.dispatchEvent(new CustomEvent('slashdot-alias', { detail: { name: match[1], cmd: match[2] } }))
     return { output: `\r\n${c.green}✓ Alias created: ${c.yellow}${match[1]}${c.green} = ${c.white}${match[2]}${c.reset}\r\n${c.gray}Saved to session storage.${c.reset}\r\n` }
   },
+
+  community: (): CommandResult => ({
+  output: `\r\n${c.green}▶ Opening Community Hub...${c.reset}\r\n`,
+  action: { type: 'open_window', appId: 'clubcommunity' as any, title: 'community.app' },
+}),
+
+forum: (): CommandResult => ({
+  output: `\r\n${c.green}▶ Opening Discussion Forum...${c.reset}\r\n`,
+  action: { type: 'open_window', appId: 'clubcommunity' as any, title: 'community.app' },
+}),
+
+projects: (): CommandResult => ({
+  output: `\r\n${c.green}▶ Opening Project Collaboration...${c.reset}\r\n`,
+  action: { type: 'open_window', appId: 'clubcommunity' as any, title: 'community.app' },
+}),
 
   challenge: (): CommandResult => {
     try {
